@@ -3,17 +3,26 @@
 "          https://github.com/junegunn/vim-plug
 " #######################################################
 call plug#begin('~/.vim/plugged')
-"call plug#begin('~/.config/vim/plugged')   " TODO: move vim conf to ~/.config
+
+" Airline plugin
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'scrooloose/nerdtree'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 " Gruvbox Theme
 Plug 'morhetz/gruvbox'
+
+" NERDTree and related plugins
+Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'  " Icons in NERDTree
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Coloured files in NERDTree
+
+" CoC autocompletion plugin
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Syntax highlighting plugins
 Plug 'sheerun/vim-polyglot'
 Plug 'tomlion/vim-solidity'
+Plug 'tridactyl/vim-tridactyl'
 
 " https://vimawesome.com/plugin/targets-vim
 Plug 'wellle/targets.vim'
@@ -23,8 +32,15 @@ Plug 'tpope/vim-surround'
 " https://github.com/tpope/vim-repeat
 Plug 'tpope/vim-repeat'
 
+" Emmet plugin
+Plug 'mattn/emmet-vim'
+
 " hex colors highlighting
 Plug 'ap/vim-css-color'
+
+" FuzzyFind
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 " =======================================================
@@ -33,29 +49,42 @@ call plug#end()
 
 
 
-
 " #######################################################
 "                   Key Bindings Begin
 " #######################################################
 
-" H/L to go to the beginning/end of the line
+" H / L - go to the beginning/end of the line
 nmap H ^
 nmap L $
 
-" Use arrow keys to resize splits
-nnoremap <Up> :resize +1<CR>
-nnoremap <Down> :resize -1<CR>
-nnoremap <Left> :vertical-resize +1<CR>
-nnoremap <Right> :vertical-resize -1<CR>
+" Use <count>+arrow key to resize the split by <count> rows/columns
+nnoremap <Up> :<C-U>exe ':resize +' . v:count1<CR><C-c>
+nnoremap <Down> :<C-U>exe ':resize -' . v:count1<CR><C-c>
+nnoremap <Left> :<C-U>exe ':vertical-resize +' . v:count1<CR><C-c>
+nnoremap <Right> :<C-U>exe ':vertical-resize -' . v:count1<CR><C-c>
+
+
+" TODO: lags when using o/O as usual - find another binging
+" <count>oo / <count>OO - Add <count> blank lines (default=1)
+" below/above the current line without entering insert mode
+"nnoremap <expr> oo 'm`' . v:count1 . 'o<Esc>``'
+"nnoremap <expr> OO 'm`' . v:count1 . 'O<Esc>``'
+
 
 " Use Ctrl-hjkl keys to switch between splits
-map <C-k> <C-w><Up>
-map <C-j> <C-w><Down>
-map <C-l> <C-w><Right>
-map <C-h> <C-w><Left>
+nnoremap <C-k> <C-w><Up>
+nnoremap <C-j> <C-w><Down>
+nnoremap <C-l> <C-w><Right>
+nnoremap <C-h> <C-w><Left>
 
 " Open NERDTree with Ctrl+n
 map <C-n> :NERDTreeToggle<CR>
+
+" Clear highlights on pressing `\` (backslash)
+nnoremap \ :noh<CR>
+
+" Copy to system clipboard with `Ctrl+y`
+vnoremap <C-y> "+y
 
 " =======================================================
 "                   Key Bindings End
@@ -92,8 +121,16 @@ set fileencodings=utf8,cp1251
 set mousehide "Hide mouse cursor when typing
 set mouse=a "Turn on mouse support
 
-set rtp+=/usr/local/opt/fzf   " TODO: wtf is this?
+" --------------- Nerd Tree tuning --------------------
+" Hide 'Press ? for help' text at the top of NERDTree
+let NERDTreeMinimalUI = 1 
 
+" Remove extra spacing between dir arrows and icons
+let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
+
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" ---------------------------------------------------
 
 " ---------------- Persistent Undo ------------------
 " Keep undo history across sessions, by storing in file.
@@ -120,7 +157,6 @@ set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNO
 " #######################################################
 "                   Styling Settings Begin
 " #######################################################
-"colorscheme nord
 colorscheme gruvbox
 set background=dark
 set termguicolors
@@ -130,13 +166,28 @@ hi! Normal ctermbg=NONE guibg=NONE
 hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
 
 let g:airline_powerline_fonts = 1
-"let g:airline_theme='nord'
 let g:airline_theme='minimalist'
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
+" Customize fzf colors to match your color scheme
+" - fzf#wrap translates this to a set of `--color` options
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
 " Neovim/Vim True Color support 
 if (empty($TMUX))
@@ -170,7 +221,7 @@ set nobackup
 set nowritebackup
 
 " Give more space for displaying messages.
-set cmdheight=2
+"set cmdheight=2    " [EDITED] Turned it off because it sucks
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
