@@ -7,20 +7,13 @@ window:
     x: 0
     y: 0
 
-  #padding:
-    #x: 5
-    #y: 5
-
-  # Spread additional padding evenly around the terminal content.
-  #dynamic_padding: false
-
   decorations: none
+
+  opacity: 0.90
 
 scrolling:
   history: 10000
 
-  # Scrolling distance multiplier.
-  #multiplier: 3
 
 font:
   normal:
@@ -35,17 +28,11 @@ font:
   bold_italic:
     family: MesloLGS Nerd Font Mono
     style: Bold Italic
-  size: 14.0
+  size: 11.0
 
-  # Offset is the extra space around each character. `offset.y` can be thought
-  # of as modifying the line spacing, and `offset.x` as modifying the letter
-  # spacing.
   offset:
     x: 0
     y: 0
-  #glyph_offset:
-    #x: 0
-    #y: 0
 
 
 # If `true`, bold text is drawn using the bright color variants.
@@ -99,7 +86,6 @@ colors:
 ########################################
 
 
-background_opacity: 0.90
 
 selection:
   # This string contains all characters that are used as separators for
@@ -110,22 +96,7 @@ selection:
   #save_to_clipboard: false
 
 cursor:
-  # Cursor style
-  #style:
-    # Cursor shape
-    #shape: Block
-
-    #blinking: Off
-
-  #vi_mode_style: None
-
-  #blink_interval: 750
-
   unfocused_hollow: true
-
-  # Thickness of the cursor relative to the cell width as floating point number
-  # from `0.0` to `1.0`.
-  #thickness: 0.15
 
 
 
