@@ -24,6 +24,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tomlion/vim-solidity'
 Plug 'tridactyl/vim-tridactyl'
 
+Plug 'jiangmiao/auto-pairs'
 " https://vimawesome.com/plugin/targets-vim
 Plug 'wellle/targets.vim'
 
@@ -83,8 +84,8 @@ map <C-n> :NERDTreeToggle<CR>
 " Clear highlights on pressing `\` (backslash)
 nnoremap \ :noh<CR>
 
-" Copy to system clipboard with `Ctrl+y`
-vnoremap <C-y> "+y
+" Copy to system clipboard with `Ctrl+Y`
+vnoremap <C-Y> "+y
 
 " =======================================================
 "                   Key Bindings End
@@ -105,12 +106,16 @@ highlight LineNr ctermfg=DarkGrey
 " Fix issues with delete key in vim insert mode
 set backspace=indent,eol,start
 
-" Tabs settings for Python, according to recomendations
+" Tabs settings for Python
 set tabstop=4
 set shiftwidth=4
 set smarttab
 set expandtab
 set softtabstop=4 "4 spaces in tab
+
+" Tabs settings for HTML, CSS files
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
+autocmd FileType css setlocal shiftwidth=2 tabstop=2
 
 " Turning off .swp and ~ (backup) files
 set nobackup
