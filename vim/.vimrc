@@ -99,6 +99,7 @@ vnoremap <C-Y> "+y
 "                   General Settings Begin
 " #######################################################
 syntax on
+filetype on
 set number
 highlight Normal ctermbg=None
 highlight LineNr ctermfg=DarkGrey
