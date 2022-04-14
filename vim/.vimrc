@@ -172,11 +172,12 @@ let g:ycm_complete_in_strings = 1 " Completion in string
 
 " ---------- emmet-vim plugin settings ------------------
 "  Expand tags with newline per tag
-let g:user_emmet_settings = {
-\  'html' : {
-\    'block_all_childless' : 1,
-\  },
-\}
+"  NOTE: it sucks because expands with newline all the time 
+"let g:user_emmet_settings = {
+"\  'html' : {
+"\    'block_all_childless' : 1,
+"\  },
+"\}
 " -------------------------------------------------------
 
 
