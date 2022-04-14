@@ -114,8 +114,9 @@ set smarttab
 set expandtab
 set softtabstop=4 "4 spaces in tab
 
-" Tabs settings for HTML, CSS files
+" Auto indent settings for HTML, Django templates, CSS files
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
+autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2
 autocmd FileType css setlocal shiftwidth=2 tabstop=2
 
 " Turning off .swp and ~ (backup) files
