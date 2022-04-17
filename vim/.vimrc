@@ -16,6 +16,7 @@ Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'  " Icons in NERDTree
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Coloured files in NERDTree
 
+
 " Warning: CoC and YCM autocompletion plugins are incompatible!
 " YCM aka YouCompleteMe code completion plugin
 Plug 'valloric/youcompleteme'
@@ -86,10 +87,29 @@ nnoremap <C-h> <C-w><Left>
 " Open NERDTree with Ctrl+n
 map <C-n> :NERDTreeToggle<CR>
 
+" ---------- Switching between tabs ------------
+" g<num> - Switch to tab number <num>
+nnoremap g1 1gt
+nnoremap g2 2gt
+nnoremap g3 3gt
+nnoremap g4 4gt
+nnoremap g5 5gt
+nnoremap g6 6gt
+nnoremap g7 7gt
+nnoremap g8 8gt
+nnoremap g9 9gt
+" gb - Go to the previous tab
+nnoremap gb :tabprev<CR>
+" g0 - Go to the first tab
+nnoremap g0 :tabfirst<CR>
+" g$ - Go to the last tab
+nnoremap g$ :tablast<CR>
+" ----------------------------------------------
+
 " Clear highlights on pressing `\` (backslash)
 nnoremap \ :noh<CR>
 
-" Copy to system clipboard with `Ctrl+Y`
+" Copy to system clipboard with `Ctrl+Y` (`Ctrl+Shift+y`)
 vnoremap <C-Y> "+y
 
 " =======================================================
@@ -143,6 +163,8 @@ let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 " ---------------------------------------------------
+
+
 
 " ---------------- Persistent Undo ------------------
 " Keep undo history across sessions, by storing in file.
