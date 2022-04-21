@@ -133,6 +133,10 @@ set number
 highlight Normal ctermbg=None
 highlight LineNr ctermfg=DarkGrey
 
+" New split opens at the bottom instead at the top
+" (mainly to make YouCompleteMe preview window open at the bottom)
+set splitbelow
+
 " Fix issues with delete key in vim insert mode
 set backspace=indent,eol,start
 
