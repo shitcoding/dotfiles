@@ -104,6 +104,10 @@ nnoremap gb :tabprev<CR>
 nnoremap g0 :tabfirst<CR>
 " g$ - Go to the last tab
 nnoremap g$ :tablast<CR>
+" gm - Move current tab to the right
+nnoremap gm :tabmove +1<CR>
+" gM - Move current tab to the left
+nnoremap gM :tabmove -1<CR>
 " ----------------------------------------------
 
 " Clear highlights on pressing `\` (backslash)
@@ -182,6 +186,10 @@ set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNO
 
 
 " ---------- YouCompleteMe plugin settings --------------
+" Auto close preview window after completion or leaving insert mode
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+
 " Django autocompletion settings for YCM
 " https://code.djangoproject.com/wiki/UsingVimWithDjango#YouCompleteMe
 let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
