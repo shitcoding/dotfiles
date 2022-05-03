@@ -49,6 +49,10 @@ Plug 'ap/vim-css-color'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+" Toggles between hybrid and absolute line numbers automatically
+" NOTE: Add `set-option -g focus-events on` to .tmux.conf
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+
 call plug#end()
 " =======================================================
 "      End of vim-plug plugins installation section
@@ -61,23 +65,26 @@ call plug#end()
 " #######################################################
 
 " H / L - go to the beginning/end of the line
-nmap H ^
-nmap L $
+nnoremap H ^
+nnoremap L $
+" Same for Cyrillic layout
+nnoremap Р ^ 
+nnoremap Д $
 
+" ----------------------- Resizing splits -----------------------
 " Use <count>+arrow key to resize the split by <count> rows/columns
 nnoremap <Up> :<C-U>exe ':resize +' . v:count1<CR><C-c>
 nnoremap <Down> :<C-U>exe ':resize -' . v:count1<CR><C-c>
 nnoremap <Left> :<C-U>exe ':vertical-resize +' . v:count1<CR><C-c>
 nnoremap <Right> :<C-U>exe ':vertical-resize -' . v:count1<CR><C-c>
+" Use <Ctrl-w><Space> to resize all splits to equal sizes
+nnoremap <C-w><Space> <C-w>=
+" Use <Ctrl-w>m to resize current split to max height
+nnoremap <C-w>m <C-w>_
+" ----------------------------------------------
 
 
-" TODO: lags when using o/O as usual - find another binging
-" <count>oo / <count>OO - Add <count> blank lines (default=1)
-" below/above the current line without entering insert mode
-"nnoremap <expr> oo 'm`' . v:count1 . 'o<Esc>``'
-"nnoremap <expr> OO 'm`' . v:count1 . 'O<Esc>``'
-
-
+" ---------- Switching between splits ------------
 " Use Ctrl-hjkl keys to switch between splits
 nnoremap <C-k> <C-w><Up>
 nnoremap <C-j> <C-w><Down>
@@ -86,6 +93,8 @@ nnoremap <C-h> <C-w><Left>
 
 " Open NERDTree with Ctrl+n
 map <C-n> :NERDTreeToggle<CR>
+" ----------------------------------------------
+
 
 " ---------- Switching between tabs ------------
 " g<num> - Switch to tab number <num>
@@ -115,6 +124,13 @@ nnoremap \ :noh<CR>
 
 " Copy to system clipboard with `Ctrl+Y` (`Ctrl+Shift+y`)
 vnoremap <C-Y> "+y
+
+
+" <count>oo / <count>OO - Add <count> blank lines (default=1)
+" below/above the current line without entering insert mode
+" TODO: lags when using o/O as usual - find another binging
+"nnoremap <expr> oo 'm`' . v:count1 . 'o<Esc>``'
+"nnoremap <expr> OO 'm`' . v:count1 . 'O<Esc>``'
 
 " =======================================================
 "                   Key Bindings End
