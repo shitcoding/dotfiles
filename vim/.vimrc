@@ -54,9 +54,111 @@ Plug 'junegunn/fzf.vim'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 call plug#end()
+" #######################################################
+" ###  End of vim-plug plugins installation section  ####
+" #######################################################
+
+
+
+
+" #######################################################
+"                   General Settings Begin
+" #######################################################
+syntax on
+filetype on
+set number
+highlight Normal ctermbg=None
+highlight LineNr ctermfg=DarkGrey
+
+" New split opens at the bottom instead at the top
+" (mainly to make YouCompleteMe preview window open at the bottom)
+set splitbelow
+
+" Fix issues with delete key in vim insert mode
+set backspace=indent,eol,start
+
+" Tabs settings for Python
+set tabstop=4
+set shiftwidth=4
+set smarttab
+set expandtab
+set softtabstop=4 "4 spaces in tab
+
+" Auto indent settings for HTML, Django templates, CSS files
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
+autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2
+autocmd FileType css setlocal shiftwidth=2 tabstop=2
+
+" Turning off .swp and ~ (backup) files
+set nobackup
+set noswapfile
+
+scriptencoding utf-8
+set encoding=utf-8 " Default encoding
+set fileencodings=utf8,cp1251
+
+set mousehide "Hide mouse cursor when typing
+set mouse=a "Turn on mouse support
+
+" --------------- Nerd Tree tuning --------------------
+" Hide 'Press ? for help' text at the top of NERDTree
+let NERDTreeMinimalUI = 1 
+
+" Remove extra spacing between dir arrows and icons
+let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
+
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" ---------------------------------------------------
+
+
+
+" ---------------- Persistent Undo ------------------
+" Keep undo history across sessions, by storing in file.
+if has('persistent_undo')
+  silent !mkdir /tmp/.vim/backups > /dev/null 2>&1
+  set undodir=/tmp/.vim/backups
+  set undofile
+endif
+" ---------------------------------------------------
+
+
+" Enable hotkeys for Russian layout
+" https://github.com/vim/vim/blob/master/runtime/doc/russian.txt
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+
+
+" ---------- YouCompleteMe plugin settings --------------
+" Auto close preview window after completion or leaving insert mode
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+
+" Django autocompletion settings for YCM
+" https://code.djangoproject.com/wiki/UsingVimWithDjango#YouCompleteMe
+let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
+let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
+let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
+let g:ycm_complete_in_comments = 1 " Completion in comments
+let g:ycm_complete_in_strings = 1 " Completion in string
+" -------------------------------------------------------
+
+
+" ---------- emmet-vim plugin settings ------------------
+"  Expand tags with newline per tag
+"  NOTE: it sucks because expands with newline all the time 
+"let g:user_emmet_settings = {
+"\  'html' : {
+"\    'block_all_childless' : 1,
+"\  },
+"\}
+" -------------------------------------------------------
+
+
 " =======================================================
-"      End of vim-plug plugins installation section
+"                   General Settings End
 " =======================================================
+
+
 
 
 
@@ -125,7 +227,7 @@ nnoremap <silent> <Leader>l :tablast<CR>
 " `gm` - Move current tab to the right
 nnoremap <silent> gm :tabmove +1<CR>
 " `gM` - Move current tab to the left
-nnorema <silent>p gM :tabmove -1<CR>
+nnoremap <silent> gM :tabmove -1<CR>
 " ----------------------------------------------
 
 " Clear search highlights on pressing `\` (backslash)
@@ -146,105 +248,6 @@ nnoremap <expr> <Leader>O 'm`' . v:count1 . 'O<Esc>``'
 
 " =======================================================
 "                   Key Bindings End
-" =======================================================
-
-
-
-
-
-" #######################################################
-"                   General Settings Begin
-" #######################################################
-syntax on
-filetype on
-set number
-highlight Normal ctermbg=None
-highlight LineNr ctermfg=DarkGrey
-
-" New split opens at the bottom instead at the top
-" (mainly to make YouCompleteMe preview window open at the bottom)
-set splitbelow
-
-" Fix issues with delete key in vim insert mode
-set backspace=indent,eol,start
-
-" Tabs settings for Python
-set tabstop=4
-set shiftwidth=4
-set smarttab
-set expandtab
-set softtabstop=4 "4 spaces in tab
-
-" Auto indent settings for HTML, Django templates, CSS files
-autocmd FileType html setlocal shiftwidth=2 tabstop=2
-autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2
-autocmd FileType css setlocal shiftwidth=2 tabstop=2
-
-" Turning off .swp and ~ (backup) files
-set nobackup
-set noswapfile
-set encoding=utf-8 " Default encoding
-set fileencodings=utf8,cp1251
-
-set mousehide "Hide mouse cursor when typing
-set mouse=a "Turn on mouse support
-
-" --------------- Nerd Tree tuning --------------------
-" Hide 'Press ? for help' text at the top of NERDTree
-let NERDTreeMinimalUI = 1 
-
-" Remove extra spacing between dir arrows and icons
-let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
-
-" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-" ---------------------------------------------------
-
-
-
-" ---------------- Persistent Undo ------------------
-" Keep undo history across sessions, by storing in file.
-if has('persistent_undo')
-  silent !mkdir /tmp/.vim/backups > /dev/null 2>&1
-  set undodir=/tmp/.vim/backups
-  set undofile
-endif
-" ---------------------------------------------------
-
-
-" Enable hotkeys for Russian layout
-" https://github.com/vim/vim/blob/master/runtime/doc/russian.txt
-set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
-
-
-" ---------- YouCompleteMe plugin settings --------------
-" Auto close preview window after completion or leaving insert mode
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-
-" Django autocompletion settings for YCM
-" https://code.djangoproject.com/wiki/UsingVimWithDjango#YouCompleteMe
-let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
-let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
-let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
-let g:ycm_complete_in_comments = 1 " Completion in comments
-let g:ycm_complete_in_strings = 1 " Completion in string
-" -------------------------------------------------------
-
-
-" ---------- emmet-vim plugin settings ------------------
-"  Expand tags with newline per tag
-"  NOTE: it sucks because expands with newline all the time 
-"let g:user_emmet_settings = {
-"\  'html' : {
-"\    'block_all_childless' : 1,
-"\  },
-"\}
-" -------------------------------------------------------
-
-
-" =======================================================
-"                   General Settings End
 " =======================================================
 
 
