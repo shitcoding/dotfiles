@@ -63,6 +63,9 @@ call plug#end()
 " #######################################################
 "                   Key Bindings Begin
 " #######################################################
+" Set space as Leader key
+nnoremap <Space> <Nop>
+let mapleader=" "
 
 " H / L - go to the beginning/end of the line
 nnoremap H ^
@@ -72,16 +75,17 @@ nnoremap Р ^
 nnoremap Д $
 
 " ----------------------- Resizing splits -----------------------
-" Use <count>+arrow key to resize the split by <count> rows/columns
+" `<count>+arrow key` - resize the split by <count> rows/columns
 nnoremap <Up> :<C-U>exe ':resize +' . v:count1<CR><C-c>
 nnoremap <Down> :<C-U>exe ':resize -' . v:count1<CR><C-c>
 nnoremap <Left> :<C-U>exe ':vertical-resize +' . v:count1<CR><C-c>
 nnoremap <Right> :<C-U>exe ':vertical-resize -' . v:count1<CR><C-c>
-" Use <Ctrl-w><Space> to resize all splits to equal sizes
-nnoremap <C-w><Space> <C-w>=
-" Use <Ctrl-w>m to resize current split to max height
-nnoremap <C-w>m <C-w>_
-" ----------------------------------------------
+
+" `<Space> <Space>` - resize all splits to equal sizes
+nnoremap <Leader><Leader> <C-w>=
+" `<Space>+m` - resize current split to max height
+nnoremap <Leader>m <C-w>_
+" ----------------------------------------------------------------
 
 
 " ---------- Switching between splits ------------
@@ -97,7 +101,7 @@ map <C-n> :NERDTreeToggle<CR>
 
 
 " ---------- Switching between tabs ------------
-" g<num> - Switch to tab number <num>
+" `g<num>` - Switch to tab number <num>
 nnoremap g1 1gt
 nnoremap g2 2gt
 nnoremap g3 3gt
@@ -107,30 +111,38 @@ nnoremap g6 6gt
 nnoremap g7 7gt
 nnoremap g8 8gt
 nnoremap g9 9gt
-" gb - Go to the previous tab
-nnoremap gb :tabprev<CR>
-" g0 - Go to the first tab
-nnoremap g0 :tabfirst<CR>
-" g$ - Go to the last tab
-nnoremap g$ :tablast<CR>
-" gm - Move current tab to the right
-nnoremap gm :tabmove +1<CR>
-" gM - Move current tab to the left
-nnoremap gM :tabmove -1<CR>
+" `<Space>+j` - Go to the next tab
+nnoremap <silent> <Leader>j :tabnext<CR>
+" `gb` / `<Space>+k` - Go to the previous tab
+nnoremap <silent> gb :tabprev<CR>
+nnoremap <silent> <Leader>k :tabprev<CR>
+" `g0` / `<Space>+h` - Go to the first tab
+nnoremap <silent> g0 :tabfirst<CR>
+nnoremap <silent> <Leader>h :tabfirst<CR>
+" `g$` / `<Space>+l` - Go to the last tab
+nnoremap <silent> g$ :tablast<CR>
+nnoremap <silent> <Leader>l :tablast<CR>
+" `gm` - Move current tab to the right
+nnoremap <silent> gm :tabmove +1<CR>
+" `gM` - Move current tab to the left
+nnorema <silent>p gM :tabmove -1<CR>
 " ----------------------------------------------
 
-" Clear highlights on pressing `\` (backslash)
-nnoremap \ :noh<CR>
+" Clear search highlights on pressing `\` (backslash)
+nnoremap <silent> \ :noh<CR>
 
 " Copy to system clipboard with `Ctrl+Y` (`Ctrl+Shift+y`)
 vnoremap <C-Y> "+y
 
+" Fix for vim-numbertoggle plugin not switching from absolute
+" to relative line numbers when leaving Insert mode with <Ctrl-c>
+inoremap <silent> <C-c> <C-c>:set rnu<CR>
 
-" <count>oo / <count>OO - Add <count> blank lines (default=1)
+
+" `<count><Space>o` / `<count><Space>OO` - Add <count> blank lines (default=1)
 " below/above the current line without entering insert mode
-" TODO: lags when using o/O as usual - find another binging
-"nnoremap <expr> oo 'm`' . v:count1 . 'o<Esc>``'
-"nnoremap <expr> OO 'm`' . v:count1 . 'O<Esc>``'
+nnoremap <expr> <Leader>o 'm`' . v:count1 . 'o<Esc>``'
+nnoremap <expr> <Leader>O 'm`' . v:count1 . 'O<Esc>``'
 
 " =======================================================
 "                   Key Bindings End
