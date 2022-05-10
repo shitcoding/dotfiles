@@ -89,6 +89,10 @@ autocmd FileType html setlocal shiftwidth=2 tabstop=2
 autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2
 autocmd FileType css setlocal shiftwidth=2 tabstop=2
 
+" Aliases for faster setting filetype if it's not detected
+command! Html set filetype=html
+command! Django set filetype=htmldjango
+
 " Turning off .swp and ~ (backup) files
 set nobackup
 set noswapfile
@@ -169,12 +173,21 @@ let g:ycm_complete_in_strings = 1 " Completion in string
 nnoremap <Space> <Nop>
 let mapleader=" "
 
-" H / L - go to the beginning/end of the line
+" H / L - go to the beginning/end of the line in normal mode
 nnoremap H ^
 nnoremap L $
 " Same for Cyrillic layout
 nnoremap Р ^ 
 nnoremap Д $
+
+" H / L - mark to the beginning/end (not including line break)
+" of the line in visual mode
+vnoremap H ^
+vnoremap L g_
+" Same for Cyrillic layout
+vnoremap Р ^ 
+vnoremap Д g_
+
 
 " ----------------------- Resizing splits -----------------------
 " `<count>+arrow key` - resize the split by <count> rows/columns
