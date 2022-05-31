@@ -72,10 +72,10 @@ endif
 set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
 
 
-" ------------------------------------------------------------------------------
+" ----------------------------------------------------------------------
 "                    Key Bindings
-" ------------------------------------------------------------------------------
-" Use Ctrl-hjkl keys to switch between splits
+" ----------------------------------------------------------------------
+" Use Ctrl-hjkl keys to switch between splits in Normal and View modes
 nnoremap <C-h> <C-w>h
 " account for <c-h>/<bs> conflict
 nnoremap <bs> <C-w>h
