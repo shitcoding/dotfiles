@@ -72,9 +72,9 @@ endif
 set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
 
 
-" ----------------------------------------------------------------------
-"                    Key Bindings
-" ----------------------------------------------------------------------
+" ######################################################################
+" ################   Key Bindings    ###################################
+" ######################################################################
 " Use Ctrl-hjkl keys to switch between splits in Normal and View modes
 nnoremap <C-h> <C-w>h
 " account for <c-h>/<bs> conflict
@@ -82,6 +82,12 @@ nnoremap <bs> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Resizing splits with arrow keys
+nnoremap <Left> <C-w><
+nnoremap <Right> <C-w>>
+nnoremap <Up> <C-w>+
+nnoremap <Down> <C-w>-
 
 
 " Single stroke to access command line
@@ -317,8 +323,11 @@ filextype */
 " ------------------------------------------------------------------------------
 " Preview window tuning
 " ------------------------------------------------------------------------------
-" Syntax highlighting in preview
-fileviewer *.[ch],*.[ch]pp,*.[ch]xx,*.js,*.py,*.css,*.html bat --color always --wrap never --pager never %c -p
+" Syntax highlighting in preview mode using bat
+fileviewer *.[ch],*.[ch]pp,*.[ch]xx,
+        \*.js,*.py,*.css,*.html,*.scss,
+        \*.json,*.yml,*.yaml,Makefile,*.md,.*rc
+        \ bat --color always --wrap never --pager never %c -p
 
 " Use Gtree (tree with icons) for directory preview,
 " ignoring hidden files, .git folder, depth=4
