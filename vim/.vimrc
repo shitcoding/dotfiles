@@ -145,6 +145,11 @@ set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNO
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 
+" Fix CSS autocompletion
+let g:ycm_semantic_triggers = {
+   \   'css': [ 're!^\s{2}', 're!:\s+' ],
+   \ }
+
 " Django autocompletion settings for YCM
 " https://code.djangoproject.com/wiki/UsingVimWithDjango#YouCompleteMe
 let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
