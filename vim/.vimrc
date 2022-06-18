@@ -272,6 +272,31 @@ inoremap <silent> <C-c> <C-c>:set rnu<CR>
 nnoremap <expr> <Leader>o 'm`' . v:count1 . 'o<Esc>``'
 nnoremap <expr> <Leader>O 'm`' . v:count1 . 'O<Esc>``'
 
+
+" ---------- Emacs-like shortcuts in command line mode ----------
+" start of line
+:cnoremap <C-a>  <Home>
+" back one character
+:cnoremap <C-b> <Left>
+" delete character under cursor
+:cnoremap <C-d>	<Del>
+" end of line
+:cnoremap <C-e>	<End>
+" forward one character
+" Note / TODO: <C-f> remap below overrides standard mapping
+" for opening command-line window, maybe it's better not to do so.
+:cnoremap <C-f>	<Right>
+" recall newer command-line
+:cnoremap <C-n>	<Down>
+" recall previous (older) command-line
+:cnoremap <C-p>	<Up>
+" back one word
+:cnoremap <M-b>	<S-Left>
+" forward one word
+:cnoremap <M-f>	<S-Right>
+" ---------------------------------------------------------------
+
+
 " =======================================================
 "                   Key Bindings End
 " =======================================================
