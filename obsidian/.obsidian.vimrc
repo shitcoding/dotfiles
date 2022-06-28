@@ -18,10 +18,11 @@ set clipboard=unnamed
 
 
 """""""""""""" Begin Mappings for Russian layout """"""""""""""
-nmap пп gg
 
 imap <C-с> <C-c>
 vmap <C-с> <C-c>
+nmap <C-г> <C-u>
+nmap <C-в> <C-d>
 
 
 nmap й q
