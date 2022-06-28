@@ -1,3 +1,10 @@
+" .obsidian.vimrc config for Obsidian Vim mode
+" Note: Needs this plugin in order to work:
+" https://github.com/esm7/obsidian-vimrc-support
+
+
+
+"""""""""""""""""""""" Various mappings """""""""""""""""""""
 " H and L for beginning/end of line
 nmap H ^
 nmap L $
