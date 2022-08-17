@@ -15,6 +15,7 @@ Plug 'morhetz/gruvbox'
 Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'  " Icons in NERDTree
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Coloured files in NERDTree
+Plug 'jistr/vim-nerdtree-tabs'  " Fixes issues with NERDTree when using tabs
 
 
 " Warning: CoC and YCM autocompletion plugins are incompatible!
@@ -224,7 +225,10 @@ nnoremap <C-l> <C-w><Right>
 nnoremap <C-h> <C-w><Left>
 
 " Open NERDTree with Ctrl+n
-map <C-n> :NERDTreeToggle<CR>
+"map <C-n> :NERDTreeToggle<CR>
+
+" Open NERDTree mirrored for all open tabs with Ctrl+n
+map <C-n> :NERDTreeMirrorToggle<CR>
 " ----------------------------------------------
 
 
