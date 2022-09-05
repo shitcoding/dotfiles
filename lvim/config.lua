@@ -1,22 +1,27 @@
--- ###############################################################################################
--- ############################## General Settings ###############################################
--- ###############################################################################################
+--################################################################################################
+--############################### General Settings ###############################################
+--################################################################################################
 
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "onedarker"
 lvim.transparent_window = true
 
+
+--------------------------------- colorscheme settings ------------------------------------------
+lvim.colorscheme = "vscode"
+vim.cmd("au ColorScheme * hi LineNr guibg=NONE") -- transparent background of line numbers
+
+
 -- Enable hotkeys for Russian layout
--- https://github.com/vim/vim/blob/master/runtime/doc/russian.txt
 vim.cmd("set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz")
+
 
 
 
 -- ###############################################################################################
 -- ################################# Keymappings #################################################
 -- ###############################################################################################
---                      [view all the defaults by pressing <leader>Lk]
+------------------------[view all the defaults by pressing <leader>Lk]----------------------------
 lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
@@ -24,34 +29,42 @@ lvim.keys.normal_mode["<C-n>"] = ":NvimTreeToggle<cr>"
 
 -- ##################### Keymappings migrated from .vimrc ########################################
 
+-- Shorten the keymap function and mapping options
+local keymap = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+
 -- H / L - go to the beginning/end of the line in normal mode
-vim.api.nvim_set_keymap('n', 'H', '^', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'L', '$', { noremap = true, silent = true })
+keymap('n', 'H', '^', opts)
+keymap('n', 'L', '$', opts)
 
 -- Same for Cyrillic layout
-vim.api.nvim_set_keymap('n', 'Р', '^', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'Д', '$', { noremap = true, silent = true })
+keymap('n', 'Р', '^', opts)
+keymap('n', 'Д', '$', opts)
 
 -- H / L - mark to the beginning/end (not including line break)
 -- of the line in visual mode
-vim.api.nvim_set_keymap('v', 'H', '^', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', 'L', 'g_', { noremap = true, silent = true })
+keymap('v', 'H', '^', opts)
+keymap('v', 'L', 'g_', opts)
 
 -- Same for Cyrillic layout
-vim.api.nvim_set_keymap('v', 'Р', '^', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', 'Д', 'g_', { noremap = true, silent = true })
+keymap('v', 'Р', '^', opts)
+keymap('v', 'Д', 'g_', opts)
 
 ------------------------- Resizing splits -----------------------
 -- `<count>+arrow key` - resize the split by <count> rows/columns
 vim.cmd([[
   nnoremap <Up> :<C-U>exe ':resize +' . v:count1<CR><C-c>
 ]])
+
 vim.cmd([[
   nnoremap <Down> :<C-U>exe ':resize -' . v:count1<CR><C-c>
 ]])
+
 vim.cmd([[
-  nnoremap <Left> :<C-U>exe ':vertical-resize +' . v:count1<CR><C-c>
+ nnoremap <Left> :<C-U>exe ':vertical-resize +' . v:count1<CR><C-c>
 ]])
+
 vim.cmd([[
   nnoremap <Right> :<C-U>exe ':vertical-resize -' . v:count1<CR><C-c>
 ]])
@@ -67,36 +80,55 @@ vim.cmd([[
 ------------------------------------------------------------------
 
 -- Clear search highlights on pressing `\` (backslash)
-vim.api.nvim_set_keymap('n', '\\', ':noh<CR>', { noremap = true, silent = true })
+keymap('n', '\\', ':noh<CR>', opts)
 
 -- Fix for vim-numbertoggle plugin not switching from absolute
 -- to relative line numbers when leaving Insert mode with <Ctrl-c>
-vim.api.nvim_set_keymap('i', '<C-c>', '<C-c>:set rnu<CR>', { noremap = true, silent = true })
+keymap('i', '<C-c>', '<C-c>:set rnu<CR>', opts)
+
+
+---------------- Visual mode customizing ---------------------------
+-- Stay in indent mode
+keymap("v", "<", "<gv", opts)
+keymap("v", ">", ">gv", opts)
+
+-- Don't paste replaced text after pasting some text on its' place
+keymap("v", "p", '"_dP', opts)
+
+-- Move text up and down in visual mode
+keymap("v", "<C-j>", ":m .+1<CR>==", opts)
+keymap("v", "<C-k>", ":m .-2<CR>==", opts)
+
+-- Move text up and down in visual block mode
+keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
+keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
+keymap("x", "<C-j>", ":move '>+1<CR>gv-gv", opts)
+keymap("x", "<C-k>", ":move '<-2<CR>gv-gv", opts)
 
 
 
 ------------------- Switching between tabs -----------------------
 -- `g<num>` - Switch to tab number <num>
-vim.api.nvim_set_keymap('n', 'g1', ':BufferLineGoToBuffer 1<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'g2', ':BufferLineGoToBuffer 2<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'g3', ':BufferLineGoToBuffer 3<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'g4', ':BufferLineGoToBuffer 4<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'g5', ':BufferLineGoToBuffer 5<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'g6', ':BufferLineGoToBuffer 6<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'g7', ':BufferLineGoToBuffer 7<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'g8', ':BufferLineGoToBuffer 8<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'g9', ':BufferLineGoToBuffer 9<CR>', { noremap = true, silent = true })
+keymap('n', 'g1', ':BufferLineGoToBuffer 1<CR>', opts)
+keymap('n', 'g2', ':BufferLineGoToBuffer 2<CR>', opts)
+keymap('n', 'g3', ':BufferLineGoToBuffer 3<CR>', opts)
+keymap('n', 'g4', ':BufferLineGoToBuffer 4<CR>', opts)
+keymap('n', 'g5', ':BufferLineGoToBuffer 5<CR>', opts)
+keymap('n', 'g6', ':BufferLineGoToBuffer 6<CR>', opts)
+keymap('n', 'g7', ':BufferLineGoToBuffer 7<CR>', opts)
+keymap('n', 'g8', ':BufferLineGoToBuffer 8<CR>', opts)
+keymap('n', 'g9', ':BufferLineGoToBuffer 9<CR>', opts)
 
--- `<Space>+j` - Go to the next tab
-vim.api.nvim_set_keymap('n', 'gt', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>j', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
+-- `gt` or `<Space>+j` - Go to the next tab
+keymap('n', 'gt', ':BufferLineCycleNext<CR>', opts)
+--keymap('n', '<Leader>j', ':BufferLineCycleNext<CR>', opts)
 
--- `<Space>+k` - Go to the previous tab
-vim.api.nvim_set_keymap('n', 'gb', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>k', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
+-- `gb` or `<Space>+k` - Go to the previous tab
+keymap('n', 'gb', ':BufferLineCyclePrev<CR>', opts)
+--keymap('n', '<Leader>k', ':BufferLineCyclePrev<CR>', opts)
 
 -- `<Space>+h` - Go to the first tab
-vim.api.nvim_set_keymap('n', '<Leader>h', ':BufferLineGoToBuffer 1<CR>', { noremap = true, silent = true })
+--keymap('n', '<Leader>h', ':BufferLineGoToBuffer 1<CR>', opts)
 
 ---- `g$` / `<Space>+l` - Go to the last tab
 --vim.cmd([[
@@ -104,31 +136,21 @@ vim.api.nvim_set_keymap('n', '<Leader>h', ':BufferLineGoToBuffer 1<CR>', { norem
 --  nnoremap <silent> <Leader>l :tablast<CR>
 --]])
 -- `gm` - Move current tab to the right
-vim.api.nvim_set_keymap('n', 'gm', ':BufferLineMoveNext<CR>', { noremap = true, silent = true })
+keymap('n', 'gm', ':BufferLineMoveNext<CR>', opts)
 -- `gM` - Move current tab to the left
-vim.api.nvim_set_keymap('n', 'gM', ':BufferLineMovePrev<CR>', { noremap = true, silent = true })
+keymap('n', 'gM', ':BufferLineMovePrev<CR>', opts)
 ------------------------------------------------
 
+-- `<count><Space>o` / `<count><Space>OO` - Add <count> blank lines (default=1)
+-- below/above the current line without entering insert mode
+vim.cmd([[
+  nnoremap <expr> <Leader>o "m`" . v:count1 . "o<Esc>``"
+]])
 
--------------- Emacs-like shortcuts in command line mode ----------
----- start of line
---vim.api.nvim_set_keymap('c', '<C-a>', '<Home>', { noremap = true, silent = true })
----- back one character
---vim.api.nvim_set_keymap('c', '<C-b>', '<Left>', { noremap = true, silent = true })
----- delete character under cursor
---vim.api.nvim_set_keymap('c', '<C-b>', '<Del>', { noremap = true, silent = true })
----- end of line
---vim.api.nvim_set_keymap('c', '<C-e>', '<End>', { noremap = true, silent = true })
----- forward one character
----- Note / TODO: <C-f> remap below overrides standard mapping
----- for opening command-line window, maybe it's better not to do so.
---vim.api.nvim_set_keymap('c', '<C-f>', '<Right>', { noremap = true, silent = true })
----- back one word
---vim.api.nvim_set_keymap('c', '<M-b>', '<S-Left>', { noremap = true, silent = true })
----- forward one word
-----:cnoremap <M-f>	<S-Right>
---vim.api.nvim_set_keymap('c', '<M-f>', '<S-Right>', { noremap = true, silent = true })
--------------------------------------------------------------------
+vim.cmd([[
+  nnoremap <expr> <Leader>O "m`" . v:count1 . "O<Esc>``"
+]])
+
 
 
 
@@ -137,6 +159,9 @@ vim.api.nvim_set_keymap('n', 'gM', ':BufferLineMovePrev<CR>', { noremap = true, 
 -- override a default keymapping
 -- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
 
+----------------------------------------------------------------------------------------------
+--------------------------- Telescope key bindings -------------------------------------------
+----------------------------------------------------------------------------------------------
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
 local _, actions = pcall(require, "telescope.actions")
@@ -172,14 +197,22 @@ lvim.builtin.telescope.defaults.mappings = {
 
 
 
--- TODO: User Config for predefined plugins
+--#########################################################################################
+--####################### User Config for predefined plugins ##############################
+--#########################################################################################
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
+
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
+
+-- Nvim-Tree options
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
+lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
+lvim.builtin.nvimtree.setup.renderer.indent_markers.enable = true
+lvim.builtin.nvimtree.setup.view.number = true
+lvim.builtin.nvimtree.setup.view.relativenumber = true
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -280,20 +313,17 @@ lvim.builtin.treesitter.highlight.enabled = true
 --   },
 -- }
 
--- Additional Plugins
--- lvim.plugins = {
---     {"folke/tokyonight.nvim"},
---     {
---       "folke/trouble.nvim",
---       cmd = "TroubleToggle",
---     },
--- }
+
+
 lvim.plugins = {
   { "luisiacc/gruvbox-baby" },
   { "sainnhe/gruvbox-material" },
+  { "ellisonleao/gruvbox.nvim" },
   -- Toggles between hybrid and absolute line numbers automatically
-  -- NOTE: Add `set-option -g focus-events on` to .tmux.conf
+  -- NOTE: Add `set-option -g focus-events on` to .tmux.conf if you're using Tmux
   { "jeffkreeftmeijer/vim-numbertoggle" },
+  { "Mofiqul/vscode.nvim" },
+  --{ "lukas-reineke/indent-blackline.nvim" },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
@@ -309,3 +339,9 @@ lvim.plugins = {
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
+
+
+
+------------------------------------------------------------------------------------------------------
+---------------------------------------- Various Ricing ----------------------------------------------
+------------------------------------------------------------------------------------------------------
