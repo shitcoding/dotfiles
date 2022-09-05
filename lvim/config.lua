@@ -130,16 +130,21 @@ keymap('n', 'g7', ':BufferLineGoToBuffer 7<CR>', opts)
 keymap('n', 'g8', ':BufferLineGoToBuffer 8<CR>', opts)
 keymap('n', 'g9', ':BufferLineGoToBuffer 9<CR>', opts)
 
--- `gt` - Go to the next tab
+-- `gt` / `gj` - Go to the next tab
 keymap('n', 'gt', ':BufferLineCycleNext<CR>', opts)
+keymap('n', 'gj', ':BufferLineCycleNext<CR>', opts)
 
--- `gb` - Go to the previous tab
-keymap('n', 'gb', ':BufferLineCyclePrev<CR>', opts)
+-- `gT` / `gk` - Go to the previous tab
+keymap('n', 'gT', ':BufferLineCyclePrev<CR>', opts)
+keymap('n', 'gk', ':BufferLineCyclePrev<CR>', opts)
 
 -- `gm` - Move current tab to the right
 keymap('n', 'gm', ':BufferLineMoveNext<CR>', opts)
 -- `gM` - Move current tab to the left
 keymap('n', 'gM', ':BufferLineMovePrev<CR>', opts)
+
+-- `gx` - Close current buffer / tab
+keymap('n', 'gx', ':BufferKill<CR>', opts)
 ---------------------------------------------------------------------
 
 -- `<count><Space>o` / `<count><Space>OO` - Add <count> blank lines (default=1)
