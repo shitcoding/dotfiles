@@ -5,16 +5,18 @@
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.transparent_window = true
+vim.opt.cmdheight = 1 -- set command line height to 1 instead of 2
 
 
 --------------------------------- colorscheme settings ------------------------------------------
 lvim.colorscheme = "vscode"
 vim.cmd("au ColorScheme * hi LineNr guibg=NONE") -- transparent background of line numbers
 
+-- Lualine settings
+lvim.builtin.lualine.style = "default"
+lvim.builtin.lualine.options.theme = "codedark"
 
--- Enable hotkeys for Russian layout
-vim.cmd("set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz")
-
+lvim.builtin.lualine.sections.lualine_a = { "mode" }
 
 
 
@@ -22,16 +24,24 @@ vim.cmd("set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEF
 -- ################################# Keymappings #################################################
 -- ###############################################################################################
 ------------------------[view all the defaults by pressing <leader>Lk]----------------------------
+-- unmap a default keymapping
+-- vim.keymap.del("n", "<C-Up>")
+-- override a default keymapping
+-- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
+
+
+
+-- Shorten the key mapping function and mapping options for convenience
+local keymap = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+
 lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
-lvim.keys.normal_mode["<C-n>"] = ":NvimTreeToggle<cr>"
+-- Enable hotkeys for Russian layout
+vim.cmd("set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz")
 
--- ##################### Keymappings migrated from .vimrc ########################################
-
--- Shorten the keymap function and mapping options
-local keymap = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
 
 
 -- H / L - go to the beginning/end of the line in normal mode
@@ -51,6 +61,7 @@ keymap('v', 'L', 'g_', opts)
 keymap('v', 'Р', '^', opts)
 keymap('v', 'Д', 'g_', opts)
 
+
 ------------------------- Resizing splits -----------------------
 -- `<count>+arrow key` - resize the split by <count> rows/columns
 vim.cmd([[
@@ -69,9 +80,9 @@ vim.cmd([[
   nnoremap <Right> :<C-U>exe ':vertical-resize -' . v:count1<CR><C-c>
 ]])
 
--- `<Space> <Space>` - resize all splits to equal sizes
+-- `<Space>+=` - resize all splits to equal sizes
 vim.cmd([[
-  nnoremap <Leader><Leader> <C-w>=
+  nnoremap <Leader>= <C-w>=
 ]])
 -- `<Space>+m` - resize current split to max height
 vim.cmd([[
@@ -88,7 +99,7 @@ keymap('i', '<C-c>', '<C-c>:set rnu<CR>', opts)
 
 
 ---------------- Visual mode customizing ---------------------------
--- Stay in indent mode
+-- Stay in visual mode after changing indent
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
@@ -107,7 +118,7 @@ keymap("x", "<C-k>", ":move '<-2<CR>gv-gv", opts)
 
 
 
-------------------- Switching between tabs -----------------------
+------------------- Buffer tabs navigation -----------------------
 -- `g<num>` - Switch to tab number <num>
 keymap('n', 'g1', ':BufferLineGoToBuffer 1<CR>', opts)
 keymap('n', 'g2', ':BufferLineGoToBuffer 2<CR>', opts)
@@ -119,27 +130,17 @@ keymap('n', 'g7', ':BufferLineGoToBuffer 7<CR>', opts)
 keymap('n', 'g8', ':BufferLineGoToBuffer 8<CR>', opts)
 keymap('n', 'g9', ':BufferLineGoToBuffer 9<CR>', opts)
 
--- `gt` or `<Space>+j` - Go to the next tab
+-- `gt` - Go to the next tab
 keymap('n', 'gt', ':BufferLineCycleNext<CR>', opts)
---keymap('n', '<Leader>j', ':BufferLineCycleNext<CR>', opts)
 
--- `gb` or `<Space>+k` - Go to the previous tab
+-- `gb` - Go to the previous tab
 keymap('n', 'gb', ':BufferLineCyclePrev<CR>', opts)
---keymap('n', '<Leader>k', ':BufferLineCyclePrev<CR>', opts)
 
--- `<Space>+h` - Go to the first tab
---keymap('n', '<Leader>h', ':BufferLineGoToBuffer 1<CR>', opts)
-
----- `g$` / `<Space>+l` - Go to the last tab
---vim.cmd([[
---  nnoremap <silent> g$ :tablast<CR>
---  nnoremap <silent> <Leader>l :tablast<CR>
---]])
 -- `gm` - Move current tab to the right
 keymap('n', 'gm', ':BufferLineMoveNext<CR>', opts)
 -- `gM` - Move current tab to the left
 keymap('n', 'gM', ':BufferLineMovePrev<CR>', opts)
-------------------------------------------------
+---------------------------------------------------------------------
 
 -- `<count><Space>o` / `<count><Space>OO` - Add <count> blank lines (default=1)
 -- below/above the current line without entering insert mode
@@ -152,12 +153,6 @@ vim.cmd([[
 ]])
 
 
-
-
--- unmap a default keymapping
--- vim.keymap.del("n", "<C-Up>")
--- override a default keymapping
--- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
 
 ----------------------------------------------------------------------------------------------
 --------------------------- Telescope key bindings -------------------------------------------
@@ -180,7 +175,7 @@ lvim.builtin.telescope.defaults.mappings = {
   },
 }
 
--- Use which-key to add extra bindings with the leader-key prefix
+-- Use which-key plugin to add extra bindings with the leader-key prefix
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 -- lvim.builtin.which_key.mappings["t"] = {
 --   name = "+Trouble",
@@ -213,6 +208,9 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 lvim.builtin.nvimtree.setup.renderer.indent_markers.enable = true
 lvim.builtin.nvimtree.setup.view.number = true
 lvim.builtin.nvimtree.setup.view.relativenumber = true
+lvim.builtin.nvimtree.setup.filters.dotfiles = true
+
+
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -313,18 +311,22 @@ lvim.builtin.treesitter.highlight.enabled = true
 --   },
 -- }
 
-
+--#########################################################################################
+--############################## User Installed Plugins ###################################
+--#########################################################################################
 
 lvim.plugins = {
-  { "luisiacc/gruvbox-baby" },
-  { "sainnhe/gruvbox-material" },
-  { "ellisonleao/gruvbox.nvim" },
   -- Toggles between hybrid and absolute line numbers automatically
   -- NOTE: Add `set-option -g focus-events on` to .tmux.conf if you're using Tmux
   { "jeffkreeftmeijer/vim-numbertoggle" },
   { "Mofiqul/vscode.nvim" },
-  --{ "lukas-reineke/indent-blackline.nvim" },
+  { "wellle/targets.vim" },
+  { "tpope/vim-surround" },
+  { "tpope/vim-repeat" },
+
 }
+
+
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {
@@ -339,9 +341,3 @@ lvim.plugins = {
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
-
-
-
-------------------------------------------------------------------------------------------------------
----------------------------------------- Various Ricing ----------------------------------------------
-------------------------------------------------------------------------------------------------------
