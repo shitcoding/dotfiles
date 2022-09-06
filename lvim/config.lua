@@ -42,6 +42,13 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- Enable hotkeys for Russian layout
 vim.cmd("set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz")
 
+-- Remap LSP hover from K to gh to navigate between tabs with J / K
+lvim.lsp.buffer_mappings.normal_mode["K"] = nil
+keymap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+
+-- Remap joining lines from J to gj
+keymap('n', 'gj', 'J', opts)
+
 
 
 -- H / L - go to the beginning/end of the line in normal mode
@@ -130,13 +137,9 @@ keymap('n', 'g7', ':BufferLineGoToBuffer 7<CR>', opts)
 keymap('n', 'g8', ':BufferLineGoToBuffer 8<CR>', opts)
 keymap('n', 'g9', ':BufferLineGoToBuffer 9<CR>', opts)
 
--- `gt` / `gj` - Go to the next tab
-keymap('n', 'gt', ':BufferLineCycleNext<CR>', opts)
-keymap('n', 'gj', ':BufferLineCycleNext<CR>', opts)
-
--- `gT` / `gk` - Go to the previous tab
-keymap('n', 'gT', ':BufferLineCyclePrev<CR>', opts)
-keymap('n', 'gk', ':BufferLineCyclePrev<CR>', opts)
+-- J / K - Go to the next / previous tab
+keymap('n', 'J', ':BufferLineCycleNext<CR>', opts)
+keymap('n', 'K', ':BufferLineCyclePrev<CR>', opts)
 
 -- `gm` - Move current tab to the right
 keymap('n', 'gm', ':BufferLineMoveNext<CR>', opts)
