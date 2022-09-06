@@ -46,7 +46,7 @@ vim.cmd("set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEF
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
 keymap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 
--- Remap joining lines from J to gj
+-- Remap joining lines from J to gj to navigate between tabs with J / K
 keymap('n', 'gj', 'J', opts)
 
 
