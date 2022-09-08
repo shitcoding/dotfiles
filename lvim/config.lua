@@ -8,15 +8,20 @@ lvim.transparent_window = true
 vim.opt.cmdheight = 1 -- set command line height to 1 instead of 2
 
 
---------------------------------- colorscheme settings ------------------------------------------
+--################################################################################################
+--############################### Styling settings ###############################################
+--################################################################################################
 lvim.colorscheme = "vscode"
 vim.cmd("au ColorScheme * hi LineNr guibg=NONE") -- transparent background of line numbers
 
 -- Lualine settings
 lvim.builtin.lualine.style = "default"
 lvim.builtin.lualine.options.theme = "codedark"
-
 lvim.builtin.lualine.sections.lualine_a = { "mode" }
+
+-- Bufferline settings
+lvim.builtin.bufferline.options.show_buffer_close_icons = false -- no tab close icons
+lvim.builtin.bufferline.options.numbers = "ordinal" -- show tab numbers
 
 
 
@@ -150,15 +155,18 @@ keymap('n', 'gM', ':BufferLineMovePrev<CR>', opts)
 keymap('n', 'gx', ':BufferKill<CR>', opts)
 ---------------------------------------------------------------------
 
--- `<count><Space>o` / `<count><Space>OO` - Add <count> blank lines (default=1)
--- below/above the current line without entering insert mode
-vim.cmd([[
-  nnoremap <expr> <Leader>o "m`" . v:count1 . "o<Esc>``"
-]])
+-- `<count><Space>o` / `<count><Space>O` - Add <count> blank lines (default=1)
+-- Insert a blank line below or above current line (do not move the cursor),
+-- see https://stackoverflow.com/a/16136133/6064933
+vim.keymap.set("n", "<Leader>o", "printf('m`%so<ESC>``', v:count1)", {
+  expr = true,
+  desc = "insert line below",
+})
 
-vim.cmd([[
-  nnoremap <expr> <Leader>O "m`" . v:count1 . "O<Esc>``"
-]])
+vim.keymap.set("n", "<Leader>O", "printf('m`%sO<ESC>``', v:count1)", {
+  expr = true,
+  desc = "insert line above",
+})
 
 
 
