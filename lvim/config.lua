@@ -92,14 +92,7 @@ vim.cmd([[
   nnoremap <Right> :<C-U>exe ':vertical-resize -' . v:count1<CR><C-c>
 ]])
 
--- `<Space>+=` - resize all splits to equal sizes
-vim.cmd([[
-  nnoremap <Leader>= <C-w>=
-]])
--- `<Space>+m` - resize current split to max height
-vim.cmd([[
-  nnoremap <Leader>m <C-w>_
-]])
+
 ------------------------------------------------------------------
 
 -- Clear search highlights on pressing `\` (backslash)
@@ -191,20 +184,29 @@ lvim.builtin.telescope.defaults.mappings = {
   },
 }
 
--- Use which-key plugin to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<cr>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
--- }
+-------------------------------------------------------------------------------------------
+---------------------- Additional bindings for which-key plugin ---------------------------
+-------------------------------------------------------------------------------------------
+lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 
+-- trouble.nvim bindings
+lvim.builtin.which_key.mappings["t"] = {
+  name = "+Trouble",
+  r = { "<cmd>Trouble lsp_references<cr>", "References" },
+  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
+}
 
-
+-- persistence.nvim bindings
+lvim.builtin.which_key.mappings["S"] = {
+  name = "Session",
+  c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
+  l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
+  Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
+}
 
 
 
@@ -339,7 +341,18 @@ lvim.plugins = {
   { "wellle/targets.vim" },
   { "tpope/vim-surround" },
   { "tpope/vim-repeat" },
-
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    module = "persistence",
+    config = function()
+      require("persistence").setup {
+        dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
+        options = { "buffers", "curdir", "tabpages", "winsize" },
+      }
+    end,
+  },
+  { "folke/trouble.nvim" },
 }
 
 
