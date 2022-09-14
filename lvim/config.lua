@@ -210,6 +210,8 @@ lvim.builtin.which_key.mappings["S"] = {
 
 
 
+
+
 --#########################################################################################
 --####################### User Config for predefined plugins ##############################
 --#########################################################################################
@@ -254,7 +256,9 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 
 
--- generic LSP settings
+--#########################################################################################
+--############################## generic LSP settings #####################################
+--#########################################################################################
 
 -- -- make sure server will always be installed even if the server is in skipped_servers list
 -- lvim.lsp.installer.setup.ensure_installed = {
@@ -329,6 +333,8 @@ linters.setup {
   --  },
 }
 
+
+
 --#########################################################################################
 --############################## User Installed Plugins ###################################
 --#########################################################################################
@@ -341,6 +347,7 @@ lvim.plugins = {
   { "wellle/targets.vim" },
   { "tpope/vim-surround" },
   { "tpope/vim-repeat" },
+  { "mattn/emmet-vim" },
   {
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
