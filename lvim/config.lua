@@ -258,11 +258,11 @@ lvim.builtin.treesitter.highlight.enabled = true
 --############################## generic LSP settings #####################################
 --#########################################################################################
 
--- -- make sure server will always be installed even if the server is in skipped_servers list
--- lvim.lsp.installer.setup.ensure_installed = {
---     "sumeko_lua",
---     "jsonls",
--- }
+-- make sure server will always be installed even if the server is in skipped_servers list
+lvim.lsp.installer.setup.ensure_installed = {
+  "sumeko_lua",
+  "jsonls",
+}
 -- -- change UI setting of `LspInstallInfo`
 -- -- see <https://github.com/williamboman/nvim-lsp-installer#default-configuration>
 -- lvim.lsp.installer.setup.ui.check_outdated_servers_on_open = false
@@ -277,7 +277,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 ---configure a server manually. !!Requires `:LvimCacheReset` to take effect!!
 ---see the full default list `:lua print(vim.inspect(lvim.lsp.automatic_configuration.skipped_servers))`
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" }) -- disable autoinstallation of pyright
+--vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" }) -- disable autoinstallation of pyright
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pyright", opts)
 
