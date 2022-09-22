@@ -139,13 +139,11 @@ keymap('n', 'g9', ':BufferLineGoToBuffer 9<CR>', opts)
 keymap('n', 'J', ':BufferLineCycleNext<CR>', opts)
 keymap('n', 'K', ':BufferLineCyclePrev<CR>', opts)
 
--- `gm` - Move current tab to the right
-keymap('n', 'gm', ':BufferLineMoveNext<CR>', opts)
--- `gM` - Move current tab to the left
-keymap('n', 'gM', ':BufferLineMovePrev<CR>', opts)
+-- `m` - Move current tab to the right
+keymap('n', 'm', ':BufferLineMoveNext<CR>', opts)
+-- `M` - Move current tab to the left
+keymap('n', 'M', ':BufferLineMovePrev<CR>', opts)
 
--- `gx` - Close current buffer / tab
-keymap('n', 'gx', ':BufferKill<CR>', opts)
 ---------------------------------------------------------------------
 
 -- `<count><Space>o` / `<count><Space>O` - Add <count> blank lines (default=1)
