@@ -6,6 +6,7 @@ lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.transparent_window = true
 vim.opt.cmdheight = 1 -- set command line height to 1 instead of 2
+vim.opt.scrolloff = 0 -- make zt put the current line to the top of the window
 
 
 --################################################################################################
