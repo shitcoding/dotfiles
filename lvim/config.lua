@@ -22,7 +22,8 @@ lvim.builtin.lualine.sections.lualine_a = { "mode" }
 
 -- Bufferline settings
 lvim.builtin.bufferline.options.show_buffer_close_icons = false -- no tab close icons
-lvim.builtin.bufferline.options.numbers = "ordinal" -- show tab numbers
+-- lvim.builtin.bufferline.options.numbers = "ordinal" -- show tab numbers
+lvim.builtin.bufferline.options.tab_size = 10 -- change tabs width from default 18 to 10
 
 
 
