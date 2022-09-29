@@ -185,6 +185,10 @@ lvim.builtin.telescope.defaults.mappings = {
 }
 
 -------------------------------------------------------------------------------------------
+
+
+
+-------------------------------------------------------------------------------------------
 ---------------------- Additional bindings for which-key plugin ---------------------------
 -------------------------------------------------------------------------------------------
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
@@ -208,7 +212,7 @@ lvim.builtin.which_key.mappings["S"] = {
   Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 }
 
-
+-------------------------------------------------------------------------------------------
 
 
 
@@ -322,7 +326,11 @@ formatters.setup {
 -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-  { command = "flake8", filetypes = { "python" } },
+  {
+    command = "flake8",
+    filetypes = { "python" },
+    prefer_local = ".venv/bin" -- prefer local .venv flake8 installation in order to use plugins like wemake-style-guide
+  },
   --  {
   --    -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
   --    command = "shellcheck",
