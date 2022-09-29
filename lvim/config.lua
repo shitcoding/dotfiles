@@ -287,6 +287,19 @@ lvim.lsp.installer.setup.ensure_installed = {
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pyright", opts)
 
+-------------------- Pyright setup -----------------------------------------------------------------
+-- Mute Pyright warnings
+require("lspconfig").pyright.setup {
+  settings = {
+    python = {
+      analysis = {
+        typeCheckingMode = "off",
+      }
+    }
+  }
+}
+----------------------------------------------------------------------------------------------------
+
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. !!Requires `:LvimCacheReset` to take effect!!
 -- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
 -- vim.tbl_map(function(server)
