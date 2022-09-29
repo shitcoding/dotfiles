@@ -162,6 +162,24 @@ vim.keymap.set("n", "<Leader>O", "printf('m`%sO<ESC>``', v:count1)", {
 })
 
 
+------------- Emacs-like shortcuts in command line mode ----------
+-- start of line
+vim.cmd("cnoremap <C-a> <Home>")
+-- back one character
+vim.cmd("cnoremap <C-b> <Left>")
+-- delete character under cursor
+vim.cmd("cnoremap <C-d>	<Del>")
+-- end of line
+vim.cmd("cnoremap <C-e>	<End>")
+-- forward one character
+-- Note / TODO: <C-f> remap below overrides standard mapping
+-- for opening command-line window, maybe it's better not to do so.
+vim.cmd("cnoremap <C-f>	<Right>")
+-- back one word
+vim.cmd("cnoremap <M-b>	<S-Left>")
+-- forward one word
+vim.cmd("cnoremap <M-f>	<S-Right>")
+-----------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------
 --------------------------- Telescope key bindings -------------------------------------------
