@@ -137,7 +137,6 @@ nmap б ,
 nmap Б <
 nmap ю .
 nmap Ю >
-nmap . /
 vmap я z
 vmap Я Z
 vmap ч x
@@ -156,22 +155,14 @@ vmap б ,
 vmap Б <
 vmap ю .
 vmap Ю >
-vmap . /
 
 nmap ё `
 nmap Ё ~
-nmap " @
 nmap № #
-nmap ; $
-nmap : ^
 nmap ? &
 vmap ё `
 vmap Ё ~
-vmap " @
 vmap № #
-vmap ; $
-vmap : ^
-vmap ? &
 
 
 
