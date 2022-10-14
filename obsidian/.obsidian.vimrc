@@ -16,6 +16,12 @@ nmap \ :nohl
 " Yank to system clipboard
 set clipboard=unnamed
 
+" Switch tabs in normal mode with J / K
+exmap nexttab obcommand workspace:next-tab
+exmap prevtab obcommand workspace:previous-tab
+nmap J :nexttab
+nmap K :prevtab
+
 
 """""""""""""" Begin Mappings for Russian layout """"""""""""""
 
