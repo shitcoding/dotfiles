@@ -56,6 +56,9 @@ keymap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 -- Remap joining lines from J to gj to navigate between tabs with J / K
 keymap('n', 'gj', 'J', opts)
 
+-- Remap adding mark from `m` to `<Leader> m` to move tabs left / right with m / M
+keymap('n', '<Leader>m', 'm', opts)
+
 
 
 -- H / L - go to the beginning/end of the line in normal mode
