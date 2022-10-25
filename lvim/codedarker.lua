@@ -1,6 +1,6 @@
--- Copyright (c) 2020-2021 Shatur95
--- MIT license, see LICENSE for more details.
 -- stylua: ignore
+-- Put the theme file to:
+-- `$HOME/.local/share/lunarvim/site/pack/packer/start/lualine.nvim/lua/lualine/themes/codedarker.lua`
 local colors = {
   gray     = '#3C3C3C',
   lightred = '#D16969',
