@@ -17,8 +17,9 @@ vim.cmd("au ColorScheme * hi LineNr guibg=NONE") -- transparent background of li
 
 -- Lualine settings
 lvim.builtin.lualine.style = "default"
-lvim.builtin.lualine.options.theme = "codedark"
+lvim.builtin.lualine.options.theme = "codedarker"
 lvim.builtin.lualine.sections.lualine_a = { "mode" }
+lvim.builtin.lualine.options.globalstatus = false
 
 -- Bufferline settings
 lvim.builtin.bufferline.options.show_buffer_close_icons = false -- no tab close icons
