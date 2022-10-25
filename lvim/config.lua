@@ -245,7 +245,7 @@ lvim.builtin.which_key.mappings["S"] = {
 
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.notify.active = true
+-- lvim.builtin.notify.active = true    -- plugin usage in lvim is deprecated, commenting out for now
 lvim.builtin.terminal.active = true
 
 -- Nvim-Tree options
