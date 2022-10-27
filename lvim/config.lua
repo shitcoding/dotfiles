@@ -230,6 +230,12 @@ lvim.builtin.which_key.mappings["t"] = {
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
 }
 
+lvim.builtin.which_key.mappings["T"] = {
+  name = "+Telescope",
+  l = { "<cmd>Telescope live_grep<cr>", "Live grep" },
+  f = { "<cmd>Telescope find_files<cr>", "Find files" },
+}
+
 -- persistence.nvim bindings
 lvim.builtin.which_key.mappings["S"] = {
   name = "Session",
