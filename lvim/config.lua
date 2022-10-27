@@ -7,6 +7,7 @@ lvim.format_on_save = true
 lvim.transparent_window = true
 vim.opt.cmdheight = 1 -- set command line height to 1 instead of 2
 vim.opt.scrolloff = 0 -- make zt put the current line to the top of the window
+vim.opt.timeoutlen = 50
 
 
 --################################################################################################
@@ -44,7 +45,10 @@ local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
 
+-- Set Space as a Leader key
 lvim.leader = "space"
+
+-- Save file with Ctrl-S
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
 -- Enable hotkeys for Russian layout
