@@ -5,9 +5,11 @@
 
 
 """""""""""""""""""""" Various mappings """""""""""""""""""""
-" H and L for beginning/end of line
+" H and L to go to the beginning/end of line
 nmap H ^
 nmap L $
+vmap H ^
+vmap L $
 
 " Quickly remove search highlights
 nmap \ :nohl
@@ -113,13 +115,13 @@ vmap А F
 vmap п g
 vmap П G
 vmap р h
-vmap Р H
+vmap Р ^
 vmap о j
 vmap О J
 vmap л k
 vmap Л K
 vmap д l
-vmap Д L
+vmap Д $
 vmap ж ;
 vmap Ж :
 vmap э '
