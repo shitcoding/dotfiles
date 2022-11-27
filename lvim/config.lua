@@ -44,7 +44,6 @@ lvim.builtin.bufferline.options.tab_size = 10 -- change tabs width from default 
 local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
-
 -- Set Space as a Leader key
 lvim.leader = "space"
 
@@ -118,8 +117,17 @@ keymap('i', '<C-c>', '<C-c>:set rnu<CR>', opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
+-- ### NOTE: Commenting this out, as it breaks nvim-cmp snippets completion
+-- ### https://github.com/LunarVim/LunarVim/issues/3485
+--
 -- Don't paste replaced text after pasting some text on its' place
-keymap("v", "p", '"_dP', opts)
+-- keymap("v", "p", '"_dP', opts)
+--
+-- This one does the same, don't know how but it works :)
+lvim.keys.visual_block_mode = {
+  ["p"] = "P",
+  ["P"] = "p",
+}
 
 -- Move text up and down in visual mode
 keymap("v", "<C-j>", ":m .+1<CR>==", opts)
@@ -187,6 +195,12 @@ vim.cmd("cnoremap <C-f>	<Right>")
 vim.cmd("cnoremap <M-b>	<S-Left>")
 -- forward one word
 vim.cmd("cnoremap <M-f>	<S-Right>")
+
+-----------------------------------------------------------------
+
+---------- redefine trigger key for vim-emmet plugin ------------
+vim.cmd("let g:user_emmet_leader_key='<C-e>'")
+
 -----------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------
@@ -391,6 +405,19 @@ linters.setup {
 }
 
 
+-- Setup dap for python
+lvim.builtin.dap.active = true
+local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
+pcall(function() require("dap-python").setup(mason_path .. "packages/debugpy/venv/bin/python") end)
+
+-- Supported test frameworks are unittest, pytest and django. By default it
+-- tries to detect the runner by probing for pytest.ini and manage.py, if
+-- neither are present it defaults to unittest.
+pcall(function() require("dap-python").test_runner = "pytest" end)
+
+
+
+
 
 --#########################################################################################
 --############################## User Installed Plugins ###################################
@@ -431,6 +458,7 @@ lvim.plugins = {
       })
     end,
   },
+  "mfussenegger/nvim-dap-python",
 }
 
 
