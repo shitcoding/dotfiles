@@ -120,6 +120,3 @@ source $ZSH/oh-my-zsh.sh
 # fzf key bindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(pyenv init -)"
-
-# heroku autocomplete setup
-HEROKU_AC_ZSH_SETUP_PATH=/home/archer/.cache/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
