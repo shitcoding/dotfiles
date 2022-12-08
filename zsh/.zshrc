@@ -31,4 +31,8 @@ source $ZSH/oh-my-zsh.sh
 
 # fzf key bindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(pyenv init -)"
+
+# Init pyenv if it is installed
+if [ -x "$(command -v pyenv)" ]; then
+  eval "$(pyenv init -)"
+fi
