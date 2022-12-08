@@ -427,6 +427,7 @@ lvim.plugins = {
   -- Toggles between hybrid and absolute line numbers automatically
   -- NOTE: Add `set-option -g focus-events on` to .tmux.conf if you're using Tmux
   { "jeffkreeftmeijer/vim-numbertoggle" },
+  { "WhoIsSethDaniel/mason-tool-installer.nvim" },
   { "Mofiqul/vscode.nvim" }, -- vscode colorscheme
   { "wellle/targets.vim" },
   { "tpope/vim-surround" },
@@ -476,3 +477,24 @@ lvim.plugins = {
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
+
+
+
+-- mason-tool-installer setup
+require('mason-tool-installer').setup {
+  ensure_installed = {
+    'bash-language-server',
+    'dockerfile-language-server',
+    'vim-language-server',
+    'yaml-language-server',
+    'stylua',
+    'shellcheck',
+    'editorconfig-checker',
+    'pyright',
+    'flake8',
+    'black',
+    'debugpy',
+    'css-lsp',
+  },
+  auto_update = true,
+}
