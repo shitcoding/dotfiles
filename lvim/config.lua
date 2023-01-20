@@ -18,7 +18,7 @@ vim.cmd("au ColorScheme * hi LineNr guibg=NONE") -- transparent background of li
 
 -- Lualine settings
 lvim.builtin.lualine.style = "default"
-lvim.builtin.lualine.options.theme = "codedarker"
+-- lvim.builtin.lualine.options.theme = "codedarker"
 lvim.builtin.lualine.sections.lualine_a = { "mode" }
 lvim.builtin.lualine.options.globalstatus = false
 
