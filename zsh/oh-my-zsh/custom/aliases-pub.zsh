@@ -20,6 +20,9 @@ alias cpwd='pwd | tr -d "\n" | xclip -selection clipboard'
 alias cpls='$HOME/.scripts/copy_filepath.sh'
 # Edit zsh_history
 alias hist='v ~/.zsh_history'
+# Show system notification (useful to notify when task
+# that takes a long time is finished)
+alias yo="notify-send 'yo!'"
 
 ##### Launching various tools #############################
 alias v='lvim'
