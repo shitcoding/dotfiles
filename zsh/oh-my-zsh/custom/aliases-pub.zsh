@@ -10,6 +10,7 @@ alias ping='prettyping'
 alias rmrf='rm -rf'
 alias mkd='mkdir -p'
 alias dcmp='docker-compose'
+alias cpr='cp -r'
 
 ##### Various custom commands #############################
 # copy absolute path of current working directory to clipboard
