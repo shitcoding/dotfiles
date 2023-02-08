@@ -24,6 +24,41 @@ exmap prevtab obcommand workspace:previous-tab
 nmap J :nexttab
 nmap K :prevtab
 
+exmap surround_wiki surround [[ ]]
+exmap surround_double_quotes surround " "
+exmap surround_single_quotes surround ' '
+exmap surround_asterisc surround ` `
+exmap surround_brackets surround ( )
+exmap surround_square_brackets surround [ ]
+exmap surround_curly_brackets surround { }
+
+" Surround text (like with vim-surround plugin)
+" NOTE: must use 'map' and not 'nmap'
+nunmap S
+vunmap S
+map S" :surround_double_quotes
+map S' :surround_single_quotes
+map S` :surround_asterisc
+map Sb :surround_brackets
+map S( :surround_brackets
+map S) :surround_brackets
+map S[ :surround_square_brackets
+map S] :surround_square_brackets
+map S{ :surround_curly_brackets
+map S} :surround_curly_brackets
+" Same bindings for Russian layout
+nunmap Ы
+vunmap Ы
+map Ы" :surround_double_quotes
+map Ы' :surround_single_quotes
+map Ы` :surround_asterisc
+map Ыb :surround_brackets
+map Ы( :surround_brackets
+map Ы) :surround_brackets
+map Ы[ :surround_square_brackets
+map Ы] :surround_square_brackets
+map Ы{ :surround_curly_brackets
+map Ы} :surround_curly_brackets
 
 """""""""""""" Begin Mappings for Russian layout """"""""""""""
 
