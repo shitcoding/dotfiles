@@ -5,6 +5,10 @@
 
 
 """""""""""""""""""""" Various mappings """""""""""""""""""""
+" Unmap Space to use as a leader key
+unmap <Space>
+
+
 " H and L to go to the beginning/end of line
 nmap H ^
 nmap L $
