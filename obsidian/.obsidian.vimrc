@@ -24,6 +24,14 @@ exmap prevtab obcommand workspace:previous-tab
 nmap J :nexttab
 nmap K :prevtab
 
+" Close the current tab with ZZ / ZQ
+exmap closetab obcommand workspace:close
+nmap ZZ :closetab
+nmap ZQ :closetab
+
+
+" Surround text (like with vim-surround plugin)
+" NOTE: must use 'map' and not 'nmap'
 exmap surround_wiki surround [[ ]]
 exmap surround_double_quotes surround " "
 exmap surround_single_quotes surround ' '
@@ -32,8 +40,6 @@ exmap surround_brackets surround ( )
 exmap surround_square_brackets surround [ ]
 exmap surround_curly_brackets surround { }
 
-" Surround text (like with vim-surround plugin)
-" NOTE: must use 'map' and not 'nmap'
 nunmap S
 vunmap S
 map S" :surround_double_quotes
@@ -60,8 +66,8 @@ map Ы] :surround_square_brackets
 map Ы{ :surround_curly_brackets
 map Ы} :surround_curly_brackets
 
-"""""""""""""" Begin Mappings for Russian layout """"""""""""""
 
+"""""""""""""" Begin Mappings for Russian layout """"""""""""""
 imap <C-с> <C-c>
 vmap <C-с> <C-c>
 nmap <C-г> <C-u>
