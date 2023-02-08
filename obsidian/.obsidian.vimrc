@@ -43,6 +43,8 @@ exmap surround_asterisc surround ` `
 exmap surround_brackets surround ( )
 exmap surround_square_brackets surround [ ]
 exmap surround_curly_brackets surround { }
+exmap surround_superscript surround <sup> </sup>
+exmap surround_subscript surround <sub> </sub>
 
 nunmap S
 vunmap S
@@ -56,6 +58,9 @@ map S[ :surround_square_brackets
 map S] :surround_square_brackets
 map S{ :surround_curly_brackets
 map S} :surround_curly_brackets
+map S^ :surround_superscript
+map S_ :surround_subscript
+
 " Same bindings for Russian layout
 nunmap Ы
 vunmap Ы
