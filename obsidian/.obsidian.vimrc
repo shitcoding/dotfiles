@@ -22,7 +22,11 @@ nmap \ :nohl
 " Yank to system clipboard
 set clipboard=unnamed
 
+" gj - Join the current line with the line beyond with a space in between
+noremap gj J
+
 " Switch tabs in normal mode with J / K
+unmap J
 exmap nexttab obcommand workspace:next-tab
 exmap prevtab obcommand workspace:previous-tab
 nmap J :nexttab
@@ -34,12 +38,16 @@ nmap ZZ :closetab
 nmap ZQ :closetab
 
 
+" Reload Obsidian
+exmap reload_obsidian obcommand app:reload
+map <A-r> :reload_obsidian
+
+
 " Surround text (like with vim-surround plugin)
 " NOTE: must use 'map' and not 'nmap'
-exmap surround_wiki surround [[ ]]
 exmap surround_double_quotes surround " "
 exmap surround_single_quotes surround ' '
-exmap surround_asterisc surround ` `
+exmap surround_backtick surround ` `
 exmap surround_brackets surround ( )
 exmap surround_square_brackets surround [ ]
 exmap surround_curly_brackets surround { }
@@ -50,7 +58,7 @@ nunmap S
 vunmap S
 map S" :surround_double_quotes
 map S' :surround_single_quotes
-map S` :surround_asterisc
+map S` :surround_backtick
 map Sb :surround_brackets
 map S( :surround_brackets
 map S) :surround_brackets
