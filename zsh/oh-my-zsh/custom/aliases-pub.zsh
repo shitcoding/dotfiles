@@ -44,5 +44,5 @@ alias pym='python3 -m'
 ###### Various Fixes and dirty hacks ########################
 # Fix scaling for external displays and get rid of cursor flickering glitch
 # (xorg only)
-alias fixrandr='xrandr --output DP-1 --scale 0.6x0.6 ; xrandr --output HDMI-1 --scale 0.9999x0.9999 ; xrandr --output eDP-1 --scale 0.9999x0.9999'
+alias fxrndr='xrandr --output DP-1 --scale 0.6x0.6 ; xrandr --output HDMI-1 --scale 0.9999x0.9999 ; xrandr --output eDP-1 --scale 0.9999x0.9999'
 
