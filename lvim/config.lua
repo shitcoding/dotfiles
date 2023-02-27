@@ -335,16 +335,15 @@ lvim.lsp.installer.setup.ensure_installed = {
 -- require("lvim.lsp.manager").setup("pyright", opts)
 
 -------------------- Pyright setup -----------------------------------------------------------------
--- Mute Pyright warnings
-require("lspconfig").pyright.setup {
-  settings = {
-    python = {
-      analysis = {
-        typeCheckingMode = "off",
-      }
-    }
-  }
-}
+-- require("lspconfig").pyright.setup {
+--   settings = {
+--     python = {
+--       analysis = {
+--         typeCheckingMode = "off",
+--       }
+--     }
+--   }
+-- }
 ----------------------------------------------------------------------------------------------------
 
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. !!Requires `:LvimCacheReset` to take effect!!
