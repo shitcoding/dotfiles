@@ -41,6 +41,7 @@ nmap ZQ :closetab
 " Reload Obsidian
 exmap reload_obsidian obcommand app:reload
 map <A-r> :reload_obsidian
+map <A-к> :reload_obsidian
 
 
 " Surround text (like with vim-surround plugin)
@@ -85,10 +86,18 @@ map Ы} :surround_curly_brackets
 
 
 """""""""""""" Begin Mappings for Russian layout """"""""""""""
-imap <C-с> <C-c>
-vmap <C-с> <C-c>
+imap <C-с> <Esc>
+nmap <C-с> <Esc>
+vmap <C-с> <Esc>
+
+imap <C-х> <Esc>
+nmap <C-х> <Esc>
+vmap <C-х> <Esc>
+
 nmap <C-г> <C-u>
 nmap <C-в> <C-d>
+vmap <C-г> <C-u>
+vmap <C-в> <C-d>
 
 
 nmap й q
