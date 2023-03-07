@@ -1,1 +1,43 @@
-/home/archer/.mozilla/firefox/q3uf56jw.default-release/chrome/userChrome.css
+/********************* Tab numbering ********************/
+/* Kudos to https://github.com/tuomassalo/tab-numbering */
+/********************************************************/
+tabs {
+  counter-reset: tab-counter;
+}
+
+tab:nth-child(1) .tab-content::before,
+tab:nth-child(2) .tab-content::before,
+tab:nth-child(3) .tab-content::before,
+tab:nth-child(4) .tab-content::before,
+tab:nth-child(5) .tab-content::before,
+tab:nth-child(6) .tab-content::before,
+tab:nth-child(7) .tab-content::before,
+tab:nth-child(8) .tab-content::before,
+tab:nth-child(9) .tab-content::before,
+tab:nth-child(10) .tab-content::before,
+tab:nth-child(11) .tab-content::before,
+tab:nth-child(12) .tab-content::before,
+tab:nth-child(13) .tab-content::before,
+tab:nth-child(14) .tab-content::before,
+tab:nth-child(15) .tab-content::before,
+tab:nth-child(16) .tab-content::before,
+tab:nth-child(17) .tab-content::before,
+tab:nth-child(18) .tab-content::before,
+tab:nth-child(19) .tab-content::before,
+tab:nth-child(20) .tab-content::before {
+  counter-increment: tab-counter;
+  content: counter(tab-counter) "";
+
+  position: absolute;
+  left: 3px;
+  top: 4px;
+
+  opacity: .4;
+
+  font-weight: bold;
+  font-size: 60%;
+}
+
+
+/********************************************************/
+
