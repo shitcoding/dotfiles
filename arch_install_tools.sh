@@ -25,6 +25,9 @@ chown -R $(whoami):$(whoami) $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 chown -R $(whoami):$(whoami) $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 chown -R $(whoami):$(whoami) $HOME/.oh-my-zsh/custom/plugins/zsh-fzf-history-search
 
+# Install nerd fonts
+sudo pacman -S ttf-inconsolata-nerd ttf-meslo-nerd ttf-hack-nerd ttf-firacode-nerd ttf-iosevka-nerd --noconfirm
+
 # Install powerlevel10k prompt
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
@@ -39,7 +42,7 @@ cp ~/.dotfiles/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
 
 
 ############ Install tmux and plugins ###########################
-sudo pacman -S tmux --noconfirm
+sudo pacman -S tmux xclip --noconfirm
 # Install tpm plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # Copy tmux config from downloaded dotfiles
@@ -67,7 +70,6 @@ y
 y
 EOF
 # Add path to lvim executable to system $PATH
-#echo "export PATH=/home/ubuntu/.local/bin:$PATH" >> $ZSH_CUSTOM/env.zsh
 echo "export PATH=$HOME/.local/bin:$PATH" >> $ZSH_CUSTOM/env.zsh
 
 # Set lvim config from dotfiles
@@ -88,15 +90,12 @@ makepkg -si
 paru -S logo-ls --noconfirm --skipreview
 
 # Gnome extensions
-sudo pacman -S gnome-shell-extensions --noconfirm
+sudo pacman -S gnome-shell-extensions gnome-browser-connector --noconfirm
 # Load Gnome config from dotfiles
 dconf load / < ~/.dotfiles/gnome/gnome-settings.ini
 
-# Install nerd fonts
-sudo pacman -S ttf-inconsolata-nerd ttf-meslo-nerd ttf-hack-nerd ttf-firacode-nerd ttf-iosevka-nerd --noconfirm
-
-# Install Tridactyl firefox extension and copy config from dotfiles
-sudo pacman -S firefox-tridactyl --noconfirm
+# Install Firefox and Tridactyl firefox extension and copy config from dotfiles
+sudo pacman -S firefox firefox-tridactyl --noconfirm
 paru -S firefox-tridactyl-native --noconfirm --skipreview
 mkdir -p ~/.config/tridactyl/
 cp ~/.dotfiles/firefox/tridactylrc ~/.config/tridactyl/tridactylrc
