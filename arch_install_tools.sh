@@ -11,7 +11,7 @@ git clone https://github.com/shitcoding/dotfiles ~/.dotfiles
 
 #Install zsh, oh-my-zsh and plugins ###########################
 # Set up zsh and other tools
-sudo pacman -S curl git zsh wget fzf alacritty --noconfirm
+sudo pacman -S curl git zsh wget fzf alacritty rustup --noconfirm
 sudo chsh -s $(which zsh) $USER
 # Set up oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
