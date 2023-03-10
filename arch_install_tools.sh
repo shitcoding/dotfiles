@@ -80,6 +80,7 @@ cp $HOME/.dotfiles/lvim/htmldjango.vim $HOME/.config/lvim/after/ftplugin/htmldja
 
 ###### Various tools ############################
 # paru
+rustup default stable
 mkdir -p ~/Utils
 cd ~/Utils
 git clone https://aur.archlinux.org/paru.git
