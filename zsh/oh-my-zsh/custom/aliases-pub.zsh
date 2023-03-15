@@ -35,6 +35,12 @@ alias pac='sudo pacman'
 alias pacs='sudo pacman -S'
 alias pacr='sudo pacman -R'
 
+##### Apt aliases #####################################
+alias sap='sudo apt'
+alias sai='sudo apt install'
+alias sar='sudo apt remove'
+alias sau='sudo apt update -y && sudo apt upgrade -y'
+
 
 ###### Various Python related aliases #######################
 alias pcd='find . -type d -name __pycache__ -exec rm -r {} \+'
