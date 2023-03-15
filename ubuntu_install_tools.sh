@@ -2,8 +2,9 @@
 
 ##################### Install tools for Ubuntu #####################
 
-# Update packages
+# Update and install packages
 sudo apt update && sudo apt upgrade -y
+sudo apt install curl git wget -y
 
 # Download dotfiles
 git clone https://github.com/shitcoding/dotfiles ~/.dotfiles
@@ -16,18 +17,21 @@ mkdir -p ~/.config/alacritty
 cp ~/.dotfiles/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
 
 # Download and install Nerd Fonts
-mkdir -p ~/Utils/
-cd ~/Utils
-git clone --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts.git
-cd nerd-fonts
-./install.sh MesloLG
-./install.sh Hack
-./install.sh FiraCode
+mkdir -p /tmp/nerd-fonts
+cd /tmp/nerd-fonts
+wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Meslo.zip
+wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip
+unzip Meslo.zip
+unzip Hack.zip
+mkdir -p ~/.local/share/fonts
+mv ./*.ttf ~/.local/share/fonts
+fc-cache -fv
+rm -rf /tmp/nerd-fonts
 
 
 # Install zsh, oh-my-zsh, plugins, set up config ###########
 # Set up zsh and other tools
-sudo apt install curl git zsh wget fzf -y
+sudo apt install zsh fzf -y
 sudo chsh -s $(which zsh) $USER
 # Set up oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -66,7 +70,9 @@ sudo apt install neovim -y
 
 # Install LunarVim dependencies
 # install rust
+# TODO: Remove prompt during rust installation
 sudo curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 sudo apt install make unzip python3-pip python3 python3-venv -y
 #Install nvm, nodejs, npm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
