@@ -1,5 +1,12 @@
 /********************* Tab numbering ********************/
 /* Kudos to https://github.com/tuomassalo/tab-numbering */
+/* Setup: https://www.userchrome.org/how-create-userchrome-css.html */
+
+/* 1. Enter about:profile in Firefox, copy "Profile Directory" path */
+/* 2. Create a directory called `chrome` in Profile Directory */
+/* 3. Put userChrome.css into newly created `chrome` directory */
+/* 4. Enter about:config in Firefox and switch parameter 
+* toolkit.legacyUserProfileCustomizations.stylesheets to True */
 /********************************************************/
 tabs {
   counter-reset: tab-counter;
