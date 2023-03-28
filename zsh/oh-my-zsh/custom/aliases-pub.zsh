@@ -52,3 +52,8 @@ alias pym='python3 -m'
 # (xorg only)
 alias fxrndr='xrandr --output DP-1 --scale 0.6x0.6 ; xrandr --output HDMI-1 --scale 0.9999x0.9999 ; xrandr --output eDP-1 --scale 0.9999x0.9999'
 
+
+###### AWS cli aliases #######################################
+# Set current IP for inbound ssh connections for target security
+# group and remove all other IPs
+alias aws_ssh_reset='$HOME/.scripts/aws_set_current_ip_ssh_for_group.sh'
