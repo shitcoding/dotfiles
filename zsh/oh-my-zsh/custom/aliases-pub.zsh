@@ -9,8 +9,14 @@ alias ping='prettyping'
 ##### Shorten often used commands ##############
 alias rmrf='rm -rf'
 alias mkd='mkdir -p'
-alias dcmp='docker-compose'
 alias cpr='cp -r'
+
+# Docker
+alias dcmp='docker-compose'
+alias dcst='docker stop'
+alias dcrm='docker rm'
+alias dcps='docker ps --all'
+
 
 ##### Various custom commands #############################
 # copy absolute path of current working directory to clipboard
@@ -43,6 +49,7 @@ alias sau='sudo apt update -y && sudo apt upgrade -y'
 
 
 ###### Various Python related aliases #######################
+# Remove __pycache__ dirs in current directory and subdirectories
 alias pcd='find . -type d -name __pycache__ -exec rm -r {} \+'
 alias py='python3'
 alias pym='python3 -m'
