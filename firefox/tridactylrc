@@ -7,6 +7,9 @@ set update.lastnaggedversion 1.14.0
 set update.checkintervalsecs 86400
 set theme midnight
 
+" Git{Hub,Lab} git clone via SSH yank
+bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
+
 " Binds
 bind gb tabprev
 bind J tabnext
