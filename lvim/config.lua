@@ -22,11 +22,12 @@ lvim.builtin.lualine.style = "default"
 lvim.builtin.lualine.sections.lualine_a = { "mode" }
 lvim.builtin.lualine.sections.lualine_b = {}
 lvim.builtin.lualine.options.globalstatus = false
+lvim.builtin.lualine.options.disabled_filetypes = { 'lazy', 'NvimTree' }
 
 -- Bufferline settings
 lvim.builtin.bufferline.options.show_buffer_close_icons = false -- no tab close icons
 -- lvim.builtin.bufferline.options.numbers = "ordinal" -- show tab numbers
-lvim.builtin.bufferline.options.tab_size = 10 -- change tabs width from default 18 to 10
+lvim.builtin.bufferline.options.tab_size = 10                   -- change tabs width from default 18 to 10
 
 
 
@@ -52,7 +53,8 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
 -- Enable hotkeys for Russian layout
-vim.cmd("set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz")
+vim.cmd(
+  "set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz")
 
 -- Remap LSP hover from K to gh to navigate between tabs with J / K
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
@@ -235,7 +237,7 @@ lvim.builtin.telescope.defaults.mappings = {
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 
 -- trouble.nvim bindings
-lvim.builtin.which_key.mappings["t"] = {
+lvim.builtin.which_key.mappings["T"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_references<cr>", "References" },
   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
@@ -245,7 +247,7 @@ lvim.builtin.which_key.mappings["t"] = {
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
 }
 
-lvim.builtin.which_key.mappings["T"] = {
+lvim.builtin.which_key.mappings["t"] = {
   name = "+Telescope",
   l = { "<cmd>Telescope live_grep<cr>", "Live grep" },
   f = { "<cmd>Telescope find_files<cr>", "Find files" },
@@ -273,6 +275,7 @@ lvim.builtin.alpha.mode = "dashboard"
 -- lvim.builtin.notify.active = true    -- plugin usage in lvim is deprecated, commenting out for now
 lvim.builtin.terminal.active = true
 
+
 -- Nvim-Tree options
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
@@ -280,6 +283,15 @@ lvim.builtin.nvimtree.setup.renderer.indent_markers.enable = true
 lvim.builtin.nvimtree.setup.view.number = true
 lvim.builtin.nvimtree.setup.view.relativenumber = true
 lvim.builtin.nvimtree.setup.filters.dotfiles = true
+-- Fix for nvim-tree conflict with project.nvim plugin
+lvim.builtin.nvimtree.setup.respect_buf_cwd = true
+lvim.builtin.nvimtree.setup.sync_root_with_cwd = true
+lvim.builtin.nvimtree.setup.update_focused_file.enable = true
+lvim.builtin.nvimtree.setup.update_focused_file.update_root = true
+
+
+-- Fix for nvim-tree conflict with project.nvim plugin
+lvim.builtin.project.manual_mode = true
 
 
 
@@ -435,7 +447,7 @@ lvim.plugins = {
   { "mattn/emmet-vim" },
   {
     "folke/persistence.nvim", -- saving sessions for each directory
-    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    event = "BufReadPre",     -- this will only start session saving when an actual file was opened
     -- module = "persistence",
     config = function()
       require("persistence").setup {
@@ -449,17 +461,51 @@ lvim.plugins = {
     "norcalli/nvim-colorizer.lua", -- hex color codes colorizer
     config = function()
       require("colorizer").setup({ "css", "scss", "html", "javascript", "tmux" }, {
-        RGB = true, -- #RGB hex codes
-        RRGGBB = true, -- #RRGGBB hex codes
+        RGB = true,      -- #RGB hex codes
+        RRGGBB = true,   -- #RRGGBB hex codes
         RRGGBBAA = true, -- #RRGGBBAA hex codes
-        rgb_fn = true, -- CSS rgb() and rgba() functions
-        hsl_fn = true, -- CSS hsl() and hsla() functions
-        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+        rgb_fn = true,   -- CSS rgb() and rgba() functions
+        hsl_fn = true,   -- CSS hsl() and hsla() functions
+        css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
       })
     end,
   },
   "mfussenegger/nvim-dap-python",
+  -- virtualenv selector plugin
+  {
+    "linux-cultist/venv-selector.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "nvim-telescope/telescope.nvim",
+      -- for DAP support
+      "mfussenegger/nvim-dap-python"
+    },
+    config = true,
+    opts = {
+      search_workspace = false,
+      search = true,
+      dap_enabled = false,
+      name = { "venv", ".venv", "env" },
+      fd_binary_name = "fd",
+      notify_user_on_activate = true,
+
+    },
+    event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
+  },
+  -- -- ChatGPT plugin
+  -- {
+  --   "jackMort/ChatGPT.nvim",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("chatgpt").setup()
+  --   end,
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-telescope/telescope.nvim"
+  --   }
+  -- },
 }
 
 
@@ -477,7 +523,6 @@ lvim.plugins = {
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
-
 
 
 -- mason-tool-installer setup
