@@ -165,10 +165,13 @@ keymap('n', 'm', ':BufferLineMoveNext<CR>', opts)
 -- `M` - Move current tab to the left
 keymap('n', 'M', ':BufferLineMovePrev<CR>', opts)
 
+
+---------------------------------------------------------------------
+------------------ DIRTY BUT COOL HACKS ZONE ------------------------
 ---------------------------------------------------------------------
 
 -- `<count><Space>o` / `<count><Space>O` - Add <count> blank lines (default=1)
--- Insert a blank line below or above current line (do not move the cursor),
+-- Insert a blank line below / above current line (not moving the cursor),
 -- see https://stackoverflow.com/a/16136133/6064933
 vim.keymap.set("n", "<Leader>o", "printf('m`%so<ESC>``', v:count1)", {
   expr = true,
@@ -179,6 +182,35 @@ vim.keymap.set("n", "<Leader>O", "printf('m`%sO<ESC>``', v:count1)", {
   expr = true,
   desc = "insert line above",
 })
+
+---------------------------------------------------------------------
+-- Live grep selected text in visual mode with `<Leader>g`
+function vim.getVisualSelection() -- Helper function to get selected text
+  vim.cmd('noau normal! "vy"')
+  local text = vim.fn.getreg('v')
+  vim.fn.setreg('v', {})
+
+  text = string.gsub(text, "\n", "")
+  if #text > 0 then
+    return text
+  else
+    return ''
+  end
+end
+
+local tb = require('telescope.builtin')
+
+keymap('v', '<Leader>g', '', {
+  noremap = true,
+  silent = true,
+  desc = "Live grep selected text",
+  callback = function()
+    local text = vim.getVisualSelection()
+    tb.live_grep({ default_text = text })
+  end,
+})
+---------------------------------------------------------------------
+
 
 
 ------------- Emacs-like shortcuts in command line mode ----------
@@ -509,8 +541,14 @@ lvim.plugins = {
 }
 
 
-
--- Autocommands (https://neovim.io/doc/user/autocmd.html)
+--####################################################################
+--##### Autocommands (https://neovim.io/doc/user/autocmd.html) #######
+--####################################################################
+-- Reload LunarVim config after launch, to make work bindings / hotkeys
+-- that are using dirty hacks =)
+vim.api.nvim_create_autocmd("VimEnter", {
+  command = "LvimReload",
+})
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
 --   -- enable wrap mode for json files only
