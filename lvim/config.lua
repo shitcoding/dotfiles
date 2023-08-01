@@ -10,6 +10,28 @@ vim.opt.scrolloff = 0 -- make zt put the current line to the top of the window
 vim.opt.timeoutlen = 50
 
 
+
+
+--------------------------------------------------------------------------------------------------
+------------------------------ Helper functions, shortcuts, etc ----------------------------------
+--------------------------------------------------------------------------------------------------
+
+-- Shorten the key mapping function and mapping options for convenience
+local keymap = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+-- Helper function to get shell output
+local function get_shell_command_output(command)
+  local handle = io.popen(command)
+  local output = handle:read("*a")
+  handle:close()
+  return output and vim.trim(output) or nil
+end
+
+
+
+
+
 --################################################################################################
 --############################### Styling settings ###############################################
 --################################################################################################
@@ -18,7 +40,6 @@ vim.cmd("au ColorScheme * hi LineNr guibg=NONE") -- transparent background of li
 
 -- Lualine settings
 lvim.builtin.lualine.style = "default"
--- lvim.builtin.lualine.options.theme = "codedarker"
 lvim.builtin.lualine.sections.lualine_a = { "mode" }
 lvim.builtin.lualine.sections.lualine_b = {}
 lvim.builtin.lualine.options.globalstatus = false
@@ -31,20 +52,18 @@ lvim.builtin.bufferline.options.tab_size = 10                   -- change tabs w
 
 
 
+
+
 -- ###############################################################################################
 -- ################################# Keymappings #################################################
 -- ###############################################################################################
+
 ------------------------[view all the defaults by pressing <leader>Lk]----------------------------
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
 -- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
 
-
-
--- Shorten the key mapping function and mapping options for convenience
-local keymap = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
 
 -- Set Space as a Leader key
 lvim.leader = "space"
@@ -56,7 +75,7 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 vim.cmd(
   "set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz")
 
--- Remap LSP hover from K to gh to navigate between tabs with J / K
+-- Remap LSP hover popup menu from K to gh to navigate between tabs with J / K
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
 keymap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 
@@ -86,7 +105,9 @@ keymap('v', 'Р', '^', opts)
 keymap('v', 'Д', 'g_', opts)
 
 
-------------------------- Resizing splits -----------------------
+-------------------------------------------------------------------------
+----------------------------- Resizing splits ---------------------------
+-------------------------------------------------------------------------
 -- `<count>+arrow key` - resize the split by <count> rows/columns
 vim.cmd([[
   nnoremap <Up> :<C-U>exe ':resize +' . v:count1<CR><C-c>
@@ -103,40 +124,38 @@ vim.cmd([[
 vim.cmd([[
   nnoremap <Right> :<C-U>exe ':vertical-resize -' . v:count1<CR><C-c>
 ]])
-
-
 ------------------------------------------------------------------
+
+
 
 -- Clear search highlights on pressing `\` (backslash)
 keymap('n', '\\', ':noh<CR>', opts)
+
 
 -- Fix for vim-numbertoggle plugin not switching from absolute
 -- to relative line numbers when leaving Insert mode with <Ctrl-c>
 keymap('i', '<C-c>', '<C-c>:set rnu<CR>', opts)
 
 
----------------- Visual mode customizing ---------------------------
--- Stay in visual mode after changing indent
+----------------------------------------------------------------------------
+--------------------- Visual mode customizing ------------------------------
+----------------------------------------------------------------------------
+-- Stay in visual mode after changing indent with `<` / `>`
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
--- ### NOTE: Commenting this out, as it breaks nvim-cmp snippets completion
--- ### https://github.com/LunarVim/LunarVim/issues/3485
---
+
 -- Don't paste replaced text after pasting some text on its' place
--- keymap("v", "p", '"_dP', opts)
---
--- This one does the same, don't know how but it works :)
 lvim.keys.visual_block_mode = {
   ["p"] = "P",
   ["P"] = "p",
 }
 
--- Move text up and down in visual mode
+-- Move selected text up and down in visual mode
 keymap("v", "<C-j>", ":m .+1<CR>==", opts)
 keymap("v", "<C-k>", ":m .-2<CR>==", opts)
 
--- Move text up and down in visual block mode
+-- Move selected text up and down in visual block mode
 keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<C-j>", ":move '>+1<CR>gv-gv", opts)
@@ -144,7 +163,9 @@ keymap("x", "<C-k>", ":move '<-2<CR>gv-gv", opts)
 
 
 
-------------------- Buffer tabs navigation -----------------------
+------------------------------------------------------------------------
+---------------------- Buffer tabs navigation --------------------------
+------------------------------------------------------------------------
 -- `g<num>` - Switch to tab number <num>
 keymap('n', 'g1', ':BufferLineGoToBuffer 1<CR>', opts)
 keymap('n', 'g2', ':BufferLineGoToBuffer 2<CR>', opts)
@@ -166,6 +187,7 @@ keymap('n', 'm', ':BufferLineMoveNext<CR>', opts)
 keymap('n', 'M', ':BufferLineMovePrev<CR>', opts)
 
 
+
 ---------------------------------------------------------------------
 ------------------ DIRTY BUT COOL HACKS ZONE ------------------------
 ---------------------------------------------------------------------
@@ -184,7 +206,8 @@ vim.keymap.set("n", "<Leader>O", "printf('m`%sO<ESC>``', v:count1)", {
 })
 
 ---------------------------------------------------------------------
--- Live grep selected text in visual mode with `<Leader>g`
+------ Live grep selected text in visual mode with `<Leader>g` ------
+---------------------------------------------------------------------
 function vim.getVisualSelection() -- Helper function to get selected text
   vim.cmd('noau normal! "vy"')
   local text = vim.fn.getreg('v')
@@ -209,39 +232,43 @@ keymap('v', '<Leader>g', '', {
     tb.live_grep({ default_text = text })
   end,
 })
+
+
+
 ---------------------------------------------------------------------
-
-
-
-------------- Emacs-like shortcuts in command line mode ----------
--- start of line
+-------------- Emacs-like shortcuts in command line mode ------------
+---------------------------------------------------------------------
+-- go to start of line
 vim.cmd("cnoremap <C-a> <Home>")
--- back one character
+-- go back one character
 vim.cmd("cnoremap <C-b> <Left>")
 -- delete character under cursor
 vim.cmd("cnoremap <C-d>	<Del>")
--- end of line
+-- go to end of line
 vim.cmd("cnoremap <C-e>	<End>")
--- forward one character
--- Note / TODO: <C-f> remap below overrides standard mapping
+-- go forward one character
+-- [Note / TODO]: <C-f> remap below overrides standard mapping
 -- for opening command-line window, maybe it's better not to do so.
 vim.cmd("cnoremap <C-f>	<Right>")
--- back one word
+-- go back one word
 vim.cmd("cnoremap <M-b>	<S-Left>")
--- forward one word
+-- go forward one word
 vim.cmd("cnoremap <M-f>	<S-Right>")
 
------------------------------------------------------------------
 
+
+-----------------------------------------------------------------
 ---------- redefine trigger key for vim-emmet plugin ------------
+-----------------------------------------------------------------
 vim.cmd("let g:user_emmet_leader_key='<C-e>'")
 
------------------------------------------------------------------
+
 
 ----------------------------------------------------------------------------------------------
 --------------------------- Telescope key bindings -------------------------------------------
 ----------------------------------------------------------------------------------------------
--- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
+-- Change Telescope navigation to use j and k for navigation and n and p for history
+-- in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
 local _, actions = pcall(require, "telescope.actions")
 lvim.builtin.telescope.defaults.mappings = {
@@ -259,7 +286,6 @@ lvim.builtin.telescope.defaults.mappings = {
   },
 }
 
--------------------------------------------------------------------------------------------
 
 
 
@@ -279,6 +305,7 @@ lvim.builtin.which_key.mappings["T"] = {
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
 }
 
+-- Telescope bindings
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Telescope",
   l = { "<cmd>Telescope live_grep<cr>", "Live grep" },
@@ -293,19 +320,26 @@ lvim.builtin.which_key.mappings["S"] = {
   Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 }
 
+-- Copilot.nvim bindings
+lvim.builtin.which_key.mappings["C"] = {
+  name = "Copilot",
+  p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
+  s = { "<cmd>Copilot status<cr>", "Copilot status" },
+}
+
 -------------------------------------------------------------------------------------------
 
 
 
+
+
 --#########################################################################################
---####################### User Config for predefined plugins ##############################
+--################### User Config for Lvim preinstalled plugins ###########################
 --#########################################################################################
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
--- lvim.builtin.notify.active = true    -- plugin usage in lvim is deprecated, commenting out for now
-lvim.builtin.terminal.active = true
+lvim.builtin.terminal.active = true -- enable builtin terminal (`Ctrl+\` to toggle)
 
 
 -- Nvim-Tree options
@@ -320,13 +354,181 @@ lvim.builtin.nvimtree.setup.respect_buf_cwd = true
 lvim.builtin.nvimtree.setup.sync_root_with_cwd = true
 lvim.builtin.nvimtree.setup.update_focused_file.enable = true
 lvim.builtin.nvimtree.setup.update_focused_file.update_root = true
-
-
--- Fix for nvim-tree conflict with project.nvim plugin
 lvim.builtin.project.manual_mode = true
 
 
 
+
+
+
+
+
+--#########################################################################################
+--############################## User Installed Plugins ###################################
+--#########################################################################################
+
+lvim.plugins = {
+  -- vim-numbertoggle: Toggles between hybrid and absolute line numbers automatically
+  -- NOTE: Add `set-option -g focus-events on` to .tmux.conf if you're using Tmux
+  { "jeffkreeftmeijer/vim-numbertoggle" },
+  -- Autoinstall LSPs/linters/formatters from predefined list via Mason
+  { "WhoIsSethDaniel/mason-tool-installer.nvim" },
+  { "Mofiqul/vscode.nvim" }, -- vscode colorscheme
+  { "wellle/targets.vim" },
+  { "tpope/vim-surround" },
+  { "tpope/vim-repeat" },
+  { "mattn/emmet-vim" },
+  -- persistence.nvim: Save nvim sessions automatically
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    -- module = "persistence",
+    config = function()
+      require("persistence").setup {
+        dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
+        options = { "buffers", "curdir", "tabpages", "winsize" },
+      }
+    end,
+  },
+  -- A pretty diagnostics, references, telescope results, quickfix and location list
+  { "folke/trouble.nvim" },
+  -- hex color codes colorizer
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup({ "css", "scss", "html", "javascript", "tmux" }, {
+        RGB = true,      -- #RGB hex codes
+        RRGGBB = true,   -- #RRGGBB hex codes
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        rgb_fn = true,   -- CSS rgb() and rgba() functions
+        hsl_fn = true,   -- CSS hsl() and hsla() functions
+        css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
+      })
+    end,
+  },
+  -- Python extension for nvim-dap
+  "mfussenegger/nvim-dap-python",
+  -- Python Venv Selector
+  {
+    "linux-cultist/venv-selector.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "nvim-telescope/telescope.nvim",
+      -- for DAP support
+      "mfussenegger/nvim-dap-python"
+    },
+    config = true,
+    opts = {
+      search_workspace = false,
+      search = true,
+      dap_enabled = false,
+      name = { "venv", ".venv", "env" },
+      fd_binary_name = "fd",
+      notify_user_on_activate = true,
+
+    },
+    event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
+  },
+  -- Github Copilot plugin
+  {
+    "github/copilot.vim",
+    event = "VeryLazy",
+    config = function()
+      vim.g.copilot_assume_mapped = true
+      vim.g.copilot_no_tab_map = true
+      -- Get copilot proxy from pass command (requires pass installed)
+      vim.g.copilot_proxy = get_shell_command_output("pass copilot_proxy")
+      -- vim.g.copilot_proxy_strict_ssl = false
+    end,
+  },
+  -- {
+  --   "hrsh7th/cmp-copilot",
+  --   config = function()
+  --     lvim.builtin.cmp.formatting.source_names["copilot"] = "( )"
+  --     table.insert(lvim.builtin.cmp.sources, 2, { name = "copilot" })
+  --   end,
+  -- },
+  -- -- ChatGPT plugin
+  -- {
+  --   "jackMort/ChatGPT.nvim",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("chatgpt").setup()
+  --   end,
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-telescope/telescope.nvim"
+  --   }
+  -- },
+}
+
+
+
+--####################################################################
+--########### Additional config for user installed plugins ###########
+--####################################################################
+
+--------------------- mason-tool-installer setup ---------------------
+require('mason-tool-installer').setup {
+  ensure_installed = {
+    'bash-language-server',
+    'dockerfile-language-server',
+    'vim-language-server',
+    'yaml-language-server',
+    'stylua',
+    'shellcheck',
+    'editorconfig-checker',
+    'pyright',
+    'flake8',
+    'black',
+    'debugpy',
+    'css-lsp',
+  },
+  auto_update = true,
+}
+
+
+
+--####################################################################
+--##### Autocommands (https://neovim.io/doc/user/autocmd.html) #######
+--####################################################################
+
+-- Reload LunarVim config after launch, to make work bindings / hotkeys
+-- that use dirty hacks and black magic =)
+vim.api.nvim_create_autocmd("VimEnter", {
+  command = "LvimReload",
+})
+
+-- Other examples of autocommands usage:
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   pattern = { "*.json", "*.jsonc" },
+--   -- enable wrap mode for json files only
+--   command = "setlocal wrap",
+-- })
+--
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "zsh",
+--   callback = function()
+--     -- let treesitter use bash highlight for zsh files as well
+--     require("nvim-treesitter.highlight").attach(0, "bash")
+--   end,
+-- })
+
+
+
+
+
+
+--#########################################################################################
+--########################### LSP, linters, DAP settings ##################################
+--#########################################################################################
+
+
+---------------------------------------------------------------------------------------------
+------------------------------- Treesitter / LSP config -------------------------------------
+---------------------------------------------------------------------------------------------
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
@@ -345,15 +547,6 @@ lvim.builtin.treesitter.ensure_installed = {
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
-
-
-
-
-
-
---#########################################################################################
---############################## generic LSP settings #####################################
---#########################################################################################
 
 -- make sure server will always be installed even if the server is in skipped_servers list
 lvim.lsp.installer.setup.ensure_installed = {
@@ -406,6 +599,11 @@ lvim.lsp.installer.setup.ensure_installed = {
 --   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
+
+
+---------------------------------------------------------------------------------------------
+---------------------------------- Formatters config ----------------------------------------
+---------------------------------------------------------------------------------------------
 -- set a formatter, this will override the language server formatting capabilities (if it exists)
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
@@ -426,6 +624,11 @@ formatters.setup {
   --  },
 }
 
+
+
+---------------------------------------------------------------------------------------------
+----------------------------------- Linters config ------------------------------------------
+---------------------------------------------------------------------------------------------
 -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
@@ -449,6 +652,10 @@ linters.setup {
 }
 
 
+
+---------------------------------------------------------------------------------------------
+------------------------------------- DAP config ------------------------------------------
+---------------------------------------------------------------------------------------------
 -- Setup dap for python
 lvim.builtin.dap.active = true
 local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
@@ -458,126 +665,3 @@ pcall(function() require("dap-python").setup(mason_path .. "packages/debugpy/ven
 -- tries to detect the runner by probing for pytest.ini and manage.py, if
 -- neither are present it defaults to unittest.
 pcall(function() require("dap-python").test_runner = "pytest" end)
-
-
-
-
-
---#########################################################################################
---############################## User Installed Plugins ###################################
---#########################################################################################
-
-lvim.plugins = {
-  -- Toggles between hybrid and absolute line numbers automatically
-  -- NOTE: Add `set-option -g focus-events on` to .tmux.conf if you're using Tmux
-  { "jeffkreeftmeijer/vim-numbertoggle" },
-  { "WhoIsSethDaniel/mason-tool-installer.nvim" },
-  { "Mofiqul/vscode.nvim" }, -- vscode colorscheme
-  { "wellle/targets.vim" },
-  { "tpope/vim-surround" },
-  { "tpope/vim-repeat" },
-  { "mattn/emmet-vim" },
-  {
-    "folke/persistence.nvim", -- saving sessions for each directory
-    event = "BufReadPre",     -- this will only start session saving when an actual file was opened
-    -- module = "persistence",
-    config = function()
-      require("persistence").setup {
-        dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
-        options = { "buffers", "curdir", "tabpages", "winsize" },
-      }
-    end,
-  },
-  { "folke/trouble.nvim" },
-  {
-    "norcalli/nvim-colorizer.lua", -- hex color codes colorizer
-    config = function()
-      require("colorizer").setup({ "css", "scss", "html", "javascript", "tmux" }, {
-        RGB = true,      -- #RGB hex codes
-        RRGGBB = true,   -- #RRGGBB hex codes
-        RRGGBBAA = true, -- #RRGGBBAA hex codes
-        rgb_fn = true,   -- CSS rgb() and rgba() functions
-        hsl_fn = true,   -- CSS hsl() and hsla() functions
-        css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
-      })
-    end,
-  },
-  "mfussenegger/nvim-dap-python",
-  -- virtualenv selector plugin
-  {
-    "linux-cultist/venv-selector.nvim",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "nvim-telescope/telescope.nvim",
-      -- for DAP support
-      "mfussenegger/nvim-dap-python"
-    },
-    config = true,
-    opts = {
-      search_workspace = false,
-      search = true,
-      dap_enabled = false,
-      name = { "venv", ".venv", "env" },
-      fd_binary_name = "fd",
-      notify_user_on_activate = true,
-
-    },
-    event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
-  },
-  -- -- ChatGPT plugin
-  -- {
-  --   "jackMort/ChatGPT.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("chatgpt").setup()
-  --   end,
-  --   dependencies = {
-  --     "MunifTanjim/nui.nvim",
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-telescope/telescope.nvim"
-  --   }
-  -- },
-}
-
-
---####################################################################
---##### Autocommands (https://neovim.io/doc/user/autocmd.html) #######
---####################################################################
--- Reload LunarVim config after launch, to make work bindings / hotkeys
--- that are using dirty hacks =)
-vim.api.nvim_create_autocmd("VimEnter", {
-  command = "LvimReload",
-})
--- vim.api.nvim_create_autocmd("BufEnter", {
---   pattern = { "*.json", "*.jsonc" },
---   -- enable wrap mode for json files only
---   command = "setlocal wrap",
--- })
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "zsh",
---   callback = function()
---     -- let treesitter use bash highlight for zsh files as well
---     require("nvim-treesitter.highlight").attach(0, "bash")
---   end,
--- })
-
-
--- mason-tool-installer setup
-require('mason-tool-installer').setup {
-  ensure_installed = {
-    'bash-language-server',
-    'dockerfile-language-server',
-    'vim-language-server',
-    'yaml-language-server',
-    'stylua',
-    'shellcheck',
-    'editorconfig-checker',
-    'pyright',
-    'flake8',
-    'black',
-    'debugpy',
-    'css-lsp',
-  },
-  auto_update = true,
-}
