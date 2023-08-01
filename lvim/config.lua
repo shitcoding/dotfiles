@@ -325,6 +325,8 @@ lvim.builtin.which_key.mappings["C"] = {
   name = "Copilot",
   p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
   s = { "<cmd>Copilot status<cr>", "Copilot status" },
+  e = { "<cmd>Copilot enable<cr><cmd>Copilot status<cr>", "Copilot enable" },
+  d = { "<cmd>Copilot disable<cr><cmd>Copilot status<cr>", "Copilot disable" },
 }
 
 -------------------------------------------------------------------------------------------
