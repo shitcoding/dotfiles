@@ -1,14 +1,11 @@
 " General Settings
-set configversion 2.0
-set update.lastchecktime 1662565752663
+set update.lastchecktime 1690892535591
 set update.nag true
 set update.nagwait 7
 set update.lastnaggedversion 1.14.0
 set update.checkintervalsecs 86400
+set configversion 2.0
 set theme midnight
-
-" Git{Hub,Lab} git clone via SSH yank
-bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
 
 " Binds
 bind gb tabprev
@@ -37,7 +34,10 @@ bind M tabmove -1
 unbind <C-c>
 unbind <C-[>
 bind I focusinput -I
+bind gnM tabopen https://github.com/tridactyl/tridactyl/wiki/Exemplar-.tridactylrc-files
+bind goM open https://github.com/tridactyl/tridactyl/wiki/Exemplar-.tridactylrc-files
 unbind bkpconf
+bind gwM winopen https://github.com/tridactyl/tridactyl/wiki/Exemplar-.tridactylrc-files
 bind ;x hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool click 1")}
 bind ;X hint -F e => { const pos = tri.dom.getAbsoluteCentre(e); tri.excmds.exclaim_quiet("xdotool mousemove --sync " + window.devicePixelRatio * pos.x + " " + window.devicePixelRatio * pos.y + "; xdotool keydown ctrl+shift; xdotool click 1; xdotool keyup ctrl+shift")}
 bind <A-p> pin
@@ -139,9 +139,9 @@ bind ;v hint -W mpvsafe
 bind ;V hint -V
 bind ;w hint -w
 bind ;t hint -W tabopen
-bind ;O hint -W fillcmdline_notrail open 
-bind ;W hint -W fillcmdline_notrail winopen 
-bind ;T hint -W fillcmdline_notrail tabopen 
+bind ;O hint -W fillcmdline_notrail open
+bind ;W hint -W fillcmdline_notrail winopen
+bind ;T hint -W fillcmdline_notrail tabopen
 bind ;z hint -z
 bind ;m composite hint -Jpipe img src | open images.google.com/searchbyimage?image_url=
 bind ;M composite hint -Jpipe img src | tabopen images.google.com/searchbyimage?image_url=
@@ -185,6 +185,10 @@ bind * tabduplicate
 bind И back
 bind ь tabmove +1
 bind Ь tabmove -1
+bind г undo
+bind нн clipboard yank
+bind <C-в> scrollpage 0.5
+bind <C-г> scrollpage -0.5
 bind --mode=input <C-c> composite unfocus | mode normal
 bind --mode=input <Tab> focusinput -n
 bind --mode=input <S-Tab> focusinput -N
@@ -198,7 +202,7 @@ bind --mode=ex <Escape> ex.hide_and_clear
 bind --mode=ex <C-[> ex.hide_and_clear
 bind --mode=ex <ArrowUp> ex.prev_history
 bind --mode=ex <ArrowDown> ex.next_history
-bind --mode=ex <S-Del> ex.execute_ex_on_completion_args tabclose
+bind --mode=ex <S-Delete> ex.execute_ex_on_completion_args tabclose
 bind --mode=ex <A-b> text.backward_word
 bind --mode=ex <A-f> text.forward_word
 bind --mode=ex <C-e> text.end_of_line
@@ -301,7 +305,7 @@ alias man help
 alias !js fillcmdline_tmp 3000 !js is deprecated. Please use js instead
 alias !jsb fillcmdline_tmp 3000 !jsb is deprecated. Please use jsb instead
 alias get_current_url js document.location.href
-alias current_url composite get_current_url | fillcmdline_notrail 
+alias current_url composite get_current_url | fillcmdline_notrail
 alias stop js window.stop()
 alias zo zoom
 alias installnative nativeinstall
