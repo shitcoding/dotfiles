@@ -432,25 +432,56 @@ lvim.plugins = {
     },
     event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
   },
-  -- Github Copilot plugin
+  -- Copilot.lua plugin
   {
-    "github/copilot.vim",
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
     event = "VeryLazy",
     config = function()
-      vim.g.copilot_assume_mapped = true
-      vim.g.copilot_no_tab_map = true
+      require("copilot").setup({
+        panel = {
+          auto_refresh = true,
+          keymap = {
+            jump_prev = "[",
+            jump_next = "]",
+            accept = "<CR>",
+            refresh = "gr",
+            open = "<M-CR>"
+          },
+          layout = {
+            ratio = 0.3
+          },
+        },
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = "<C-d>",
+            accept_word = "<C-f>",
+            accept_line = "<C-l>",
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-]>",
+          },
+        },
+        filetypes = {
+          -- Explicitly specify filetypes to use Copilot
+          javascript = true,
+          typescript = true,
+          html = true,
+          css = true,
+          django = true,
+          python = true,
+          lua = true,
+          ["*"] = false, -- disable for all other filetypes
+        },
+      })
+      -- vim.g.copilot_assume_mapped = true
+      -- vim.g.copilot_no_tab_map = true
       -- Get copilot proxy from pass command (requires pass installed)
       vim.g.copilot_proxy = get_shell_command_output("pass copilot_proxy")
-      -- vim.g.copilot_proxy_strict_ssl = false
     end,
   },
-  -- {
-  --   "hrsh7th/cmp-copilot",
-  --   config = function()
-  --     lvim.builtin.cmp.formatting.source_names["copilot"] = "( )"
-  --     table.insert(lvim.builtin.cmp.sources, 2, { name = "copilot" })
-  --   end,
-  -- },
   -- -- ChatGPT plugin
   -- {
   --   "jackMort/ChatGPT.nvim",
