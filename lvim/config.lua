@@ -325,8 +325,8 @@ lvim.builtin.which_key.mappings["C"] = {
   name = "Copilot",
   p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
   s = { "<cmd>Copilot status<cr>", "Copilot status" },
-  e = { "<cmd>Copilot enable<cr><cmd>Copilot status<cr>", "Copilot enable" },
-  d = { "<cmd>Copilot disable<cr><cmd>Copilot status<cr>", "Copilot disable" },
+  e = { "<cmd>Copilot enable<cr><cmd>echo 'Copilot enabled'<cr>", "Copilot enable" },
+  d = { "<cmd>Copilot disable<cr><cmd>echo 'Copilot disabled'<cr>", "Copilot disable" },
 }
 
 -------------------------------------------------------------------------------------------
@@ -454,14 +454,14 @@ lvim.plugins = {
         },
         suggestion = {
           enabled = true,
-          auto_trigger = true,
+          auto_trigger = false,
           keymap = {
-            accept = "<C-d>",
+            accept = "<C-v>",
             accept_word = "<C-f>",
             accept_line = "<C-l>",
             next = "<M-]>",
             prev = "<M-[>",
-            dismiss = "<C-]>",
+            dismiss = "<C-z>",
           },
         },
         filetypes = {
@@ -537,6 +537,12 @@ vim.api.nvim_create_autocmd("VimEnter", {
   command = "LvimReload",
 })
 
+
+-- Disable Copilot on Neovim startup
+vim.api.nvim_create_autocmd("VimEnter", {
+  command = "Copilot disable",
+})
+
 -- Other examples of autocommands usage:
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
@@ -589,14 +595,6 @@ lvim.lsp.installer.setup.ensure_installed = {
   "lua_ls",
   "jsonls",
 }
--- -- change UI setting of `LspInstallInfo`
--- -- see <https://github.com/williamboman/nvim-lsp-installer#default-configuration>
--- lvim.lsp.installer.setup.ui.check_outdated_servers_on_open = false
--- lvim.lsp.installer.setup.ui.border = "rounded"
--- lvim.lsp.installer.setup.ui.keymaps = {
---     uninstall_server = "d",
---     toggle_server_expand = "o",
--- }
 
 -- ---@usage disable automatic installation of servers
 -- lvim.lsp.automatic_servers_installation = false
@@ -608,15 +606,15 @@ lvim.lsp.installer.setup.ensure_installed = {
 -- require("lvim.lsp.manager").setup("pyright", opts)
 
 -------------------- Pyright setup -----------------------------------------------------------------
--- require("lspconfig").pyright.setup {
---   settings = {
---     python = {
---       analysis = {
---         typeCheckingMode = "off",
---       }
---     }
---   }
--- }
+require("lspconfig").pyright.setup {
+  settings = {
+    python = {
+      analysis = {
+        typeCheckingMode = "off",
+      }
+    }
+  }
+}
 ----------------------------------------------------------------------------------------------------
 
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. !!Requires `:LvimCacheReset` to take effect!!
