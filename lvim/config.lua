@@ -294,6 +294,16 @@ lvim.builtin.telescope.defaults.mappings = {
 -------------------------------------------------------------------------------------------
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 
+-- Telescope bindings
+lvim.builtin.which_key.mappings["t"] = {
+  name = "+Telescope",
+  l = { "<cmd>Telescope live_grep<cr>", "Live grep" },
+  s = { "<cmd>Telescope search_history<cr>", "Search history" },
+  f = { "<cmd>Telescope find_files<cr>", "Find files" },
+  c = { "<cmd>Telescope command_history<cr>", "Command history" },
+  j = { "<cmd>Telescope jumplist<cr>", "Jumplist" },
+}
+
 -- trouble.nvim bindings
 lvim.builtin.which_key.mappings["T"] = {
   name = "+Trouble",
@@ -303,13 +313,6 @@ lvim.builtin.which_key.mappings["T"] = {
   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
-}
-
--- Telescope bindings
-lvim.builtin.which_key.mappings["t"] = {
-  name = "+Telescope",
-  l = { "<cmd>Telescope live_grep<cr>", "Live grep" },
-  f = { "<cmd>Telescope find_files<cr>", "Find files" },
 }
 
 -- persistence.nvim bindings
@@ -346,7 +349,6 @@ lvim.builtin.which_key.mappings["C"] = {
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true -- enable builtin terminal (`Ctrl+\` to toggle)
-
 
 -- Nvim-Tree options
 lvim.builtin.nvimtree.setup.view.side = "left"
@@ -432,6 +434,14 @@ lvim.plugins = {
     },
     event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
   },
+  -- nvim-spectre: Search and replace plugin
+  {
+    "windwp/nvim-spectre",
+    event = "BufRead",
+    config = function()
+      require("spectre").setup()
+    end,
+  },
   -- Copilot.lua plugin
   {
     "zbirenbaum/copilot.lua",
@@ -478,8 +488,8 @@ lvim.plugins = {
       })
       -- vim.g.copilot_assume_mapped = true
       -- vim.g.copilot_no_tab_map = true
-      -- Get copilot proxy from pass command (requires pass installed)
-      vim.g.copilot_proxy = get_shell_command_output("pass copilot_proxy")
+      -- -- Get copilot proxy from pass command (requires pass installed)
+      -- vim.g.copilot_proxy = get_shell_command_output("pass copilot_proxy")
     end,
   },
   -- -- ChatGPT plugin
