@@ -304,6 +304,14 @@ lvim.builtin.which_key.mappings["t"] = {
   j = { "<cmd>Telescope jumplist<cr>", "Jumplist" },
 }
 
+-- spectre bindings
+lvim.builtin.which_key.mappings["r"] = {
+  name = "+Spectre",
+  r = { "<cmd>lua require('spectre').toggle()<CR>", "Toggle Spectre" },
+  w = { "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", "Search current word" },
+  f = { "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", "Search on current file" },
+}
+
 -- trouble.nvim bindings
 lvim.builtin.which_key.mappings["T"] = {
   name = "+Trouble",
@@ -434,14 +442,23 @@ lvim.plugins = {
     },
     event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
   },
+  ----------------------------------------------------------------
   -- nvim-spectre: Search and replace plugin
   {
     "windwp/nvim-spectre",
     event = "BufRead",
     config = function()
-      require("spectre").setup()
+      require('spectre').setup({
+        color_devicons = true,
+        highlight      = {
+          ui = "String",
+          search = "DiffChange",
+          replace = "DiffAdd"
+        },
+      })
     end,
   },
+  ----------------------------------------------------------------
   -- Copilot.lua plugin
   {
     "zbirenbaum/copilot.lua",
