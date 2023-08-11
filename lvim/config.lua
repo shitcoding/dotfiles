@@ -223,15 +223,15 @@ end
 
 local tb = require('telescope.builtin')
 
-keymap('v', '<Leader>g', '', {
-  noremap = true,
-  silent = true,
-  desc = "Live grep selected text",
-  callback = function()
+-- which-key binding for `<Leader>g` in visual mode
+lvim.builtin.which_key.vmappings['g'] = {
+  function()
     local text = vim.getVisualSelection()
     tb.live_grep({ default_text = text })
   end,
-})
+  "Live grep selected text"
+}
+---------------------------------------------------------------------
 
 
 
