@@ -365,6 +365,7 @@ lvim.builtin.nvimtree.setup.renderer.indent_markers.enable = true
 lvim.builtin.nvimtree.setup.view.number = true
 lvim.builtin.nvimtree.setup.view.relativenumber = true
 lvim.builtin.nvimtree.setup.filters.dotfiles = true
+lvim.builtin.nvimtree.setup.filters.custom = { ".git", ".cache", "__pycache__" }
 -- Fix for nvim-tree conflict with project.nvim plugin
 lvim.builtin.nvimtree.setup.respect_buf_cwd = true
 lvim.builtin.nvimtree.setup.sync_root_with_cwd = true
