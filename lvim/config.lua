@@ -544,6 +544,7 @@ require('mason-tool-installer').setup {
     'pyright',
     'flake8',
     'black',
+    'blue',
     'debugpy',
     'css-lsp',
   },
@@ -669,11 +670,16 @@ require("lspconfig").pyright.setup {
 -- set a formatter, this will override the language server formatting capabilities (if it exists)
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
+  -- Python formatter
   {
-    command = "black",
+    command = "blue",
     filetypes = { "python" },
-    extra_args = { "--line-length=79" }
   },
+  -- {
+  --   command = "black",
+  --   filetypes = { "python" },
+  --   extra_args = { "--line-length=79" }
+  -- },
   { command = "isort", filetypes = { "python" } },
   --  {
   --    -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
