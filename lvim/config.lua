@@ -572,6 +572,12 @@ vim.api.nvim_create_autocmd("VimEnter", {
   command = "Copilot disable",
 })
 
+-- set filetype to SQL for .ddl files
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = { "*.ddl" },
+  command = "setfiletype sql",
+})
+
 -- Other examples of autocommands usage:
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
@@ -645,6 +651,19 @@ require("lspconfig").pyright.setup {
   }
 }
 ----------------------------------------------------------------------------------------------------
+-- SQL lsp setup -------------------------------------------
+-- (requires some dirty hacks / black magic)
+-- https://github.com/LunarVim/LunarVim/discussions/4210#discussioncomment-6083169
+lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+  return server ~= "sqlls"
+end, lvim.lsp.automatic_configuration.skipped_servers)
+
+require("lvim.lsp.manager").setup("sqlls", {
+  cmd = {"sql-language-server", "up", "--method", "stdio"};
+  filetypes = {"sql", "mysql", "ddl"};
+  root_dir = function() return vim.loop.cwd() end;
+})
+--------------------------------------------------------------
 
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. !!Requires `:LvimCacheReset` to take effect!!
 -- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
@@ -681,6 +700,11 @@ formatters.setup {
   --   extra_args = { "--line-length=79" }
   -- },
   { command = "isort", filetypes = { "python" } },
+  -- SQL formatter
+  {
+    command = "sqlfmt",
+    filetypes = { "sql" },
+  },
   --  {
   --    -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
   --    command = "prettier",
