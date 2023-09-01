@@ -17,6 +17,9 @@ alias dcst='docker stop'
 alias dcrm='docker rm'
 alias dcps='docker ps --all'
 
+alias cpr='cp -r'
+alias wgu='sudo wg-quick up'
+alias wgd='sudo wg-quick down'
 
 ##### Various custom commands #############################
 # copy absolute path of current working directory to clipboard
@@ -34,6 +37,10 @@ alias yo="notify-send 'yo!'"
 ##### Launching various tools #############################
 alias v='lvim'
 alias lg='lazygit'
+
+
+##### Linux shortcuts and various fixes / hacks ##########
+alias restart-gnome='pkill -HUP gnome-shell && sudo systemctl restart gdm.service'
 
 
 ##### Pacman aliases #####################################
