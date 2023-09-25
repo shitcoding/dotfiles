@@ -1,0 +1,121 @@
+" #######################################################
+"                       Plugins
+" #######################################################
+set surround
+set NERDTree
+
+
+
+" #######################################################
+"                   General Settings
+" #######################################################
+" Space as leader key
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+
+nnoremap <C-t> <Nop>
+
+
+set number relativenumber
+
+
+" Fix issues with delete key in vim insert mode
+set backspace=indent,eol,start
+
+" Tabs settings for Python
+set tabstop=4
+set shiftwidth=4
+set smarttab
+set expandtab
+set softtabstop=4 "4 spaces in tab
+
+" Recommanded ideavim settings
+set ideajoin
+set ideaput
+set ideamarks
+
+
+
+" Switch to English lang in normal mode, restore input lang in insert mode
+" https://plugins.jetbrains.com/plugin/9615-ideavimextension
+set keep-english-in-normal-and-restore-in-insert
+
+" #######################################################
+"                   Key Bindings
+" #######################################################
+" H / L - go to the beginning/end of the line in normal mode
+nnoremap H ^
+nnoremap L $
+" Same for Cyrillic layout
+nnoremap Р ^ 
+nnoremap Д $
+
+" H / L - mark to the beginning/end (not including line break)
+" of the line in visual mode
+vnoremap H ^
+vnoremap L g_
+" Same for Cyrillic layout
+vnoremap Р ^ 
+vnoremap Д g_
+
+" ---------- Switching between tabs ------------
+" `g<num>` - Switch to tab number <num>
+nnoremap g1 1gt
+nnoremap g2 2gt
+nnoremap g3 3gt
+nnoremap g4 4gt
+nnoremap g5 5gt
+nnoremap g6 6gt
+nnoremap g7 7gt
+nnoremap g8 8gt
+nnoremap g9 9gt
+
+" `J` - Go to the next tab
+nmap J <action>(NextTab)
+" `K` - Go to the previous tab
+nmap K <action>(PreviousTab)
+
+" `m` - Move current tab to the right
+nnoremap <silent> m :tabmove +1<CR>
+" `M` - Move current tab to the left
+nnoremap <silent> M :tabmove -1<CR>
+
+
+" Window navigation keymaps
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+nmap <C-q> :q<CR>
+
+" Code navigation keymaps
+nmap gb <Action>(Back)
+nmap gf <Action>(Forward)
+nmap gd <Action>(GotoDeclaration)
+nmap gu <Action>(FindUsages)
+nmap gl <Action>(ShowErrorDescription)
+
+" Stay in visual mode after (un)indenting
+vmap < <gv^
+vmap > >gv^
+
+" Reload .ideavimrc without restarting the IDE
+nmap <Leader>ir <Action>(IdeaVim.ReloadVimRc.reload)
+
+" find things
+nmap <leader>f :find<cr>
+
+" Other windows access
+nmap <Leader>e :NERDTreeFocus<CR>
+
+
+" NERDTree keymaps : open/close a node with l/h
+let g:NERDTreeMapActivateNode="l"
+let g:NERDTreeMapCloseDir="h"
+
+" Save current file with C-s
+nmap <C-s> :w<CR>
+
+" Comment out the line
+nnoremap <leader>/ :action CommentByLineComment<cr>
+vmap <leader>/ :action CommentByLineComment<cr>
