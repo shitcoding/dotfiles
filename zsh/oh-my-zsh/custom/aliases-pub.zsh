@@ -3,21 +3,21 @@
 # alias ls='[ -x "$(command -v logo-ls)" ] && logo-ls || ls'
 
 alias ls='logo-ls'
-alias cat='bat'
+alias bat='batcat'
 alias ping='prettyping'
 
 ##### Shorten often used commands ##############
 alias rmrf='rm -rf'
 alias mkd='mkdir -p'
-alias cpr='cp -r'
-
-# Docker
 alias dcmp='docker-compose'
-alias dcst='docker stop'
+alias dcst='docker stop'                                        │
 alias dcrm='docker rm'
 alias dcps='docker ps --all'
 
 alias cpr='cp -r'
+
+# Wireguard aliases
+alias wg='sudo wg'
 alias wgu='sudo wg-quick up'
 alias wgd='sudo wg-quick down'
 
@@ -25,6 +25,7 @@ alias wgd='sudo wg-quick down'
 # copy absolute path of current working directory to clipboard
 # (requires `xclip` to be installed)
 alias cpwd='pwd | tr -d "\n" | xclip -selection clipboard'
+alias c='pwd | tr -d "\n" | xclip -selection clipboard'
 # copy absolute path of target file/directory to clipboard
 # (requires `xclip` to be installed)
 alias cpls='$HOME/.scripts/copy_filepath.sh'
@@ -34,13 +35,17 @@ alias hist='v ~/.zsh_history'
 # that takes a long time is finished)
 alias yo="notify-send 'yo!'"
 
+
 ##### Launching various tools #############################
 alias v='lvim'
+alias t='tmux'
 alias lg='lazygit'
 
 
 ##### Linux shortcuts and various fixes / hacks ##########
 alias restart-gnome='pkill -HUP gnome-shell && sudo systemctl restart gdm.service'
+alias restart-sound='systemctl --user restart wireplumber pipewire pipewire-pulse'
+
 
 
 ##### Pacman aliases #####################################
@@ -66,8 +71,3 @@ alias pym='python3 -m'
 # (xorg only)
 alias fxrndr='xrandr --output DP-1 --scale 0.6x0.6 ; xrandr --output HDMI-1 --scale 0.9999x0.9999 ; xrandr --output eDP-1 --scale 0.9999x0.9999'
 
-
-###### AWS cli aliases #######################################
-# Set current IP for inbound ssh connections for target security
-# group and remove all other IPs
-alias aws_ssh_reset='$HOME/.scripts/aws_set_current_ip_ssh_for_group.sh'
