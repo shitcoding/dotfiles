@@ -36,9 +36,9 @@ set ideamarks
 
 
 
-" Switch to English lang in normal mode, restore input lang in insert mode
-" https://plugins.jetbrains.com/plugin/9615-ideavimextension
-set keep-english-in-normal-and-restore-in-insert
+" " Switch to English lang in normal mode, restore input lang in insert mode
+" " https://plugins.jetbrains.com/plugin/9615-ideavimextension
+" set keep-english-in-normal-and-restore-in-insert
 
 " #######################################################
 "                   Key Bindings
