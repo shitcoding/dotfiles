@@ -28,7 +28,7 @@ font:
   bold_italic:
     family: MesloLGS Nerd Font Mono
     style: Bold Italic
-  size: 11.0
+  size: 10.0
 
   offset:
     x: 0
@@ -90,7 +90,7 @@ colors:
 selection:
   # This string contains all characters that are used as separators for
   # "semantic words" in Alacritty.
-  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t."
 
   # When set to `true`, selected text will be copied to the primary clipboard.
   #save_to_clipboard: false
@@ -103,3 +103,4 @@ cursor:
 
 key_bindings:
   - { key: Q, mods: Control|Shift, action: Quit }
+  - { key: V, mods: Control, action: Paste } # Paste with Ctrl-v
