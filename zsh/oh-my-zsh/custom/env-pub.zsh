@@ -6,3 +6,11 @@ export EDITOR=$HOME/.local/bin/lvim
 export LUNARVIM_RUNTIME_DIR="${LUNARVIM_RUNTIME_DIR:-"$HOME/.local/share/lunarvim"}"
 export LUNARVIM_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"$HOME/.config/lvim"}"
 export LUNARVIM_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"$HOME/.cache/lvim"}"
+
+# Custom functions to prettify / colorize curl output
+# json (requires pygments to be installed via `pip install pygments`)
+function jcurl() {
+    curl "$@" -s | json_pp | pygmentize -l json
+}
+
+export jcurl
