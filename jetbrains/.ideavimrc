@@ -15,6 +15,7 @@ let mapleader=" "
 
 nnoremap <C-t> <Nop>
 
+nnoremap <C-c> <Esc>
 
 set number relativenumber
 
