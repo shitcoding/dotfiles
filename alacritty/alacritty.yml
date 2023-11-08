@@ -103,4 +103,4 @@ cursor:
 
 key_bindings:
   - { key: Q, mods: Control|Shift, action: Quit }
-  - { key: V, mods: Control, action: Paste } # Paste with Ctrl-v
+  # - { key: V, mods: Control, action: Paste } # Paste with Ctrl-v
