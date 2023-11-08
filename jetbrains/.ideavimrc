@@ -35,6 +35,8 @@ set ideajoin
 set ideaput
 set ideamarks
 
+set clipboard+=unnamed
+
 
 
 " " Switch to English lang in normal mode, restore input lang in insert mode
