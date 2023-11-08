@@ -2,7 +2,8 @@
 # TODO: Conditional aliases, kinda like this one:
 # alias ls='[ -x "$(command -v logo-ls)" ] && logo-ls || ls'
 
-alias ls='logo-ls'
+alias l='logo-ls'
+alias la='logo-ls -lah'
 alias bat='batcat'
 alias ping='prettyping'
 
@@ -43,7 +44,10 @@ alias lg='lazygit'
 
 
 ##### Linux shortcuts and various fixes / hacks ##########
+# Restart gnome shell (kills open apps)
 alias restart-gnome='pkill -HUP gnome-shell && sudo systemctl restart gdm.service'
+
+# Restart pipewire if there are sound glitches
 alias restart-sound='systemctl --user restart wireplumber pipewire pipewire-pulse'
 
 
