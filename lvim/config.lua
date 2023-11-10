@@ -38,14 +38,16 @@ end
 lvim.colorscheme = "vscode"
 vim.cmd("au ColorScheme * hi LineNr guibg=NONE") -- transparent background of line numbers
 
--- Lualine settings
+-- Lualine settings ------------------------------------------------------------------------------
 lvim.builtin.lualine.style = "default"
 lvim.builtin.lualine.sections.lualine_a = { "mode" }
-lvim.builtin.lualine.sections.lualine_b = {}
+-- show relative path instead of just filename
+lvim.builtin.lualine.sections.lualine_c = { { "filename", path = 1, } }
+lvim.builtin.lualine.inactive_sections.lualine_c = { { "filename", path = 1, } }
 lvim.builtin.lualine.options.globalstatus = false
 lvim.builtin.lualine.options.disabled_filetypes = { 'lazy', 'NvimTree' }
 
--- Bufferline settings
+-- Bufferline settings ---------------------------------------------------------------------------
 lvim.builtin.bufferline.options.show_buffer_close_icons = false -- no tab close icons
 -- lvim.builtin.bufferline.options.numbers = "ordinal" -- show tab numbers
 lvim.builtin.bufferline.options.tab_size = 10                   -- change tabs width from default 18 to 10
