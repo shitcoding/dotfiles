@@ -291,6 +291,14 @@ lvim.builtin.telescope.defaults.mappings = {
 -------------------------------------------------------------------------------------------
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 
+-- Buffer view/settings bindings
+lvim.builtin.which_key.mappings["v"] = {
+  name = "+View",
+  w = { "<cmd>set wrap!<cr>", "Toggle line wrap" },
+}
+
+lvim.builtin.which_key.mappings.l['R'] = { "<cmd>LspRestart<CR>", "Restart LSP" }
+
 -- Telescope bindings
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Telescope",
