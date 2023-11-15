@@ -22,19 +22,30 @@ alias wg='sudo wg'
 alias wgu='sudo wg-quick up'
 alias wgd='sudo wg-quick down'
 
+
 ##### Various custom commands #############################
 # copy absolute path of current working directory to clipboard
 # (requires `xclip` to be installed)
 alias cpwd='pwd | tr -d "\n" | xclip -selection clipboard'
 alias c='pwd | tr -d "\n" | xclip -selection clipboard'
+
 # copy absolute path of target file/directory to clipboard
 # (requires `xclip` to be installed)
 alias cpls='$HOME/.scripts/copy_filepath.sh'
+
 # Edit zsh_history
 alias hist='v ~/.zsh_history'
+
 # Show system notification (useful to notify when task
 # that takes a long time is finished)
 alias yo="notify-send 'yo!'"
+
+# Output current date (to use in filenames)
+alias dnow='date "+%d-%m-%Y"'
+# Output current datetime (to use in filenames)
+alias dtnow='date "+%d-%m-%Y_%H-%M"'
+
+
 
 
 ##### Launching various tools #############################
