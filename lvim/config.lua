@@ -515,20 +515,47 @@ lvim.plugins = {
       -- vim.g.copilot_proxy = get_shell_command_output("pass copilot_proxy")
     end,
   },
-  -- -- ChatGPT plugin
-  -- {
-  --   "jackMort/ChatGPT.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("chatgpt").setup()
-  --   end,
-  --   dependencies = {
-  --     "MunifTanjim/nui.nvim",
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-telescope/telescope.nvim"
-  --   }
-  -- },
+  -- ChatGPT plugin
+  {
+    "robitx/gp.nvim",
+    config = function()
+      require("gp").setup()
+    end,
+  }
 }
+
+-- NORMAL mode key mappings for gp.nvim
+require("which-key").register({
+  -- ...
+  ["<C-g>"] = {
+    c = { "<cmd>GpChatNew<cr>", "New Chat" },
+    t = { "<cmd>GpChatToggle<cr>", "Toggle Popup Chat" },
+    f = { "<cmd>GpChatFinder<cr>", "Chat Finder" },
+
+    r = { "<cmd>GpRewrite<cr>", "Inline Rewrite" },
+    a = { "<cmd>GpAppend<cr>", "Append" },
+    b = { "<cmd>GpPrepend<cr>", "Prepend" },
+    e = { "<cmd>GpEnew<cr>", "Enew" },
+    p = { "<cmd>GpPopup<cr>", "Popup" },
+    s = { "<cmd>GpStop<cr>", "Stop" },
+
+    -- optional Whisper commands
+    w = { "<cmd>GpWhisper<cr>", "Whisper" },
+    R = { "<cmd>GpWhisperRewrite<cr>", "Whisper Inline Rewrite" },
+    A = { "<cmd>GpWhisperAppend<cr>", "Whisper Append" },
+    B = { "<cmd>GpWhisperPrepend<cr>", "Whisper Prepend" },
+    E = { "<cmd>GpWhisperEnew<cr>", "Whisper Enew" },
+    P = { "<cmd>GpWhisperPopup<cr>", "Whisper Popup" },
+  },
+  -- ...
+}, {
+  mode = "n", -- NORMAL mode
+  prefix = "",
+  buffer = nil,
+  silent = true,
+  noremap = true,
+  nowait = true,
+})
 
 
 
@@ -664,9 +691,9 @@ lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(serve
 end, lvim.lsp.automatic_configuration.skipped_servers)
 
 require("lvim.lsp.manager").setup("sqlls", {
-  cmd = {"sql-language-server", "up", "--method", "stdio"};
-  filetypes = {"sql", "mysql", "ddl"};
-  root_dir = function() return vim.loop.cwd() end;
+  cmd = { "sql-language-server", "up", "--method", "stdio" },
+  filetypes = { "sql", "mysql", "ddl" },
+  root_dir = function() return vim.loop.cwd() end,
 })
 --------------------------------------------------------------
 
