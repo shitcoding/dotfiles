@@ -10,7 +10,7 @@ alias ping='prettyping'
 ##### Shorten often used commands ##############
 alias rmrf='rm -rf'
 alias mkd='mkdir -p'
-alias dcmp='docker-compose'
+alias dcmp='docker compose'
 alias dcst='docker stop'                                        │
 alias dcrm='docker rm'
 alias dcps='docker ps --all'
@@ -73,6 +73,10 @@ alias sap='sudo apt'
 alias sai='sudo apt install'
 alias sar='sudo apt remove'
 alias sau='sudo apt update -y && sudo apt upgrade -y'
+
+##### Nala (cool wrapper for apt) aliases ###########################
+alias snu='sudo nala upgrade -y'
+alias sni='sudo nala install'
 
 
 ###### Various Python related aliases #######################
