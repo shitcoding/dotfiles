@@ -3,7 +3,6 @@
 --################################################################################################
 
 lvim.log.level = "warn"
--- lvim.format_on_save = true
 lvim.transparent_window = true
 vim.opt.cmdheight = 1 -- set command line height to 1 instead of 2
 vim.opt.scrolloff = 0 -- make zt put the current line to the top of the window
@@ -49,7 +48,6 @@ lvim.builtin.lualine.options.disabled_filetypes = { 'lazy', 'NvimTree' }
 
 -- Bufferline settings ---------------------------------------------------------------------------
 lvim.builtin.bufferline.options.show_buffer_close_icons = false -- no tab close icons
--- lvim.builtin.bufferline.options.numbers = "ordinal" -- show tab numbers
 lvim.builtin.bufferline.options.tab_size = 10                   -- change tabs width from default 18 to 10
 
 
@@ -105,6 +103,12 @@ keymap('v', 'L', 'g_', opts)
 -- Same for Cyrillic layout
 keymap('v', 'Р', '^', opts)
 keymap('v', 'Д', 'g_', opts)
+
+-- Override mappings for moving screen one line up/down w/o moving the cursor
+lvim.keys.normal_mode["<C-p>"] = "<C-e>"
+lvim.keys.normal_mode["<C-n>"] = "<C-y>"
+
+
 
 
 -------------------------------------------------------------------------
@@ -207,34 +211,6 @@ vim.keymap.set("n", "<Leader>O", "printf('m`%sO<ESC>``', v:count1)", {
   desc = "insert line above",
 })
 
----------------------------------------------------------------------
------- Live grep selected text in visual mode with `<Leader>g` ------
----------------------------------------------------------------------
-function vim.getVisualSelection() -- Helper function to get selected text
-  vim.cmd('noau normal! "vy"')
-  local text = vim.fn.getreg('v')
-  vim.fn.setreg('v', {})
-
-  text = string.gsub(text, "\n", "")
-  if #text > 0 then
-    return text
-  else
-    return ''
-  end
-end
-
-local tb = require('telescope.builtin')
-
--- which-key binding for `<Leader>g` in visual mode
-lvim.builtin.which_key.vmappings['g'] = {
-  function()
-    local text = vim.getVisualSelection()
-    tb.live_grep({ default_text = text })
-  end,
-  "Live grep selected text"
-}
----------------------------------------------------------------------
-
 
 
 ---------------------------------------------------------------------
@@ -259,7 +235,9 @@ vim.cmd("cnoremap <M-f>	<S-Right>")
 
 
 
-
+--############################################################################################
+--####################### Plugin related key bindings ########################################
+--############################################################################################
 
 ----------------------------------------------------------------------------------------------
 --------------------------- Telescope key bindings -------------------------------------------
@@ -303,6 +281,7 @@ lvim.builtin.which_key.mappings.l['R'] = { "<cmd>LspRestart<CR>", "Restart LSP" 
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Telescope",
   l = { "<cmd>Telescope live_grep<cr>", "Live grep" },
+  g = { ":execute 'Telescope live_grep default_text=' . expand('<cword>')<cr>", "Grep word under cursor" },
   s = { "<cmd>Telescope search_history<cr>", "Search history" },
   f = { "<cmd>Telescope find_files<cr>", "Find files" },
   c = { "<cmd>Telescope command_history<cr>", "Command history" },
@@ -336,14 +315,44 @@ lvim.builtin.which_key.mappings["S"] = {
   Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 }
 
--- Copilot.nvim bindings
-lvim.builtin.which_key.mappings["C"] = {
-  name = "Copilot",
-  p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
-  s = { "<cmd>Copilot status<cr>", "Copilot status" },
-  e = { "<cmd>Copilot enable<cr><cmd>echo 'Copilot enabled'<cr>", "Copilot enable" },
-  d = { "<cmd>Copilot disable<cr><cmd>echo 'Copilot disabled'<cr>", "Copilot disable" },
+-- -- Copilot.nvim bindings // disabled by now
+-- lvim.builtin.which_key.mappings["C"] = {
+--   name = "Copilot",
+--   p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
+--   s = { "<cmd>Copilot status<cr>", "Copilot status" },
+--   e = { "<cmd>Copilot enable<cr><cmd>echo 'Copilot enabled'<cr>", "Copilot enable" },
+--   d = { "<cmd>Copilot disable<cr><cmd>echo 'Copilot disabled'<cr>", "Copilot disable" },
+-- }
+
+---------------------------------------------------------------------
+------ Live grep selected text in visual mode with `<Leader>g` ------
+---------------------------------------------------------------------
+function vim.getVisualSelection() -- Helper function to get selected text
+  vim.cmd('noau normal! "vy"')
+  local text = vim.fn.getreg('v')
+  vim.fn.setreg('v', {})
+
+  text = string.gsub(text, "\n", "")
+  if #text > 0 then
+    return text
+  else
+    return ''
+  end
+end
+
+local tb = require('telescope.builtin')
+
+-- which-key binding for `<Leader>g` in visual mode
+lvim.builtin.which_key.vmappings['g'] = {
+  function()
+    local text = vim.getVisualSelection()
+    tb.live_grep({ default_text = text })
+  end,
+  "Live grep selected text"
 }
+---------------------------------------------------------------------
+
+
 
 -------------------------------------------------------------------------------------------
 
@@ -373,7 +382,7 @@ lvim.builtin.nvimtree.setup.filters.dotfiles = true
 lvim.builtin.nvimtree.setup.filters.custom = { ".git", ".cache", "__pycache__" }
 -- Fix for nvim-tree conflict with project.nvim plugin // NOTE: It fucks up cwd in nvim-tree - disabling by now
 lvim.builtin.nvimtree.setup.respect_buf_cwd = true
-lvim.builtin.nvimtree.setup.sync_root_with_cwd = true
+-- lvim.builtin.nvimtree.setup.sync_root_with_cwd = true
 -- lvim.builtin.nvimtree.setup.update_focused_file.enable = true
 -- lvim.builtin.nvimtree.setup.update_focused_file.update_root = true
 lvim.builtin.project.manual_mode = true
@@ -465,97 +474,58 @@ lvim.plugins = {
     end,
   },
   ----------------------------------------------------------------
-  -- Copilot.lua plugin
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "VeryLazy",
-    config = function()
-      require("copilot").setup({
-        panel = {
-          auto_refresh = true,
-          keymap = {
-            jump_prev = "[",
-            jump_next = "]",
-            accept = "<CR>",
-            refresh = "gr",
-            open = "<M-CR>"
-          },
-          layout = {
-            ratio = 0.3
-          },
-        },
-        suggestion = {
-          enabled = true,
-          auto_trigger = false,
-          keymap = {
-            accept = "<C-v>",
-            accept_word = "<C-f>",
-            accept_line = "<C-l>",
-            next = "<M-]>",
-            prev = "<M-[>",
-            dismiss = "<C-z>",
-          },
-        },
-        filetypes = {
-          -- Explicitly specify filetypes to use Copilot
-          javascript = true,
-          typescript = true,
-          html = true,
-          css = true,
-          django = true,
-          python = true,
-          lua = true,
-          ["*"] = false, -- disable for all other filetypes
-        },
-      })
-      -- vim.g.copilot_assume_mapped = true
-      -- vim.g.copilot_no_tab_map = true
-      -- -- Get copilot proxy from pass command (requires pass installed)
-      -- vim.g.copilot_proxy = get_shell_command_output("pass copilot_proxy")
-    end,
-  },
-  -- ChatGPT plugin
-  {
-    "robitx/gp.nvim",
-    config = function()
-      require("gp").setup()
-    end,
-  }
+  -- -- Copilot.lua settings // disabled by now
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("copilot").setup({
+  --       panel = {
+  --         auto_refresh = true,
+  --         keymap = {
+  --           jump_prev = "[",
+  --           jump_next = "]",
+  --           accept = "<CR>",
+  --           refresh = "gr",
+  --           open = "<M-CR>"
+  --         },
+  --         layout = {
+  --           ratio = 0.3
+  --         },
+  --       },
+  --       suggestion = {
+  --         enabled = true,
+  --         auto_trigger = false,
+  --         keymap = {
+  --           accept = "<C-v>",
+  --           accept_word = "<C-f>",
+  --           accept_line = "<C-l>",
+  --           next = "<M-]>",
+  --           prev = "<M-[>",
+  --           dismiss = "<C-z>",
+  --         },
+  --       },
+  --       filetypes = {
+  --         -- Explicitly specify filetypes to use Copilot
+  --         javascript = true,
+  --         typescript = true,
+  --         html = true,
+  --         css = true,
+  --         django = true,
+  --         python = true,
+  --         lua = true,
+  --         ["*"] = false, -- disable for all other filetypes
+  --       },
+  --     })
+  --     -- vim.g.copilot_assume_mapped = true
+  --     -- vim.g.copilot_no_tab_map = true
+  --     -- -- Get copilot proxy from pass command (requires pass installed)
+  --     -- vim.g.copilot_proxy = get_shell_command_output("pass copilot_proxy")
+  --   end,
+  -- },
 }
 
--- NORMAL mode key mappings for gp.nvim
-require("which-key").register({
-  -- ...
-  ["<C-g>"] = {
-    c = { "<cmd>GpChatNew<cr>", "New Chat" },
-    t = { "<cmd>GpChatToggle<cr>", "Toggle Popup Chat" },
-    f = { "<cmd>GpChatFinder<cr>", "Chat Finder" },
-
-    r = { "<cmd>GpRewrite<cr>", "Inline Rewrite" },
-    a = { "<cmd>GpAppend<cr>", "Append" },
-    b = { "<cmd>GpPrepend<cr>", "Prepend" },
-    e = { "<cmd>GpEnew<cr>", "Enew" },
-    p = { "<cmd>GpPopup<cr>", "Popup" },
-    s = { "<cmd>GpStop<cr>", "Stop" },
-
-    -- optional Whisper commands
-    w = { "<cmd>GpWhisper<cr>", "Whisper" },
-    R = { "<cmd>GpWhisperRewrite<cr>", "Whisper Inline Rewrite" },
-    A = { "<cmd>GpWhisperAppend<cr>", "Whisper Append" },
-    B = { "<cmd>GpWhisperPrepend<cr>", "Whisper Prepend" },
-    E = { "<cmd>GpWhisperEnew<cr>", "Whisper Enew" },
-    P = { "<cmd>GpWhisperPopup<cr>", "Whisper Popup" },
-  },
-  -- ...
-}, {
-  mode = "n", -- NORMAL mode
-  prefix = "",
-  buffer = nil,
-  silent = true,
-  noremap = true,
-  nowait = true,
-})
 
 
 
@@ -599,10 +569,10 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 
 
--- Disable Copilot on Neovim startup
-vim.api.nvim_create_autocmd("VimEnter", {
-  command = "Copilot disable",
-})
+-- -- Disable Copilot on Neovim startup
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   command = "Copilot disable",
+-- })
 
 -- set filetype to SQL for .ddl files
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -672,6 +642,10 @@ lvim.lsp.installer.setup.ensure_installed = {
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pyright", opts)
 
+--##################################################################################################
+--####################################### Python LSP setup #########################################
+--##################################################################################################
+
 -------------------- Pyright setup -----------------------------------------------------------------
 require("lspconfig").pyright.setup {
   settings = {
@@ -682,8 +656,34 @@ require("lspconfig").pyright.setup {
     }
   }
 }
-----------------------------------------------------------------------------------------------------
--- SQL lsp setup -------------------------------------------
+
+-- NOTE: Disabling by now, don't know how to use ruff-lsp together with pyright
+-- -------------------- Ruff-lsp setup -----------------------------------------------------------------
+-- -- remove `ruff_lsp` from `skipped_servers` list
+-- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+--   return server ~= "ruff_lsp"
+-- end, lvim.lsp.automatic_configuration.skipped_servers)
+-- -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#ruff_lsp
+-- -- For the default config, along with instructions on how to customize the settings
+-- local on_attach = function(client, bufnr)
+--   -- Disable hover in favor of Pyright
+--   client.server_capabilities.hoverProvider = false
+-- end
+
+-- require('lspconfig').ruff_lsp.setup {
+--   on_attach = on_attach,
+--   init_options = {
+--     settings = {
+--       -- Any extra CLI arguments for `ruff` go here.
+--       args = {},
+--     }
+--   }
+-- }
+
+
+--##################################################################################################
+--######################################## SQL LSP setup ###########################################
+--##################################################################################################
 -- (requires some dirty hacks / black magic)
 -- https://github.com/LunarVim/LunarVim/discussions/4210#discussioncomment-6083169
 lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
@@ -696,6 +696,8 @@ require("lvim.lsp.manager").setup("sqlls", {
   root_dir = function() return vim.loop.cwd() end,
 })
 --------------------------------------------------------------
+
+
 
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. !!Requires `:LvimCacheReset` to take effect!!
 -- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
