@@ -31,6 +31,9 @@ alias c='pwd | tr -d "\n" | xclip -selection clipboard'
 
 # copy absolute path of target file/directory to clipboard
 # (requires `xclip` to be installed)
+# copy_filepath.sh:
+# FILEPATH=$1
+# realpath $FILEPATH | tr -d "\n" | xclip -selection clipboard
 alias cpls='$HOME/.scripts/copy_filepath.sh'
 
 # Edit zsh_history
@@ -52,6 +55,7 @@ alias dtnow='date "+%d-%m-%Y_%H-%M"'
 alias v='lvim'
 alias t='tmux'
 alias lg='lazygit'
+alias ldc='lazydocker'
 
 
 ##### Linux shortcuts and various fixes / hacks ##########
