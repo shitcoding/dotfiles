@@ -1,0 +1,16 @@
+# Lazydocker config docs:
+# https://github.com/jesseduffield/lazydocker/blob/master/docs/Config.md
+# https://pkg.go.dev/github.com/jesseduffield/lazydocker/pkg/config
+
+# Config goes to: $HOME/.config/lazydocker/config.yml
+
+commandTemplates:
+  dockerCompose: docker compose
+gui:
+  containerStatusHealthStyle: "icon"
+  showBottomLine: false
+  returnImmediately: true # Immediately return to Lazydocker after running exec on container
+logs:
+  timestamps: false
+  since: '60m' # set to '' to show all logs
+  tail: '' # set to 200 to show last 200 lines of logs
