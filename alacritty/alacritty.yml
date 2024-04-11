@@ -9,6 +9,12 @@ window:
 
   decorations: none
 
+  # Values for `startup_mode`:
+  #   - Windowed
+  #   - Maximized
+  #   - Fullscreen
+  startup_mode: Maximized
+
   opacity: 0.90
 
 scrolling:
