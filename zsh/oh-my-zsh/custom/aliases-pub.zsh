@@ -22,6 +22,11 @@ alias wg='sudo wg'
 alias wgu='sudo wg-quick up'
 alias wgd='sudo wg-quick down'
 
+# Tmux aliases#################################
+# Launch tmux, restore last session with tmux-resurrect plugin
+# and attach to `main` session
+alias tmr='tmux new-session -d -s kekek && echo "Restoring saved tmux sessions..." && tmux run-shell $HOME/.tmux/plugins/tmux-resurrect/scripts/restore.sh && tmux kill-session -t kekek && tmux attach -t main'
+
 
 ##### Various custom commands #############################
 # copy absolute path of current working directory to clipboard
