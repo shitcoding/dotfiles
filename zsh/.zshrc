@@ -14,14 +14,16 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 
+
 plugins=(
 	archlinux
 	git
 	history-substring-search
 	colored-man-pages
 	zsh-autosuggestions
-	zsh-syntax-highlighting
+	# zsh-syntax-highlighting
   zsh-fzf-history-search
+  F-Sy-H
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -30,12 +32,17 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
 # fzf key bindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Init pyenv if it is installed
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+
 if [ -x "$(command -v pyenv)" ]; then
   eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 fi
 
 
@@ -50,3 +57,8 @@ pastefinish() {
 }
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[[ /snap/bin/kubectl ]] && source <(kubectl completion zsh)
