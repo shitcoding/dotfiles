@@ -8,7 +8,6 @@
 " Unmap Space to use as a leader key
 unmap <Space>
 
-
 " H and L to go to the beginning/end of line
 nmap H ^
 nmap L $
@@ -16,7 +15,7 @@ vmap H ^
 vmap L $
 
 " Quickly remove search highlights
-nmap \ :nohl
+nmap \ :nohl<CR>
 
 
 " Yank to system clipboard
@@ -29,19 +28,19 @@ noremap gj J
 unmap J
 exmap nexttab obcommand workspace:next-tab
 exmap prevtab obcommand workspace:previous-tab
-nmap J :nexttab
-nmap K :prevtab
+nmap J :nexttab<CR>
+nmap K :prevtab<CR>
 
 " Close the current tab with ZZ / ZQ
 exmap closetab obcommand workspace:close
-nmap ZZ :closetab
-nmap ZQ :closetab
+nmap ZZ :closetab<CR>
+nmap ZQ :closetab<CR>
 
 
 " Reload Obsidian
 exmap reload_obsidian obcommand app:reload
-map <A-r> :reload_obsidian
-map <A-к> :reload_obsidian
+map <A-r> :reload_obsidian<CR>
+map <A-к> :reload_obsidian<CR>
 
 
 " Surround text (like with vim-surround plugin)
@@ -57,32 +56,32 @@ exmap surround_subscript surround <sub> </sub>
 
 nunmap S
 vunmap S
-map S" :surround_double_quotes
-map S' :surround_single_quotes
-map S` :surround_backtick
-map Sb :surround_brackets
-map S( :surround_brackets
-map S) :surround_brackets
-map S[ :surround_square_brackets
-map S] :surround_square_brackets
-map S{ :surround_curly_brackets
-map S} :surround_curly_brackets
-map S^ :surround_superscript
-map S_ :surround_subscript
+map S" :surround_double_quotes<CR>
+map S' :surround_single_quotes<CR>
+map S` :surround_backtick<CR>
+map Sb :surround_brackets<CR>
+map S( :surround_brackets<CR>
+map S) :surround_brackets<CR>
+map S[ :surround_square_brackets<CR>
+map S] :surround_square_brackets<CR>
+map S{ :surround_curly_brackets<CR>
+map S} :surround_curly_brackets<CR>
+map S^ :surround_superscript<CR>
+map S_ :surround_subscript<CR>
 
 " Same bindings for Russian layout
 nunmap Ы
 vunmap Ы
-map Ы" :surround_double_quotes
-map Ы' :surround_single_quotes
-map Ы` :surround_asterisc
-map Ыb :surround_brackets
-map Ы( :surround_brackets
-map Ы) :surround_brackets
-map Ы[ :surround_square_brackets
-map Ы] :surround_square_brackets
-map Ы{ :surround_curly_brackets
-map Ы} :surround_curly_brackets
+map Ы" :surround_double_quotes<CR>
+map Ы' :surround_single_quotes<CR>
+map Ы` :surround_asterisc<CR>
+map Ыb :surround_brackets<CR>
+map Ы( :surround_brackets<CR>
+map Ы) :surround_brackets<CR>
+map Ы[ :surround_square_brackets<CR>
+map Ы] :surround_square_brackets<CR>
+map Ы{ :surround_curly_brackets<CR>
+map Ы} :surround_curly_brackets<CR>
 
 
 """""""""""""" Begin Mappings for Russian layout """"""""""""""
@@ -238,7 +237,6 @@ nmap ? &
 vmap ё `
 vmap Ё ~
 vmap № #
-
 
 
 """""""""""""" End of Mappings for Russian layout """"""""""""""
