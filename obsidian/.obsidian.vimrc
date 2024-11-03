@@ -29,8 +29,8 @@ noremap gj J
 unmap J
 exmap nexttab obcommand workspace:next-tab
 exmap prevtab obcommand workspace:previous-tab
-nmap J :nexttab
-nmap K :prevtab
+nmap J :nexttab<CR>
+nmap K :prevtab<CR>
 
 " Close the current tab with ZZ / ZQ
 exmap closetab obcommand workspace:close
@@ -40,8 +40,8 @@ nmap ZQ :closetab
 
 " Reload Obsidian
 exmap reload_obsidian obcommand app:reload
-map <A-r> :reload_obsidian
-map <A-к> :reload_obsidian
+map <A-r> :reload_obsidian<CR>
+map <A-к> :reload_obsidian<CR>
 
 
 " Surround text (like with vim-surround plugin)
@@ -238,7 +238,6 @@ nmap ? &
 vmap ё `
 vmap Ё ~
 vmap № #
-
 
 
 """""""""""""" End of Mappings for Russian layout """"""""""""""
