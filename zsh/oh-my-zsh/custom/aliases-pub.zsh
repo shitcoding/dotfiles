@@ -2,8 +2,10 @@
 # TODO: Conditional aliases, kinda like this one:
 # alias ls='[ -x "$(command -v logo-ls)" ] && logo-ls || ls'
 
-alias l='logo-ls'
-alias la='logo-ls -lah'
+# alias l='logo-ls'
+# alias la='logo-ls -lah'
+alias l='eza --icons'
+alias la='eza -lah --icons'
 alias bat='batcat'
 alias ping='prettyping'
 
@@ -30,16 +32,26 @@ alias tmr='tmux new-session -d -s kekek && echo "Restoring saved tmux sessions..
 
 ##### Various custom commands #############################
 # copy absolute path of current working directory to clipboard
+# Linux:
 # (requires `xclip` to be installed)
 alias cpwd='pwd | tr -d "\n" | xclip -selection clipboard'
 alias c='pwd | tr -d "\n" | xclip -selection clipboard'
+# MacOS
+alias cpwd='pwd | tr -d "\n" | pbcopy'
+alias c='pwd | tr -d "\n" | pbcopy'
 
 # copy absolute path of target file/directory to clipboard
-# (requires `xclip` to be installed)
-# copy_filepath.sh:
+############### Linux ###############
+# # (requires `xclip` to be installed)
+# # copy_filepath.sh:
 # FILEPATH=$1
 # realpath $FILEPATH | tr -d "\n" | xclip -selection clipboard
 alias cpls='$HOME/.scripts/copy_filepath.sh'
+############### MacOS ###############
+alias cpls='$HOME/.scripts/copy_filepath_macos.sh'
+# # copy_filepath_macos.sh
+# FILEPATH=$1
+# realpath "$FILEPATH" | tr -d "\n" | pbcopy
 
 # Edit zsh_history
 alias hist='v ~/.zsh_history'
@@ -53,7 +65,8 @@ alias dnow='date "+%d-%m-%Y"'
 # Output current datetime (to use in filenames)
 alias dtnow='date "+%d-%m-%Y_%H-%M"'
 
-
+# Encode a string in qr code and output to terminal
+alias qrstring='qrencode -t ansiutf8'
 
 
 ##### Launching various tools #############################
