@@ -1,6 +1,7 @@
 export PATH=$PATH:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/go/bin
 export XDG_CONFIG_HOME=$HOME/.config
 export EDITOR=$HOME/.local/bin/lvim
+export EZA_CONFIG_DIR=$HOME/.config/eza/
 
 # Set up lunarvim in order to make tmux-resurrect plugin restore lvim sessions
 export LUNARVIM_RUNTIME_DIR="${LUNARVIM_RUNTIME_DIR:-"$HOME/.local/share/lunarvim"}"
