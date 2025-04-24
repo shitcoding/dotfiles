@@ -1,4 +1,8 @@
-export PATH=$PATH:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/go/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.npm-global/bin
+# hidden Go directory
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOPATH/bin
+
 export XDG_CONFIG_HOME=$HOME/.config
 export EDITOR=$HOME/.local/bin/lvim
 export EZA_CONFIG_DIR=$HOME/.config/eza/
