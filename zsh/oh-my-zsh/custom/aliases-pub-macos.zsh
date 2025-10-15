@@ -65,6 +65,9 @@ alias ldc='lazydocker'
 alias aie='aichat -e'
 
 
+##### Soundcloud and music #############################
+alias scld='scdl --path ~/Downloads/_music --onlymp3 -l ' # Download one track
+
 
 ###### Various Python related aliases #######################
 # Remove __pycache__ dirs in current directory and subdirectories
