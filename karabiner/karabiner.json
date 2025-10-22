@@ -4,6 +4,37 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Cmd+Z to Ctrl+A then Z for tmux pane zoom (terminal apps only)",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.alacritty$",
+                                            "^com\\.googlecode\\.iterm2$",
+                                            "^com\\.apple\\.Terminal$",
+                                            "^tmux$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "description": "Cmd+Z to Ctrl+A then Z",
+                                "from": {
+                                    "key_code": "z",
+                                    "modifiers": { "mandatory": ["command"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "a",
+                                        "modifiers": ["control"]
+                                    },
+                                    { "key_code": "z" }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Emacs-like text editing shortcuts for macOS",
                         "manipulators": [
                             {
