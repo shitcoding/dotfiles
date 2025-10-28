@@ -387,6 +387,12 @@ lvim.builtin.nvimtree.setup.respect_buf_cwd = true
 -- lvim.builtin.nvimtree.setup.update_focused_file.update_root = true
 lvim.builtin.project.manual_mode = true
 
+-- Fix for indent-blankline error with markdown files
+lvim.builtin.indentlines.options.filetype_exclude = vim.list_extend(
+  lvim.builtin.indentlines.options.filetype_exclude or {},
+  { "markdown" }
+)
+
 
 
 
@@ -434,29 +440,29 @@ lvim.plugins = {
       })
     end,
   },
-  -- Python extension for nvim-dap
-  "mfussenegger/nvim-dap-python",
-  -- Python Venv Selector
-  {
-    "linux-cultist/venv-selector.nvim",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "nvim-telescope/telescope.nvim",
-      -- for DAP support
-      "mfussenegger/nvim-dap-python"
-    },
-    config = true,
-    opts = {
-      search_workspace = false,
-      search = true,
-      dap_enabled = false,
-      name = { ".venv" },
-      fd_binary_name = "fd",
-      notify_user_on_activate = true,
+  -- -- Python extension for nvim-dap
+  -- "mfussenegger/nvim-dap-python",
+  -- -- Python Venv Selector
+  -- {
+  --   "linux-cultist/venv-selector.nvim",
+  --   dependencies = {
+  --     "neovim/nvim-lspconfig",
+  --     "nvim-telescope/telescope.nvim",
+  --     -- for DAP support
+  --     "mfussenegger/nvim-dap-python"
+  --   },
+  --   config = true,
+  --   opts = {
+  --     search_workspace = false,
+  --     search = true,
+  --     dap_enabled = false,
+  --     name = { ".venv" },
+  --     fd_binary_name = "fd",
+  --     notify_user_on_activate = true,
 
-    },
-    event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
-  },
+  --   },
+  --   event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
+  -- },
   ----------------------------------------------------------------
   -- nvim-spectre: Search and replace plugin
   {
@@ -534,24 +540,24 @@ lvim.plugins = {
 --====================================================================
 
 --------------------- mason-tool-installer setup ---------------------
-require('mason-tool-installer').setup {
-  ensure_installed = {
-    'bash-language-server',
-    'dockerfile-language-server',
-    'vim-language-server',
-    'yaml-language-server',
-    'stylua',
-    'shellcheck',
-    'editorconfig-checker',
-    'pyright',
-    'flake8',
-    'black',
-    'blue',
-    'debugpy',
-    'css-lsp',
-  },
-  auto_update = true,
-}
+-- require('mason-tool-installer').setup {
+--   ensure_installed = {
+--     'bash-language-server',
+--     'dockerfile-language-server',
+--     'vim-language-server',
+--     'yaml-language-server',
+--     'stylua',
+--     'shellcheck',
+--     'editorconfig-checker',
+--     'pyright',
+--     'flake8',
+--     'black',
+--     'blue',
+--     'debugpy',
+--     'css-lsp',
+--   },
+--   auto_update = true,
+-- }
 
 
 
@@ -622,16 +628,18 @@ lvim.builtin.treesitter.ensure_installed = {
   "rust",
   "java",
   "yaml",
+  "markdown",
+  "markdown_inline",
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
--- make sure server will always be installed even if the server is in skipped_servers list
-lvim.lsp.installer.setup.ensure_installed = {
-  "lua_ls",
-  "jsonls",
-}
+-- -- make sure server will always be installed even if the server is in skipped_servers list
+-- lvim.lsp.installer.setup.ensure_installed = {
+--   "lua_ls",
+--   "jsonls",
+-- }
 
 -- ---@usage disable automatic installation of servers
 -- lvim.lsp.automatic_servers_installation = false
@@ -684,17 +692,17 @@ require("lspconfig").pyright.setup {
 --##################################################################################################
 --######################################## SQL LSP setup ###########################################
 --##################################################################################################
--- (requires some dirty hacks / black magic)
--- https://github.com/LunarVim/LunarVim/discussions/4210#discussioncomment-6083169
-lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
-  return server ~= "sqlls"
-end, lvim.lsp.automatic_configuration.skipped_servers)
+-- -- (requires some dirty hacks / black magic)
+-- -- https://github.com/LunarVim/LunarVim/discussions/4210#discussioncomment-6083169
+-- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+--   return server ~= "sqlls"
+-- end, lvim.lsp.automatic_configuration.skipped_servers)
 
-require("lvim.lsp.manager").setup("sqlls", {
-  cmd = { "sql-language-server", "up", "--method", "stdio" },
-  filetypes = { "sql", "mysql", "ddl" },
-  root_dir = function() return vim.loop.cwd() end,
-})
+-- require("lvim.lsp.manager").setup("sqlls", {
+--   cmd = { "sql-language-server", "up", "--method", "stdio" },
+--   filetypes = { "sql", "mysql", "ddl" },
+--   root_dir = function() return vim.loop.cwd() end,
+-- })
 --------------------------------------------------------------
 
 
@@ -734,11 +742,11 @@ formatters.setup {
   --   extra_args = { "--line-length=79" }
   -- },
   { command = "isort", filetypes = { "python" } },
-  -- SQL formatter
-  {
-    command = "sqlfmt",
-    filetypes = { "sql" },
-  },
+  -- -- SQL formatter
+  -- {
+  --   command = "sqlfmt",
+  --   filetypes = { "sql" },
+  -- },
   --  {
   --    -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
   --    command = "prettier",
