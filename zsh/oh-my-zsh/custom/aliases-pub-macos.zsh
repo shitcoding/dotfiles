@@ -47,8 +47,10 @@ alias yo="notify-send 'yo!'"
 
 # Output current date (to use in filenames)
 alias dnow='date "+%d-%m-%Y"'
+alias rdnow='date "+%Y-%m-%d"' #reversed for better sorting by filename
 # Output current datetime (to use in filenames)
 alias dtnow='date "+%d-%m-%Y_%H-%M"'
+alias rdtnow='date "+%Y-%m-%d_%H-%M"' #reversed for better sorting by filename
 
 # Encode a string in qr code and output to terminal
 alias qrstring='qrencode -t ansiutf8'
