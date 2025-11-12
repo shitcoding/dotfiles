@@ -2,8 +2,8 @@
 # TODO: Conditional aliases, kinda like this one:
 # alias ls='[ -x "$(command -v logo-ls)" ] && logo-ls || ls'
 
-alias l='eza --icons'
-alias la='eza -lah --icons'
+alias l='eza --icons=always'
+alias la='eza -lah --icons=always'
 alias bat='batcat'
 alias ping='prettyping'
 
