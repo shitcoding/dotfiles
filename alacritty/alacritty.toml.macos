@@ -1,0 +1,120 @@
+# Alacritty Configuration
+
+# Window settings
+[window]
+opacity = 0.9
+decorations = "none"
+startup_mode = "Maximized"
+option_as_alt = "OnlyLeft"
+
+[window.dimensions]
+columns = 80
+lines = 42
+
+[window.position]
+x = 0
+y = 0
+
+# Scrolling
+[scrolling]
+history = 10000
+
+# Font configuration
+[font]
+size = 16.0
+
+[font.normal]
+family = "MesloLGS Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "MesloLGS Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "MesloLGS Nerd Font Mono"
+style = "Italic"
+
+[font.bold_italic]
+family = "MesloLGS Nerd Font Mono"
+style = "Bold Italic"
+
+[font.offset]
+x = 0
+y = 0
+
+# Selection
+[selection]
+semantic_escape_chars = ''',│`|:"' ()[]{}<>	.'''
+
+# Cursor
+[cursor]
+unfocused_hollow = true
+
+#########################################
+# Makc.co Hepburn Color scheme
+#########################################
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.primary]
+background = "#000000"
+foreground = "#fbf1c7"
+
+[colors.cursor]
+text = "CellBackground"
+cursor = "CellForeground"
+
+[colors.normal]
+black = "#282828"
+red = "#cc241d"
+green = "#98971a"
+yellow = "#d79921"
+blue = "#458588"
+magenta = "#b16286"
+cyan = "#689d6a"
+white = "#a89984"
+
+[colors.bright]
+black = "#928374"
+red = "#fb4934"
+green = "#b8bb26"
+yellow = "#fabd2f"
+blue = "#83a598"
+magenta = "#d3869b"
+cyan = "#8ec07c"
+white = "#ebdbb2"
+
+[[colors.indexed_colors]]
+index = 17
+color = "#a16946"
+
+[[colors.indexed_colors]]
+index = 18
+color = "#282828"
+
+[[colors.indexed_colors]]
+index = 19
+color = "#383838"
+
+[[colors.indexed_colors]]
+index = 20
+color = "#b8b8b8"
+
+[[colors.indexed_colors]]
+index = 21
+color = "#e8e8e8"
+
+[colors.selection]
+text = "#ffffff"
+background = "#dc3232"
+
+#########################################
+# End of Makc.co Hepburn Color scheme
+#########################################
+
+# Key bindings
+[[keyboard.bindings]]
+key = "Q"
+mods = "Control|Shift"
+action = "Quit"
