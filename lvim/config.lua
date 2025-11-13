@@ -16,7 +16,7 @@ vim.opt.timeoutlen = 50
 --------------------------------------------------------------------------------------------------
 
 -- Shorten the key mapping function and mapping options for convenience
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 -- Helper function to get shell output
@@ -77,19 +77,19 @@ vim.cmd(
 
 -- Remap LSP hover popup menu from K to gh to navigate between tabs with J / K
 lvim.lsp.buffer_mappings.normal_mode["K"] = nil
-keymap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+keymap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true, desc = "LSP Hover" })
 
 -- Remap joining lines from J to gj to navigate between tabs with J / K
-keymap('n', 'gj', 'J', opts)
+keymap('n', 'gj', 'J', { noremap = true, silent = true, desc = "Join lines" })
 
 -- Remap adding mark from `m` to `<Leader> m` to move tabs left / right with m / M
-keymap('n', '<Leader>m', 'm', opts)
+keymap('n', '<Leader>m', 'm', { noremap = true, silent = true, desc = "Add mark" })
 
 
 
 -- H / L - go to the beginning/end of the line in normal mode
-keymap('n', 'H', '^', opts)
-keymap('n', 'L', '$', opts)
+keymap('n', 'H', '^', { noremap = true, silent = true, desc = "Go to line start" })
+keymap('n', 'L', '$', { noremap = true, silent = true, desc = "Go to line end" })
 
 -- Same for Cyrillic layout
 keymap('n', 'Р', '^', opts)
@@ -97,8 +97,8 @@ keymap('n', 'Д', '$', opts)
 
 -- H / L - mark to the beginning/end (not including line break)
 -- of the line in visual mode
-keymap('v', 'H', '^', opts)
-keymap('v', 'L', 'g_', opts)
+keymap('v', 'H', '^', { noremap = true, silent = true, desc = "Select to line start" })
+keymap('v', 'L', 'g_', { noremap = true, silent = true, desc = "Select to line end" })
 
 -- Same for Cyrillic layout
 keymap('v', 'Р', '^', opts)
@@ -124,31 +124,31 @@ vim.cmd([[
 ]])
 
 vim.cmd([[
- nnoremap <Left> :<C-U>exe ':vertical-resize +' . v:count1<CR><C-c>
+ nnoremap <Left> :<C-U>exe ':vertical resize +' . v:count1<CR><C-c>
 ]])
 
 vim.cmd([[
-  nnoremap <Right> :<C-U>exe ':vertical-resize -' . v:count1<CR><C-c>
+  nnoremap <Right> :<C-U>exe ':vertical resize -' . v:count1<CR><C-c>
 ]])
 ------------------------------------------------------------------
 
 
 
 -- Clear search highlights on pressing `\` (backslash)
-keymap('n', '\\', ':noh<CR>', opts)
+keymap('n', '\\', ':noh<CR>', { noremap = true, silent = true, desc = "Clear search highlights" })
 
 
 -- Fix for vim-numbertoggle plugin not switching from absolute
 -- to relative line numbers when leaving Insert mode with <Ctrl-c>
-keymap('i', '<C-c>', '<C-c>:set rnu<CR>', opts)
+keymap('i', '<C-c>', '<C-c>:set rnu<CR>', { noremap = true, silent = true, desc = "Exit insert with relative numbers" })
 
 
 ----------------------------------------------------------------------------
 --------------------- Visual mode customizing ------------------------------
 ----------------------------------------------------------------------------
 -- Stay in visual mode after changing indent with `<` / `>`
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+keymap("v", "<", "<gv", { noremap = true, silent = true, desc = "Indent left" })
+keymap("v", ">", ">gv", { noremap = true, silent = true, desc = "Indent right" })
 
 
 -- Don't paste replaced text after pasting some text on its' place
@@ -158,14 +158,14 @@ lvim.keys.visual_block_mode = {
 }
 
 -- Move selected text up and down in visual mode
-keymap("v", "<C-j>", ":m .+1<CR>==", opts)
-keymap("v", "<C-k>", ":m .-2<CR>==", opts)
+keymap("v", "<C-j>", ":m .+1<CR>==", { noremap = true, silent = true, desc = "Move line down" })
+keymap("v", "<C-k>", ":m .-2<CR>==", { noremap = true, silent = true, desc = "Move line up" })
 
 -- Move selected text up and down in visual block mode
-keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-keymap("x", "<C-j>", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<C-k>", ":move '<-2<CR>gv-gv", opts)
+keymap("x", "J", ":move '>+1<CR>gv-gv", { noremap = true, silent = true, desc = "Move selection down" })
+keymap("x", "K", ":move '<-2<CR>gv-gv", { noremap = true, silent = true, desc = "Move selection up" })
+keymap("x", "<C-j>", ":move '>+1<CR>gv-gv", { noremap = true, silent = true, desc = "Move selection down" })
+keymap("x", "<C-k>", ":move '<-2<CR>gv-gv", { noremap = true, silent = true, desc = "Move selection up" })
 
 
 
@@ -173,24 +173,24 @@ keymap("x", "<C-k>", ":move '<-2<CR>gv-gv", opts)
 ---------------------- Buffer tabs navigation --------------------------
 ------------------------------------------------------------------------
 -- `g<num>` - Switch to tab number <num>
-keymap('n', 'g1', ':BufferLineGoToBuffer 1<CR>', opts)
-keymap('n', 'g2', ':BufferLineGoToBuffer 2<CR>', opts)
-keymap('n', 'g3', ':BufferLineGoToBuffer 3<CR>', opts)
-keymap('n', 'g4', ':BufferLineGoToBuffer 4<CR>', opts)
-keymap('n', 'g5', ':BufferLineGoToBuffer 5<CR>', opts)
-keymap('n', 'g6', ':BufferLineGoToBuffer 6<CR>', opts)
-keymap('n', 'g7', ':BufferLineGoToBuffer 7<CR>', opts)
-keymap('n', 'g8', ':BufferLineGoToBuffer 8<CR>', opts)
-keymap('n', 'g9', ':BufferLineGoToBuffer 9<CR>', opts)
+keymap('n', 'g1', ':BufferLineGoToBuffer 1<CR>', { noremap = true, silent = true, desc = "Go to buffer 1" })
+keymap('n', 'g2', ':BufferLineGoToBuffer 2<CR>', { noremap = true, silent = true, desc = "Go to buffer 2" })
+keymap('n', 'g3', ':BufferLineGoToBuffer 3<CR>', { noremap = true, silent = true, desc = "Go to buffer 3" })
+keymap('n', 'g4', ':BufferLineGoToBuffer 4<CR>', { noremap = true, silent = true, desc = "Go to buffer 4" })
+keymap('n', 'g5', ':BufferLineGoToBuffer 5<CR>', { noremap = true, silent = true, desc = "Go to buffer 5" })
+keymap('n', 'g6', ':BufferLineGoToBuffer 6<CR>', { noremap = true, silent = true, desc = "Go to buffer 6" })
+keymap('n', 'g7', ':BufferLineGoToBuffer 7<CR>', { noremap = true, silent = true, desc = "Go to buffer 7" })
+keymap('n', 'g8', ':BufferLineGoToBuffer 8<CR>', { noremap = true, silent = true, desc = "Go to buffer 8" })
+keymap('n', 'g9', ':BufferLineGoToBuffer 9<CR>', { noremap = true, silent = true, desc = "Go to buffer 9" })
 
 -- J / K - Go to the next / previous tab
-keymap('n', 'J', ':BufferLineCycleNext<CR>', opts)
-keymap('n', 'K', ':BufferLineCyclePrev<CR>', opts)
+keymap('n', 'J', ':BufferLineCycleNext<CR>', { noremap = true, silent = true, desc = "Next buffer" })
+keymap('n', 'K', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true, desc = "Previous buffer" })
 
 -- `m` - Move current tab to the right
-keymap('n', 'm', ':BufferLineMoveNext<CR>', opts)
+keymap('n', 'm', ':BufferLineMoveNext<CR>', { noremap = true, silent = true, desc = "Move buffer right" })
 -- `M` - Move current tab to the left
-keymap('n', 'M', ':BufferLineMovePrev<CR>', opts)
+keymap('n', 'M', ':BufferLineMovePrev<CR>', { noremap = true, silent = true, desc = "Move buffer left" })
 
 
 
@@ -244,22 +244,23 @@ vim.cmd("cnoremap <M-f>	<S-Right>")
 ----------------------------------------------------------------------------------------------
 -- Change Telescope navigation to use j and k for navigation and n and p for history
 -- in both input and normal mode.
--- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
-local _, actions = pcall(require, "telescope.actions")
-lvim.builtin.telescope.defaults.mappings = {
-  -- for input mode
-  i = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
-    ["<C-n>"] = actions.cycle_history_next,
-    ["<C-p>"] = actions.cycle_history_prev,
-  },
-  -- for normal mode
-  n = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
-  },
-}
+local actions_ok, actions = pcall(require, "telescope.actions")
+if actions_ok then
+  lvim.builtin.telescope.defaults.mappings = {
+    -- for input mode
+    i = {
+      ["<C-j>"] = actions.move_selection_next,
+      ["<C-k>"] = actions.move_selection_previous,
+      ["<C-n>"] = actions.cycle_history_next,
+      ["<C-p>"] = actions.cycle_history_prev,
+    },
+    -- for normal mode
+    n = {
+      ["<C-j>"] = actions.move_selection_next,
+      ["<C-k>"] = actions.move_selection_previous,
+    },
+  }
+end
 
 
 
@@ -296,15 +297,15 @@ lvim.builtin.which_key.mappings["r"] = {
   f = { "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", "Search on current file" },
 }
 
--- trouble.nvim bindings
+-- trouble.nvim bindings (v3 syntax)
 lvim.builtin.which_key.mappings["T"] = {
   name = "+Trouble",
-  r = { "<cmd>Trouble lsp_references<cr>", "References" },
-  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
+  r = { "<cmd>Trouble lsp_references toggle<cr>", "References" },
+  f = { "<cmd>Trouble lsp_definitions toggle<cr>", "Definitions" },
+  d = { "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", "Buffer Diagnostics" },
+  w = { "<cmd>Trouble diagnostics toggle<cr>", "Workspace Diagnostics" },
+  q = { "<cmd>Trouble qflist toggle<cr>", "QuickFix" },
+  l = { "<cmd>Trouble loclist toggle<cr>", "LocationList" },
 }
 
 -- persistence.nvim bindings
@@ -314,15 +315,6 @@ lvim.builtin.which_key.mappings["S"] = {
   l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
   Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 }
-
--- -- Copilot.nvim bindings // disabled by now
--- lvim.builtin.which_key.mappings["C"] = {
---   name = "Copilot",
---   p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
---   s = { "<cmd>Copilot status<cr>", "Copilot status" },
---   e = { "<cmd>Copilot enable<cr><cmd>echo 'Copilot enabled'<cr>", "Copilot enable" },
---   d = { "<cmd>Copilot disable<cr><cmd>echo 'Copilot disabled'<cr>", "Copilot disable" },
--- }
 
 ---------------------------------------------------------------------
 ------ Live grep selected text in visual mode with `<Leader>g` ------
@@ -425,23 +417,26 @@ lvim.plugins = {
   },
   -- A pretty diagnostics, references, telescope results, quickfix and location list
   { "folke/trouble.nvim" },
-  -- hex color codes colorizer
+  -- hex color codes colorizer (using maintained fork)
   {
-    "norcalli/nvim-colorizer.lua",
+    "NvChad/nvim-colorizer.lua",
     config = function()
-      require("colorizer").setup({ "css", "scss", "html", "javascript", "tmux" }, {
-        RGB = true,      -- #RGB hex codes
-        RRGGBB = true,   -- #RRGGBB hex codes
-        RRGGBBAA = true, -- #RRGGBBAA hex codes
-        rgb_fn = true,   -- CSS rgb() and rgba() functions
-        hsl_fn = true,   -- CSS hsl() and hsla() functions
-        css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
+      require("colorizer").setup({
+        filetypes = { "css", "scss", "html", "javascript", "tmux" },
+        user_default_options = {
+          RGB = true,      -- #RGB hex codes
+          RRGGBB = true,   -- #RRGGBB hex codes
+          RRGGBBAA = true, -- #RRGGBBAA hex codes
+          rgb_fn = true,   -- CSS rgb() and rgba() functions
+          hsl_fn = true,   -- CSS hsl() and hsla() functions
+          css = true,      -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+          css_fn = true,   -- Enable all CSS *functions*: rgb_fn, hsl_fn
+        },
       })
     end,
   },
-  -- -- Python extension for nvim-dap
-  -- "mfussenegger/nvim-dap-python",
+  -- Python extension for nvim-dap
+  "mfussenegger/nvim-dap-python",
   -- -- Python Venv Selector
   -- {
   --   "linux-cultist/venv-selector.nvim",
@@ -479,57 +474,6 @@ lvim.plugins = {
       })
     end,
   },
-  ----------------------------------------------------------------
-  -- -- Copilot.lua settings // disabled by now
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   cmd = "Copilot",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require("copilot").setup({
-  --       panel = {
-  --         auto_refresh = true,
-  --         keymap = {
-  --           jump_prev = "[",
-  --           jump_next = "]",
-  --           accept = "<CR>",
-  --           refresh = "gr",
-  --           open = "<M-CR>"
-  --         },
-  --         layout = {
-  --           ratio = 0.3
-  --         },
-  --       },
-  --       suggestion = {
-  --         enabled = true,
-  --         auto_trigger = false,
-  --         keymap = {
-  --           accept = "<C-v>",
-  --           accept_word = "<C-f>",
-  --           accept_line = "<C-l>",
-  --           next = "<M-]>",
-  --           prev = "<M-[>",
-  --           dismiss = "<C-z>",
-  --         },
-  --       },
-  --       filetypes = {
-  --         -- Explicitly specify filetypes to use Copilot
-  --         javascript = true,
-  --         typescript = true,
-  --         html = true,
-  --         css = true,
-  --         django = true,
-  --         python = true,
-  --         lua = true,
-  --         ["*"] = false, -- disable for all other filetypes
-  --       },
-  --     })
-  --     -- vim.g.copilot_assume_mapped = true
-  --     -- vim.g.copilot_no_tab_map = true
-  --     -- -- Get copilot proxy from pass command (requires pass installed)
-  --     -- vim.g.copilot_proxy = get_shell_command_output("pass copilot_proxy")
-  --   end,
-  -- },
 }
 
 
@@ -568,8 +512,8 @@ lvim.plugins = {
 --############# Autocommands (https://neovim.io/doc/user/autocmd.html) ####################
 --#########################################################################################
 
--- Reload LunarVim config after launch, to make work bindings / hotkeys
--- that use dirty hacks and black magic =)
+-- Reload LunarVim config after launch, required for some keybindings/hacks to work
+-- (e.g., <Leader>o/<Leader>O for adding blank lines)
 vim.api.nvim_create_autocmd("VimEnter", {
   command = "LvimReload",
 })
@@ -625,11 +569,16 @@ lvim.builtin.treesitter.ensure_installed = {
   "typescript",
   "tsx",
   "css",
+  "html",
   "rust",
   "java",
   "yaml",
+  "toml",
   "markdown",
   "markdown_inline",
+  "regex",
+  "vim",
+  "vimdoc",
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
@@ -792,10 +741,16 @@ linters.setup {
 ---------------------------------------------------------------------------------------------
 -- Setup dap for python
 lvim.builtin.dap.active = true
-local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
-pcall(function() require("dap-python").setup(mason_path .. "packages/debugpy/venv/bin/python") end)
+local mason_path = vim.fn.stdpath("data") .. "/mason/"
 
--- Supported test frameworks are unittest, pytest and django. By default it
--- tries to detect the runner by probing for pytest.ini and manage.py, if
--- neither are present it defaults to unittest.
-pcall(function() require("dap-python").test_runner = "pytest" end)
+-- Setup Python DAP with proper error handling
+local dap_python_ok, dap_python = pcall(require, "dap-python")
+if dap_python_ok then
+  dap_python.setup(mason_path .. "packages/debugpy/venv/bin/python")
+  -- Supported test frameworks are unittest, pytest and django. By default it
+  -- tries to detect the runner by probing for pytest.ini and manage.py, if
+  -- neither are present it defaults to unittest.
+  dap_python.test_runner = "pytest"
+else
+  vim.notify("dap-python not installed. Install via :Mason", vim.log.levels.WARN)
+end
