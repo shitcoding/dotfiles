@@ -1,0 +1,11 @@
+# Plugin lock file (each machine gets latest versions)
+lazy-lock.json
+
+# LazyVim state file (auto-generated, tracks UI-enabled extras)
+lazyvim.json
+
+# Session state files
+session/
+
+# Migration guides (temporary)
+lunarvim_to_lazyvim_migration/
