@@ -4,7 +4,7 @@ export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
 
 export XDG_CONFIG_HOME=$HOME/.config
-export EDITOR=$HOME/.local/bin/lvim
+export EDITOR=nvim
 export EZA_CONFIG_DIR=$HOME/.config/eza/
 
 # Set up lunarvim in order to make tmux-resurrect plugin restore lvim sessions
