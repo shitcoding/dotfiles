@@ -10,6 +10,9 @@ macos-option-as-alt = left
 window-width = 80
 window-height = 42
 
+# Disable padding balance (no extra space at bottom)
+window-padding-balance = false
+
 # Window position
 window-position-x = 0
 window-position-y = 0
