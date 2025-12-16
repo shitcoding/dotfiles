@@ -11,6 +11,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$"
@@ -48,6 +49,7 @@
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^vim$",
                                             "^nvim$",
                                             "^lvim$",
@@ -83,6 +85,7 @@
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^vim$",
                                             "^nvim$",
                                             "^lvim$",
@@ -119,6 +122,7 @@
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^vim$",
                                             "^nvim$",
                                             "^lvim$",
@@ -154,6 +158,7 @@
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^vim$",
                                             "^nvim$",
                                             "^lvim$",
@@ -189,6 +194,7 @@
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^vim$",
                                             "^nvim$",
                                             "^lvim$",
@@ -224,6 +230,7 @@
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^vim$",
                                             "^nvim$",
                                             "^lvim$",
@@ -260,6 +267,7 @@
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^vim$",
                                             "^nvim$",
                                             "^lvim$",
@@ -295,6 +303,7 @@
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^vim$",
                                             "^nvim$",
                                             "^lvim$",
@@ -330,6 +339,7 @@
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^vim$",
                                             "^nvim$",
                                             "^lvim$",
@@ -364,6 +374,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$"
@@ -390,6 +401,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$"
@@ -416,6 +428,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$"
@@ -442,6 +455,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$"
@@ -538,6 +552,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$",
@@ -562,6 +577,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$",
@@ -586,6 +602,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$",
@@ -610,6 +627,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
+                                            "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$",
