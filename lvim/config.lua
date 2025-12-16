@@ -364,6 +364,10 @@ lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true -- enable builtin terminal (`Ctrl+\` to toggle)
 
+-- Disable vim-illuminate due to none-ls compatibility issues with Neovim 0.11+
+lvim.builtin.illuminate.active = false
+
+
 -- Nvim-Tree options
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
@@ -584,6 +588,14 @@ lvim.builtin.treesitter.ensure_installed = {
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
+-- Disable treesitter highlighting for markdown to fix "Invalid 'end_col': out of range" error
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown" },
+  callback = function()
+    vim.treesitter.stop()
+  end,
+})
+
 -- -- make sure server will always be installed even if the server is in skipped_servers list
 -- lvim.lsp.installer.setup.ensure_installed = {
 --   "lua_ls",
@@ -677,62 +689,28 @@ require("lspconfig").pyright.setup {
 ---------------------------------------------------------------------------------------------
 ---------------------------------- Formatters config ----------------------------------------
 ---------------------------------------------------------------------------------------------
--- set a formatter, this will override the language server formatting capabilities (if it exists)
-local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup {
-  -- Python formatter
-  {
-    command = "blue",
-    filetypes = { "python" },
-  },
-  -- {
-  --   command = "black",
-  --   filetypes = { "python" },
-  --   extra_args = { "--line-length=79" }
-  -- },
-  { command = "isort", filetypes = { "python" } },
-  -- -- SQL formatter
-  -- {
-  --   command = "sqlfmt",
-  --   filetypes = { "sql" },
-  -- },
-  --  {
-  --    -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
-  --    command = "prettier",
-  --    ---@usage arguments to pass to the formatter
-  --    -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
-  --    extra_args = { "--print-with", "100" },
-  --    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-  --    filetypes = { "typescript", "typescriptreact" },
-  --  },
-}
+-- NOTE: Disabled due to none-ls incompatibility with Neovim 0.11+
+-- Re-enable once LunarVim updates none-ls or switches to conform.nvim/nvim-lint
+-- local formatters = require "lvim.lsp.null-ls.formatters"
+-- formatters.setup {
+--   { command = "blue", filetypes = { "python" } },
+--   { command = "isort", filetypes = { "python" } },
+-- }
 
 
 
 ---------------------------------------------------------------------------------------------
 ----------------------------------- Linters config ------------------------------------------
 ---------------------------------------------------------------------------------------------
--- set additional linters
-local linters = require "lvim.lsp.null-ls.linters"
-linters.setup {
-  {
-    command = "flake8",
-    filetypes = { "python" },
-    prefer_local = ".venv/bin" -- prefer local .venv flake8 installation in order to use plugins like wemake-style-guide
-  },
-  --  {
-  --    -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
-  --    command = "shellcheck",
-  --    ---@usage arguments to pass to the formatter
-  --    -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
-  --    extra_args = { "--severity", "warning" },
-  --  },
-  --  {
-  --    command = "codespell",
-  --    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-  --    filetypes = { "javascript", "python" },
-  --  },
-}
+-- NOTE: Disabled due to none-ls incompatibility with Neovim 0.11+
+-- local linters = require "lvim.lsp.null-ls.linters"
+-- linters.setup {
+--   {
+--     command = "flake8",
+--     filetypes = { "python" },
+--     prefer_local = ".venv/bin"
+--   },
+-- }
 
 
 
