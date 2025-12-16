@@ -57,7 +57,7 @@ alias qrstring='qrencode -t ansiutf8'
 
 
 ##### Launching various tools #############################
-alias v='lvim'
+alias v='nvim'
 alias t='tmux'
 alias lg='lazygit'
 alias ldc='lazydocker'
