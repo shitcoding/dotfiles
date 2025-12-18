@@ -1,0 +1,4 @@
+# Apps that should have square borders (one per line)
+# Lines starting with # are ignored
+Ghostty
+Alacritty
