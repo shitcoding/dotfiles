@@ -4,6 +4,15 @@
 # Reads app names from square_apps.txt in the same directory.
 #
 
+# Prevent duplicate instances
+PID_FILE="/tmp/borders_watcher.pid"
+if [[ -f "$PID_FILE" ]] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
+    echo "Another instance is already running. Exiting."
+    exit 1
+fi
+echo $$ > "$PID_FILE"
+trap "rm -f '$PID_FILE'" EXIT
+
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 CONFIG_FILE="$SCRIPT_DIR/square_apps.txt"
 SWIFT_HELPER="$SCRIPT_DIR/get_windows.swift"
