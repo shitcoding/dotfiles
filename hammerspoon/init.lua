@@ -59,3 +59,42 @@ end
 -- Bind the function to Cmd-0
 hs.hotkey.bind({"cmd"}, "0", switchToLastSpace)
 -------------------------------------------------------------------------
+
+---------------- Auto-switch to English for terminal apps ----------------
+local terminalApps = {"Ghostty", "Alacritty", "iTerm2", "Terminal", "kitty", "WezTerm", "com.mitchellh.ghostty"}
+
+local lastApp = nil
+
+local function switchToEnglish()
+    hs.keycodes.setLayout("U.S.")
+end
+
+local function isTerminalApp(appName)
+    for _, term in ipairs(terminalApps) do
+        if appName == term then
+            return true
+        end
+    end
+    return false
+end
+
+local function checkFrontmostApp()
+    local app = hs.application.frontmostApplication()
+    if app then
+        local appName = app:name()
+        local bundleID = app:bundleID()
+
+        if appName ~= lastApp then
+            lastApp = appName
+
+            if isTerminalApp(appName) or isTerminalApp(bundleID) then
+                switchToEnglish()
+            end
+        end
+    end
+end
+
+-- Check every 0.1 seconds
+appTimer = hs.timer.new(0.1, checkFrontmostApp)
+appTimer:start()
+-------------------------------------------------------------------------
