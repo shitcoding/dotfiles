@@ -21,6 +21,10 @@ nmap \ :nohl<CR>
 " Yank to system clipboard
 set clipboard=unnamed
 
+" Scroll viewport one line with Ctrl-p/n (like Ctrl-y/e)
+nmap <C-p> <C-y>
+nmap <C-n> <C-e>
+
 " gj - Join the current line with the line beyond with a space in between
 noremap gj J
 
@@ -69,22 +73,28 @@ map S} :surround_curly_brackets<CR>
 map S^ :surround_superscript<CR>
 map S_ :surround_subscript<CR>
 
-" Same bindings for Russian layout
-nunmap Ы
-vunmap Ы
-map Ы" :surround_double_quotes<CR>
-map Ы' :surround_single_quotes<CR>
-map Ы` :surround_asterisc<CR>
-map Ыb :surround_brackets<CR>
-map Ы( :surround_brackets<CR>
-map Ы) :surround_brackets<CR>
-map Ы[ :surround_square_brackets<CR>
-map Ы] :surround_square_brackets<CR>
-map Ы{ :surround_curly_brackets<CR>
-map Ы} :surround_curly_brackets<CR>
+"""""""""""""" Flash navigation (obsidian-flash plugin) """"""""""""""
+" Flash Mode: press s or gs, type 2+ chars, labels appear on ALL matches
+" Supports Russian/Cyrillic text - labels match input layout.
+exmap flashMode obcommand obsidian-flash:activate-flash-mode
+nmap s :flashMode<CR>
+vmap s :flashMode<CR>
+
+" Jump to Anywhere: <Space>s shows labels on all words immediately (easymotion-style)
+exmap flashAnywhere obcommand obsidian-flash:activate-flash-anywhere
+nmap <Space>s :flashAnywhere<CR>
+vmap <Space>s :flashAnywhere<CR>
 
 
-"""""""""""""" Begin Mappings for Russian layout """"""""""""""
+"""""""""""""" Russian layout support via langmap """"""""""""""
+" Maps Russian ЙЦУКЕН layout to QWERTY for normal/visual mode
+" KNOWN BUG: ж (;) and б (,) cannot be mapped due to Obsidian bug with
+" physical semicolon/comma keys on non-English layouts. Use English layout
+" for f/t repeat motions (;/,).
+" Also removed: э (') and Э (") due to quote escaping issues in langmap.
+set langmap=йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,яz,чx,сc,мv,иb,тn,ьm,ю.,ё`,ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х{,Ъ},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Ж:,ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б<,Ю>,Ё~
+
+" Ctrl mappings for Russian layout
 imap <C-с> <Esc>
 nmap <C-с> <Esc>
 vmap <C-с> <Esc>
@@ -97,147 +107,4 @@ nmap <C-г> <C-u>
 nmap <C-в> <C-d>
 vmap <C-г> <C-u>
 vmap <C-в> <C-d>
-
-
-nmap й q
-nmap Й Q
-nmap ц w
-nmap Ц W
-nmap у e
-nmap У E
-nmap к r
-nmap К R
-nmap е t
-nmap Е T
-nmap н y
-nmap Н Y
-nmap г u
-nmap Г U
-nmap ш i
-nmap Ш I
-nmap щ o
-nmap Щ O
-nmap з p
-nmap З P
-nmap х [
-nmap Х {
-nmap ъ ]
-nmap Ъ }
-vmap й q
-vmap Й Q
-vmap ц w
-vmap Ц W
-vmap у e
-vmap У E
-vmap к r
-vmap К R
-vmap е t
-vmap Е T
-vmap н y
-vmap Н Y
-vmap г u
-vmap Г U
-vmap ш i
-vmap Ш I
-vmap щ o
-vmap Щ O
-vmap з p
-vmap З P
-vmap х [
-vmap Х {
-vmap ъ ]
-vmap Ъ }
-
-nmap ф a
-nmap Ф A
-nmap ы s
-nmap Ы S
-nmap в d
-nmap В D
-nmap а f
-nmap А F
-nmap п g
-nmap П G
-nmap р h
-nmap Р H
-nmap о j
-nmap О J
-nmap л k
-nmap Л K
-nmap д l
-nmap Д L
-nmap ж ;
-nmap Ж :
-nmap э '
-nmap Э "
-vmap ф a
-vmap Ф A
-vmap ы s
-vmap Ы S
-vmap в d
-vmap В D
-vmap а f
-vmap А F
-vmap п g
-vmap П G
-vmap р h
-vmap Р ^
-vmap о j
-vmap О J
-vmap л k
-vmap Л K
-vmap д l
-vmap Д $
-vmap ж ;
-vmap Ж :
-vmap э '
-vmap Э "
-
-nmap я z
-nmap Я Z
-nmap ч x
-nmap Ч X
-nmap с c
-nmap С C
-nmap м v
-nmap М V
-nmap и b
-nmap И B
-nmap т n
-nmap Т N
-nmap ь m
-nmap Ь M
-nmap б ,
-nmap Б <
-nmap ю .
-nmap Ю >
-vmap я z
-vmap Я Z
-vmap ч x
-vmap Ч X
-vmap с c
-vmap С C
-vmap м v
-vmap М V
-vmap и b
-vmap И B
-vmap т n
-vmap Т N
-vmap ь m
-vmap Ь M
-vmap б ,
-vmap Б <
-vmap ю .
-vmap Ю >
-
-nmap ё `
-nmap Ё ~
-nmap № #
-nmap ? &
-vmap ё `
-vmap Ё ~
-vmap № #
-
-
-"""""""""""""" End of Mappings for Russian layout """"""""""""""
 
