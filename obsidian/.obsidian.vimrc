@@ -25,8 +25,8 @@ set clipboard=unnamed
 nmap <C-p> <C-y>
 nmap <C-n> <C-e>
 
-" gj - Join the current line with the line beyond with a space in between
-noremap gj J
+" gJ - Join the current line with the line below (preserves gj/gk for visual line navigation)
+nmap gJ :join<CR>
 
 " Switch tabs in normal mode with J / K
 unmap J
@@ -40,6 +40,13 @@ exmap closetab obcommand workspace:close
 nmap ZZ :closetab<CR>
 nmap ZQ :closetab<CR>
 
+" Folding operations for headings
+exmap togglefold obcommand editor:toggle-fold
+exmap foldall obcommand editor:fold-all
+exmap unfoldall obcommand editor:unfold-all
+nmap zf :togglefold<CR>
+nmap zU :unfoldall<CR>
+nmap zF :foldall<CR>
 
 " Reload Obsidian
 exmap reload_obsidian obcommand app:reload
