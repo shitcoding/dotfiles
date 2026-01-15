@@ -67,7 +67,9 @@ unbind n
 unbind p
 
 # `Ctrl+Space`: switch to the last active window
-bind -n C-Space last-window        
+bind -n C-Space last-window
+# `Ctrl+Option+Space`: switch to the last active session
+bind -n C-M-Space switch-client -l        
 
 # # `<Prefix>+h`: select previous window (next to the left)
 # bind -r C-h previous-window 
