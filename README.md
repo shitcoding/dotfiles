@@ -67,7 +67,7 @@ Comprehensive tmux configuration with:
   - `tmux-yank` - system clipboard integration
   - `tmux-resurrect` - save/restore sessions
   - `tmux-fzf` - fuzzy finder integration
-- Resurrect support for: `vim`, `nvim`, `lvim`, `htop`, `btop`, `nvitop`, `lazygit`
+- Resurrect support for: `vim`, `nvim`, `htop`, `btop`, `nvitop`, `lazygit`
 
 **Files:**
 - `tmux/.tmux.conf` → `~/.tmux.conf`
@@ -95,29 +95,30 @@ Classic Vim configuration with extensive plugins via vim-plug:
 
 **File:** `vim/.vimrc` → `~/.vimrc`
 
-#### LunarVim (LVim)
-Neovim IDE layer with extensive customization:
+#### LazyVim
+Neovim IDE layer built on [LazyVim](https://www.lazyvim.org/) with extensive customization:
 - **VSCode** color scheme with transparency
 - Custom keybindings matching Vim configuration
-- J/K for buffer tab navigation
-- Extensive LSP configuration:
-  - Python: Pyright, flake8, black/blue, debugpy
-  - SQL: sqlls with custom config
-  - Bash, Dockerfile, YAML, CSS, and more
-- Plugins:
-  - `persistence.nvim` - session management
-  - `trouble.nvim` - diagnostics viewer
-  - `nvim-spectre` - search and replace
-  - `venv-selector` - Python virtual environment selector
-  - `nvim-colorizer` - hex color visualization
-  - `mason-tool-installer` - auto-install LSPs/formatters
-- Custom Telescope bindings for fuzzy finding
-- DAP (Debug Adapter Protocol) for Python
+- J/K for buffer tab navigation, g1-g9 for direct buffer access
+- m/M for buffer reordering
+- H/L for line beginning/end navigation
+- vim-surround style keybindings via mini.surround
+- Flash.nvim for enhanced navigation with labels
+- Emacs-style command line navigation
+- Russian keyboard layout support via langmap
+- LazyExtras for optional language support (Python, etc.)
 
 **Files:**
-- `lvim/config.lua` → LunarVim main config
-- `lvim/codedarker.lua` → Custom color scheme
-- `lvim/htmldjango.vim` → Django template support
+- `lazyvim/` → `~/.config/nvim/`
+- `lazyvim/lua/config/keymaps.lua` → Custom key mappings
+- `lazyvim/lua/config/options.lua` → Vim options
+- `lazyvim/lua/plugins/` → Plugin configurations
+
+#### LunarVim (Legacy)
+> **Note:** LunarVim is now deprecated. Configuration is kept for reference but LazyVim is the primary editor.
+
+**Files:**
+- `lvim/config.lua` → LunarVim config (legacy)
 
 ### Keyboard Remapping
 
@@ -239,7 +240,7 @@ sni, snu        # nala (better apt) install, upgrade
 
 ### Development
 ```bash
-v              # lvim (LunarVim)
+v              # nvim (LazyVim)
 lg             # lazygit
 ldc            # lazydocker
 py, pym        # python3, python3 -m
@@ -317,7 +318,7 @@ Copies dotfiles to appropriate locations (basic setup)
 - `oh-my-zsh` - Zsh framework
 - `powerlevel10k` - Zsh theme
 - `tmux` - Terminal multiplexer
-- `vim` or `neovim` - Text editor
+- `neovim` - Text editor (with LazyVim)
 
 ### Recommended
 - `alacritty` or `kitty` - Terminal emulator
@@ -347,6 +348,7 @@ Copies dotfiles to appropriate locations (basic setup)
 
 ## Recent Updates
 
+- **Editor: Migrated from LunarVim to LazyVim** (LunarVim is deprecated)
 - Karabiner: Ctrl-b as backspace (except terminals)
 - Karabiner: Emacs text editing bindings
 - Karabiner: Cmd-hjkl for tmux pane switching
