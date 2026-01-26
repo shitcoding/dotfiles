@@ -3,3 +3,6 @@ karabiner/automatic_backups/
 
 # Backup directory
 _backups/
+
+# Various service stuff
+.serena/
