@@ -28,6 +28,12 @@ nmap <C-n> <C-e>
 " gJ - Join the current line with the line below (preserves gj/gk for visual line navigation)
 nmap gJ :join<CR>
 
+" Add blank line below/above without entering insert mode (like <Space>o/O in Neovim)
+exmap blankBelow jscommand { const cursor = editor.getCursor(); editor.replaceRange('\n', {line: cursor.line, ch: editor.getLine(cursor.line).length}); }
+exmap blankAbove jscommand { const cursor = editor.getCursor(); editor.replaceRange('\n', {line: cursor.line, ch: 0}); }
+nmap <Space>o :blankBelow<CR>
+nmap <Space>O :blankAbove<CR>
+
 " Switch tabs in normal mode with J / K
 unmap J
 exmap nexttab obcommand workspace:next-tab
