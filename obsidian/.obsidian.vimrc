@@ -34,6 +34,10 @@ exmap blankAbove jscommand { const cursor = editor.getCursor(); editor.replaceRa
 nmap <Space>o :blankBelow<CR>
 nmap <Space>O :blankAbove<CR>
 
+" Add horizontal rule (---) below current line
+exmap hrBelow jscommand { const cursor = editor.getCursor(); editor.replaceRange('\n---', {line: cursor.line, ch: editor.getLine(cursor.line).length}); }
+nmap - :hrBelow<CR>
+
 " Switch tabs in normal mode with J / K
 unmap J
 exmap nexttab obcommand workspace:next-tab
