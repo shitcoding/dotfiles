@@ -480,15 +480,55 @@
                         ]
                     },
                     {
-                        "description": "Left Cmd → F3 for Mission Control when pressed alone, regular Cmd otherwise",
+                        "description": "Double Left Cmd → F3 for Mission Control",
                         "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "left_command pressed",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_command",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "f3" }],
+                                "type": "basic"
+                            },
                             {
                                 "from": {
                                     "key_code": "left_command",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "key_code": "left_command" }],
-                                "to_if_alone": [{ "key_code": "f3" }],
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "left_command pressed",
+                                            "value": 1
+                                        }
+                                    },
+                                    { "key_code": "left_command" }
+                                ],
+                                "to_delayed_action": {
+                                    "to_if_canceled": [
+                                        {
+                                            "set_variable": {
+                                                "name": "left_command pressed",
+                                                "value": 0
+                                            }
+                                        }
+                                    ],
+                                    "to_if_invoked": [
+                                        {
+                                            "set_variable": {
+                                                "name": "left_command pressed",
+                                                "value": 0
+                                            }
+                                        }
+                                    ]
+                                },
                                 "type": "basic"
                             }
                         ]
