@@ -198,6 +198,14 @@
       "key": "T"
     }
   ],
+  "tabjump:switch": [
+    {
+      "modifiers": [
+        "Ctrl"
+      ],
+      "key": " "
+    }
+  ],
   "obsidian-heading-shifter:apply-heading0": [
     {
       "modifiers": [
@@ -269,5 +277,7 @@
       ],
       "key": "="
     }
-  ]
+  ],
+  "tabjump:move-tab-left": [],
+  "tabjump:move-tab-right": []
 }

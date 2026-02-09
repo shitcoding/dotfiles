@@ -54,6 +54,12 @@ exmap closetab obcommand workspace:close
 nmap ZZ :closetab<CR>
 nmap ZQ :closetab<CR>
 
+" Move tab left/right (TabJump plugin)
+exmap movetableft obcommand tabjump:move-tab-left
+exmap movetabright obcommand tabjump:move-tab-right
+nmap M :movetableft<CR>
+nmap m :movetabright<CR>
+
 " Folding operations for headings
 exmap togglefold obcommand editor:toggle-fold
 exmap foldall obcommand editor:fold-all
