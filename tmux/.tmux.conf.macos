@@ -48,9 +48,9 @@ bind -n M-8 select-window -t 8
 bind -n M-9 select-window -t 9
 
 
-# Enter copy/yank mode with `<Ctrl> y` instead of `<Prefix> [`
+# Enter yankee mode (scrollback with line numbers) with `<Ctrl> y`
+# Replaces native copy-mode binding — yankee is a superset.
 unbind [
-bind -n C-y copy-mode
 
 # Vim keys in copypaste/yank mode (hjkl, v, y)
 set-window-option -g mode-keys vi
@@ -164,8 +164,9 @@ set -g @plugin 'tmux-plugins/tpm' # TPM plugin manager
 # A set of sensible tmux options
 set -g @plugin 'tmux-plugins/tmux-sensible'
 
-# tmux-yank - yank to system clipboard in copy mode
-set -g @plugin 'tmux-plugins/tmux-yank'
+# tmux-yankee: vim-flavored copy-mode replacement (superset of tmux-yank).
+# Binary is downloaded from the latest GitHub release on first plugin load.
+set -g @plugin 'shitcoding/tmux_yankee'
 
 # Save and restore tmux sessions and windows
 # `<Prefix> <Ctrl>+s` to save
@@ -276,6 +277,17 @@ set -gu @continuum-save-interval
 run-shell 'rm -f ~/.config/opencode/plugins/session-tracker.js'
 
 
+
+# tmux-yankee settings — values are read by yankee.tmux at plugin load.
+# The plugin entry script is re-run below so it sees these settings
+# (TPM's initial auto-run at startup happens before this block).
+set -g @yankee_key "C-y"
+set -g @yankee_key_table "root"
+set -g @yankee_wrap_mode "on"
+set -g @yankee_mouse "on"
+set -g @yankee_bind_H "first_nonblank"
+set -g @yankee_bind_L "last_nonblank"
+run-shell '~/.tmux/plugins/tmux_yankee/yankee.tmux'
 
 # tmux-fzf settings
 # Info: https://github.com/sainnhe/tmux-fzf
