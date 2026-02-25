@@ -119,7 +119,9 @@ vmap <Space>s :flashAnywhere<CR>
 " physical semicolon/comma keys on non-English layouts. Use English layout
 " for f/t repeat motions (;/,).
 " Also removed: э (') and Э (") due to quote escaping issues in langmap.
-set langmap=йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,яz,чx,сc,мv,иb,тn,ьm,ю.,ё`,ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х{,Ъ},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Ж:,ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б<,Ю>,Ё~
+" NOTE: macOS Russian layout sends Latin Ë (U+00CB) for Shift+`, not Cyrillic Ё (U+0401).
+" The ё/Ë entries use the actual characters macOS produces.
+set langmap=йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,яz,чx,сc,мv,иb,тn,ьm,ю.,ё`,ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х{,Ъ},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Ж:,ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б<,Ю>,Ë~
 
 " Ctrl mappings for Russian layout
 imap <C-с> <Esc>
@@ -129,6 +131,12 @@ vmap <C-с> <Esc>
 imap <C-х> <Esc>
 nmap <C-х> <Esc>
 vmap <C-х> <Esc>
+
+" Toggle case: overrides built-in ~ with Unicode-aware JS implementation.
+" Built-in ~ uses ASCII-only regex ([a-z]/[A-Z]) so it fails on Cyrillic.
+" This also makes Ё work on Russian layout via langmap (Ё→~→togglecase).
+exmap togglecase jscommand { const cur = editor.getCursor(); const from = { line: cur.line, ch: cur.ch }; const to = { line: cur.line, ch: cur.ch + 1 }; const ch = editor.getRange(from, to); if (!ch) return; const toggled = (ch === ch.toUpperCase()) ? ch.toLowerCase() : ch.toUpperCase(); editor.replaceRange(toggled, from, to); editor.setCursor(cur); }
+nmap ~ :togglecase<CR>
 
 nmap <C-г> <C-u>
 nmap <C-в> <C-d>
