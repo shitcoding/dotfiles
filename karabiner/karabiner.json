@@ -534,6 +534,60 @@
                         ]
                     },
                     {
+                        "description": "Double Right Cmd → F3 for Mission Control",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "right_command pressed",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "right_command",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "f3" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "right_command",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "right_command pressed",
+                                            "value": 1
+                                        }
+                                    },
+                                    { "key_code": "right_command" }
+                                ],
+                                "to_delayed_action": {
+                                    "to_if_canceled": [
+                                        {
+                                            "set_variable": {
+                                                "name": "right_command pressed",
+                                                "value": 0
+                                            }
+                                        }
+                                    ],
+                                    "to_if_invoked": [
+                                        {
+                                            "set_variable": {
+                                                "name": "right_command pressed",
+                                                "value": 0
+                                            }
+                                        }
+                                    ]
+                                },
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Left Ctrl + hjkl to arrow keys with exclusions and pass Ctrl-Cmd-H/L/K to BTT",
                         "manipulators": [
                             {
