@@ -118,3 +118,8 @@ background = "#dc3232"
 key = "Q"
 mods = "Control|Shift"
 action = "Quit"
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
