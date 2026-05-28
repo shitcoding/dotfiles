@@ -76,6 +76,11 @@ alias lg='lazygit'
 alias ldc='lazydocker'
 
 
+##### AI tool aliases #############################
+# Claude Code in bypass-permissions mode (skip all permission prompts)
+alias cdsp='claude --dangerously-skip-permissions'
+
+
 ##### Linux shortcuts and various fixes / hacks ##########
 # Restart gnome shell (kills open apps)
 alias restart-gnome='pkill -HUP gnome-shell && sudo systemctl restart gdm.service'

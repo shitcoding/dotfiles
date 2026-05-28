@@ -66,6 +66,9 @@ alias ldc='lazydocker'
 ##### AI tool aliases #############################
 alias aie='aichat -e'
 
+# Claude Code in bypass-permissions mode (skip all permission prompts)
+alias cdsp='claude --dangerously-skip-permissions'
+
 
 ##### Soundcloud and music #############################
 alias scld='scdl --path ~/Downloads/_music --onlymp3 -l ' # Download one track
