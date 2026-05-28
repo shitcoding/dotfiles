@@ -1,4 +1,15 @@
-# Apps that should have square borders (one per line)
-# Lines starting with # are ignored
+# Apps that should have square borders (one rule per line).
+#
+# Format:
+#   AppName                  → match any window of AppName
+#   AppName:titleSubstring   → match only AppName windows whose title contains
+#                               the given substring (case-sensitive).
+#
+# Lines starting with # are ignored.
+
 Ghostty
 Alacritty
+
+# Vimput popup is a kitty window titled "Vimput". Square only that one,
+# leaving any other kitty windows on the default rounded border.
+kitty:Vimput

@@ -95,12 +95,25 @@ The watcher script applies square borders to specific apps (useful for terminals
 
 ### Configure apps
 
-Edit `square_apps.txt` to list apps that should have square borders (one per line):
+Edit `square_apps.txt`. Each rule is one of:
+
+- `AppName` — match any window of that app.
+- `AppName:substring` — match windows of that app where either the window
+  title contains the substring (case-sensitive), OR — when the title isn't
+  readable — the owning process's command-line contains the substring
+  (case-insensitive). `kCGWindowName` requires Screen Recording permission,
+  which the `swift` helper usually doesn't have, so the cmdline fallback
+  is what kicks in for most users.
 
 ```
 # Apps with square borders
 Ghostty
 Alacritty
+
+# Single-window discrimination: square the Vimput popup (kitty window
+# launched with --instance-group vimput) but leave other kitty windows
+# on the default rounded border.
+kitty:Vimput
 ```
 
 Changes take effect automatically (no restart needed).
