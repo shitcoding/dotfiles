@@ -152,6 +152,10 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 # `<Prefix> <Ctrl>+r` to restore
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 
+# Relaunch Claude Code sessions in their original panes on resurrect restore.
+# Hooks into tmux-resurrect's post-save-all / post-restore-all (no continuum needed).
+set -g @plugin 'timvw/tmux-assistant-resurrect'
+
 # tmux-fzf
 set -g @plugin 'sainnhe/tmux-fzf'
 
@@ -242,6 +246,14 @@ set-option -wg window-status-format "#{?window_zoomed_flag,#[fg=default bold],#[
 ##########################################################################
 # Make tmux-resurrect plugin restore additional programs
 set -g @resurrect-processes 'vim nvim lvim htop btop nvitop lazygit'
+
+# tmux-assistant-resurrect cleanup:
+# Plugin entrypoint unconditionally sets @continuum-restore + @continuum-save-interval
+# (we don't use continuum) and symlinks an OpenCode plugin we don't need. Undo both
+# AFTER TPM has loaded — runs once per config source / tmux start.
+set -gu @continuum-restore
+set -gu @continuum-save-interval
+run-shell 'rm -f ~/.config/opencode/plugins/session-tracker.js'
 
 
 
