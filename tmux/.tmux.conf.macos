@@ -55,7 +55,14 @@ bind -n C-y copy-mode
 # Vim keys in copypaste/yank mode (hjkl, v, y)
 set-window-option -g mode-keys vi
 bind -T copy-mode-vi v send -X begin-selection
-bind -T copy-mode-vi y send -X copy-selection
+bind -T copy-mode-vi y send -X copy-selection-and-cancel
+
+# Mouse drag-end: do nothing.
+# Default is `send -X copy-pipe-and-cancel` which exits copy-mode and clears
+# the selection on mouse release. Removing the binding leaves the selection
+# visible and selection mode active, so keyboard motions extend the selection
+# and `y` (above) is the only thing that writes to the tmux buffer.
+unbind -T copy-mode-vi MouseDragEnd1Pane
 
 # Open new panes/splits in current working directory
 bind '"' split-window -v -c "#{pane_current_path}"
