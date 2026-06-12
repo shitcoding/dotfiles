@@ -64,6 +64,19 @@ bind -T copy-mode-vi y send -X copy-selection-and-cancel
 # and `y` (above) is the only thing that writes to the tmux buffer.
 unbind -T copy-mode-vi MouseDragEnd1Pane
 
+# Double-click: select word, STAY in copy-mode (don't auto-copy-and-cancel
+# 0.3s later — that's what makes the default flash the selection and lose
+# it). Override both root (entering copy-mode from a regular pane) and
+# copy-mode-vi (already in copy-mode).
+bind -T root DoubleClick1Pane \
+    select-pane -t = \; \
+    if-shell -F "#{||:#{pane_in_mode},#{mouse_any_flag}}" \
+        { send-keys -M } \
+        { copy-mode -H ; send-keys -X select-word }
+bind -T copy-mode-vi DoubleClick1Pane \
+    select-pane \; \
+    send-keys -X select-word
+
 # Open new panes/splits in current working directory
 bind '"' split-window -v -c "#{pane_current_path}"
 bind % split-window -h -c "#{pane_current_path}"
