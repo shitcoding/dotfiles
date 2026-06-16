@@ -1,0 +1,22 @@
+[
+  {
+    "icon": "󰐃",
+    "category": "Panes",
+    "title": "Mark Pane",
+    "description": "mark this pane; then Swap With Marked from another",
+    "action": { "tmux": "select-pane -m" }
+  },
+  {
+    "icon": "󰓡",
+    "category": "Panes",
+    "title": "Swap With Marked",
+    "description": "swap this pane with the marked one",
+    "action": { "tmux": "swap-pane" }
+  },
+  {
+    "icon": "󰘬",
+    "category": "Tools",
+    "title": "lazygit",
+    "action": { "popup": "lazygit" }
+  }
+]

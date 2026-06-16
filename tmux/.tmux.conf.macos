@@ -180,6 +180,14 @@ set -g @plugin 'timvw/tmux-assistant-resurrect'
 # tmux-fzf
 set -g @plugin 'sainnhe/tmux-fzf'
 
+# Command palette (Raycast-style popup). Needs Bun + tmux 3.4+.
+# Opened with Cmd+P via Karabiner (Cmd+P → tmux prefix; bound to prefix `p`).
+set -g @plugin 'eduwass/tmux-palette'
+# MUST be set before 'run tpm' below — the plugin binds its key at load time,
+# so if @palette-key isn't 'off' yet it grabs its default C-Space and clobbers
+# `bind -n C-Space last-window`. 'off' = we bind prefix p ourselves (see below).
+set -g @palette-key 'off'
+
 
 # Initialize TMUX plugin manager
 run '~/.tmux/plugins/tpm/tpm'
@@ -293,6 +301,16 @@ run-shell '~/.tmux/plugins/tmux_yankee/yankee.tmux'
 # Info: https://github.com/sainnhe/tmux-fzf
 # TMUX_FZF_LAUNCH_KEY="C-f"
 # TMUX_FZF_ORDER="keybinding|session|window|pane|command"
+
+# tmux-palette settings
+# macOS never delivers Cmd to tmux. Karabiner maps Cmd+P → `Ctrl+A` then `p`
+# (the tmux prefix + p), matching the existing Cmd+HJKL tmux-nav rules, so we
+# bind the palette to PREFIX p here. (@palette-key 'off' is set ABOVE, before
+# 'run tpm', so the plugin never binds its default C-Space over last-window.)
+bind p run-shell '~/.tmux/plugins/tmux-palette/bin/tmux-palette.sh'
+
+# Vim nav (Ctrl+J/K + Ctrl+U/D) is an upstream feature now — enabled in
+# tmux-palette/navigation.json ("vimKeys": true), not via a tmux option.
 
 ##########################################################################
 #####          End of User installed plugins settings      ###############
