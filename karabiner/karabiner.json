@@ -62,7 +62,9 @@
                                             "^nvim$",
                                             "^lvim$",
                                             "^tmux$",
-                                            "^md\\.obsidian$"
+                                            "^md\\.obsidian$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -105,7 +107,9 @@
                                             "^lvim$",
                                             "^tmux$",
                                             "^md\\.obsidian$",
-                                            "^org\\.mozilla\\.firefox$"
+                                            "^org\\.mozilla\\.firefox$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -147,7 +151,9 @@
                                             "^nvim$",
                                             "^lvim$",
                                             "^tmux$",
-                                            "^md\\.obsidian$"
+                                            "^md\\.obsidian$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -189,7 +195,9 @@
                                             "^nvim$",
                                             "^lvim$",
                                             "^tmux$",
-                                            "^md\\.obsidian$"
+                                            "^md\\.obsidian$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -231,7 +239,9 @@
                                             "^nvim$",
                                             "^lvim$",
                                             "^tmux$",
-                                            "^md\\.obsidian$"
+                                            "^md\\.obsidian$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -274,7 +284,9 @@
                                             "^lvim$",
                                             "^tmux$",
                                             "^md\\.obsidian$",
-                                            "^org\\.mozilla\\.firefox$"
+                                            "^org\\.mozilla\\.firefox$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -314,7 +326,9 @@
                                             "^nvim$",
                                             "^lvim$",
                                             "^tmux$",
-                                            "^md\\.obsidian$"
+                                            "^md\\.obsidian$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -356,7 +370,9 @@
                                             "^nvim$",
                                             "^lvim$",
                                             "^tmux$",
-                                            "^md\\.obsidian$"
+                                            "^md\\.obsidian$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -398,7 +414,9 @@
                                             "^nvim$",
                                             "^lvim$",
                                             "^tmux$",
-                                            "^md\\.obsidian$"
+                                            "^md\\.obsidian$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -833,7 +851,9 @@
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$",
                                             "^vim$",
-                                            "^nvim$"
+                                            "^nvim$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -866,7 +886,9 @@
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$",
                                             "^vim$",
-                                            "^nvim$"
+                                            "^nvim$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -899,7 +921,9 @@
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$",
                                             "^vim$",
-                                            "^nvim$"
+                                            "^nvim$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -932,7 +956,9 @@
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$",
                                             "^vim$",
-                                            "^nvim$"
+                                            "^nvim$",
+                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
