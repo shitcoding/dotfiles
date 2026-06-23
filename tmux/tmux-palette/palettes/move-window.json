@@ -1,0 +1,8 @@
+{
+  "title": "Move Window to Session",
+  "grouped": false,
+  "emptyText": "No other sessions",
+  "icon": "󱂬",
+  "command": "tmux list-sessions -F '#S' | grep -vxF \"$(tmux display-message -p '#S')\" || true",
+  "action": { "tmux": "move-window -t '{}:'" }
+}

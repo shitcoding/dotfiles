@@ -14,6 +14,13 @@
     "action": { "tmux": "swap-pane" }
   },
   {
+    "icon": "󱂬",
+    "category": "Windows",
+    "title": "Move Window to Session...",
+    "description": "send this window to another session",
+    "action": { "palette": "move-window" }
+  },
+  {
     "icon": "󰘬",
     "category": "Tools",
     "title": "lazygit",
