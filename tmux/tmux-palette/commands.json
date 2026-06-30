@@ -25,5 +25,12 @@
     "category": "Tools",
     "title": "lazygit",
     "action": { "popup": "lazygit" }
+  },
+  {
+    "icon": "󰆍",
+    "category": "Tools",
+    "title": "Terminal Popup",
+    "description": "shell in the active pane's directory",
+    "action": { "tmux": "display-popup -E -d '#{pane_current_path}' -w 80% -h 80%" }
   }
 ]
