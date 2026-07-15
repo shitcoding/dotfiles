@@ -21,6 +21,20 @@
     "action": { "palette": "move-window" }
   },
   {
+    "icon": "󰒺",
+    "category": "Windows",
+    "title": "Auto sort window numbers",
+    "description": "renumber to close gaps (1-2-4 → 1-2-3)",
+    "action": { "tmux": "move-window -r" }
+  },
+  {
+    "icon": "󰬲",
+    "category": "Windows",
+    "title": "Change current window number",
+    "description": "move this window to a chosen index",
+    "action": { "tmux": "command-prompt -p 'New window number:' 'move-window -t %%'" }
+  },
+  {
     "icon": "󰘬",
     "category": "Tools",
     "title": "lazygit",
