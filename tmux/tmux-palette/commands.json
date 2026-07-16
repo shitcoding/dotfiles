@@ -14,6 +14,13 @@
     "action": { "tmux": "swap-pane" }
   },
   {
+    "icon": "󰃢",
+    "category": "Panes",
+    "title": "Clear all panes",
+    "description": "send Ctrl-l to shell panes (skips vim/TUI)",
+    "action": { "shell": "tmux list-panes -F '#{pane_id} #{pane_current_command}' | while read -r p c; do case \"$c\" in zsh|bash|tmux) tmux send-keys -t \"$p\" C-l;; esac; done" }
+  },
+  {
     "icon": "󱂬",
     "category": "Windows",
     "title": "Move Window to Session...",
