@@ -131,10 +131,12 @@ bind M-v command-prompt -p "Move window to session (enter session name):"  "move
 bind r source-file ~/.tmux.conf \; display -d 500 '~/.tmux.conf sourced'
 
 
-# TODO: Fix the binding so it doesn't require shell script file
-# `<Prefix> L`: Clear all panes of the current window with `Ctrl+l`
+# `<Prefix> L`: Clear all panes of the current window — send Ctrl-l only to
+# shell panes (zsh/bash/tmux), skipping vim/TUI apps. Inlined, no external
+# script. ##{...} escapes the format so run-shell passes it through to the
+# inner list-panes instead of pre-expanding it to the current pane.
 unbind L # Unbind default binding (open last session)
-bind L run-shell "${HOME}/.scripts/tmux_clear_all_panes.sh"
+bind L run-shell "tmux list-panes -F '##{pane_id} ##{pane_current_command}' | while read -r p c; do case \$c in zsh|bash|tmux) tmux send-keys -t \$p C-l ;; esac; done"
 
 
 
