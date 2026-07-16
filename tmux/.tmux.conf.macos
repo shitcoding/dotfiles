@@ -146,7 +146,7 @@ bind L run-shell "${HOME}/.scripts/tmux_clear_all_panes.sh"
 ##########################################################################
 #### General Settings ####################################################
 ##########################################################################
-set -g history-limit 5000   # boost history
+set -g history-limit 50000   # boost history
 
 set -g base-index 1        # start windows numbering from 1 instead of 0
 setw -g pane-base-index 1  # start panes numbering from 1 instead of 0
@@ -295,6 +295,7 @@ set -g @yankee_wrap_mode "on"
 set -g @yankee_mouse "on"
 set -g @yankee_bind_H "first_nonblank"
 set -g @yankee_bind_L "last_nonblank"
+set -g @yankee_scrollback_lines 50000   # capture full history, not just the last 2000 (needs history-limit above)
 run-shell '~/.tmux/plugins/tmux_yankee/yankee.tmux'
 
 # tmux-fzf settings
