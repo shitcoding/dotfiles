@@ -21,6 +21,16 @@ autocmd("BufEnter", {
   command = "setfiletype sql",
 })
 
+-- Markdown: keep ``` fences visible (nvim's bundled markdown treesitter query
+-- conceals whole fence lines, which respects 'conceallevel')
+autocmd("FileType", {
+  group = augroup("MarkdownRawFences", { clear = true }),
+  pattern = { "markdown" },
+  callback = function()
+    vim.opt_local.conceallevel = 0
+  end,
+})
+
 -- Auto toggle relative/absolute line numbers
 -- Note: C-c doesn't trigger InsertLeave, see keymaps.lua for fix
 local number_toggle = augroup("NumberToggle", { clear = true })
