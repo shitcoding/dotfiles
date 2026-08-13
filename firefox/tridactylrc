@@ -1,6 +1,6 @@
 " General Settings
 set configversion 2.0
-set editorcmd kitty --class floatingAppFocus -- lvim %f
+set editorcmd kitty -- nvim %f
 set theme midnight
 set update.lastchecktime 1763045931273
 set update.lastnaggedversion 1.24.3
@@ -27,7 +27,7 @@ bind K tabprev
 bind L tablast
 bind M tabmove -1
 bind gb tabprev
-bind gi composite focusinput -l | editor
+bind gi focusinput -l
 bind gnM tabopen https://github.com/tridactyl/tridactyl/wiki/Exemplar-.tridactylrc-files
 bind goM open https://github.com/tridactyl/tridactyl/wiki/Exemplar-.tridactylrc-files
 bind gr reader
@@ -55,6 +55,7 @@ bind пп scrollto 0
 bind пш focusinput -l
 bind ь tabmove +1
 unbind --mode=insert <C-c>
+unbind --mode=insert <C-i>
 unbind --mode=visual <C-c>
 unbind <C-[>
 unbind <C-c>
