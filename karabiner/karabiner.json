@@ -12,6 +12,7 @@
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
                                             "^com\\.mitchellh\\.ghostty$",
+                                            "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$"
@@ -443,7 +444,7 @@
                         ]
                     },
                     {
-                        "description": "Cmd+HJKL to Ctrl+A then HJKL for tmux navigation (Alacritty only)",
+                        "description": "Cmd+HJKL to Ctrl+A then HJKL for tmux navigation (terminal apps only)",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -451,6 +452,7 @@
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
                                             "^com\\.mitchellh\\.ghostty$",
+                                            "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$"
@@ -486,6 +488,7 @@
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
                                             "^com\\.mitchellh\\.ghostty$",
+                                            "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$"
@@ -521,6 +524,7 @@
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
                                             "^com\\.mitchellh\\.ghostty$",
+                                            "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$"
@@ -556,6 +560,7 @@
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
                                             "^com\\.mitchellh\\.ghostty$",
+                                            "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$"
@@ -596,6 +601,7 @@
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
                                             "^com\\.mitchellh\\.ghostty$",
+                                            "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
                                             "^tmux$"
