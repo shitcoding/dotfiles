@@ -10,6 +10,7 @@
 Ghostty
 Alacritty
 
-# Vimput popup is a kitty window titled "Vimput". Square only that one,
-# leaving any other kitty windows on the default rounded border.
-kitty:Vimput
+# All kitty windows, including the Vimput popup. Previously scoped to
+# `kitty:Vimput`; the main kitty config now matches ghostty/alacritty, so it
+# gets the same square border.
+kitty
