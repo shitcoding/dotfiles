@@ -325,9 +325,12 @@ bind p run-shell '~/.tmux/plugins/tmux-palette/bin/tmux-palette.sh'
 ##########################################################################
 set-option -g focus-events on # fix for vim-numbertoggle Vim plugin
 
-# # Fix weird colors for Powerlevel10k in tmux
-# set -g default-terminal "xterm-256color"
-# set -ag terminal-overrides ",xterm-256color:Tc"
+# Advertise 24-bit colour to the outer terminal. Without this tmux quantises every
+# truecolor sequence to the 256-colour cube, which silently shifts hues -- e.g.
+# #613315 lands on xterm 58 (#5f5f00), brown rendered as olive. default-terminal is
+# already tmux-256color, which is correct; only the RGB capability was missing.
+# Named per terminal rather than "*:RGB" so a terminal without truecolor is unaffected.
+set -as terminal-features ",alacritty:RGB,xterm-ghostty:RGB,xterm-kitty:RGB"
 
 ##########################################################################
 #####          End of Various Fixes      #################################
