@@ -1,0 +1,42 @@
+[privacy]
+telemetry_enabled = true
+crash_reporting_enabled = true
+
+[appearance]
+
+[appearance.window]
+zoom_level = 110
+
+[appearance.vertical_tabs]
+enabled = true
+
+[appearance.text]
+notebook_font_size = 14.0
+font_size = 13.0
+
+[account]
+is_settings_sync_enabled = true
+
+[agents]
+cloud_conversation_storage_enabled = true
+
+[agents.warp_agent]
+
+[agents.warp_agent.input]
+nld_in_terminal_enabled = true
+
+[agents.warp_agent.other]
+should_render_use_agent_toolbar_for_user_commands = false
+
+[terminal]
+
+[terminal.input]
+input_box_type_setting = "universal"
+extra_meta_keys = { left_alt = true, right_alt = false }
+
+[general]
+login_item = false
+show_warning_before_quitting = false
+
+[text_editing]
+vim_mode_enabled = true
