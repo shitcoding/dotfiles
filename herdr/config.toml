@@ -1,0 +1,191 @@
+# herdr — terminal workspace manager for AI coding agents (https://herdr.dev)
+# Live file: ~/.config/herdr/config.toml symlinks here.
+#
+# Migrated from tmux/.tmux.conf.macos. The mapping table, the list of tmux
+# behaviour with NO herdr equivalent, and the muscle-memory traps live in
+# herdr/README.md next to this file.
+# Reload after editing: `herdr server reload-config`. Validate: `herdr config check`.
+#
+# Vocabulary: tmux "window" = herdr "tab"; tmux "session" = herdr "workspace".
+#
+# NOT YET VERIFIED LIVE. Every binding here passes `herdr config check`, but a
+# binding that validates is not a binding that arrives. Verify from a terminal
+# window running NO tmux — inside a tmux pane, tmux owns every chord below.
+
+onboarding = false
+
+##########################################################################
+##### Key Bindings #######################################################
+##########################################################################
+# herdr takes an ARRAY per action, so a tmux binding and its prefix-mode
+# equivalent can coexist. "prefix+x" needs the prefix; "alt+x" is direct.
+[keys]
+# tmux: unbind C-b; set -g prefix C-a
+prefix = "ctrl+a"
+
+# --- Panes: navigation ---------------------------------------------------
+# tmux: bind h/j/k/l select-pane -L/-D/-U/-R
+# The Cyrillic aliases mirror tmux's `bind р/о/л/д`. They are NOT redundant
+# with switch_ascii_input_source_in_prefix below: Karabiner's Cmd+HJKL rules
+# post `Ctrl+A` and `h` as two HID events, and macOS translates the second
+# with whatever input source is live at delivery — so under the RU layout the
+# PTY already holds `р` before herdr can switch anything. The flag helps
+# hand-typed chords; these aliases cover the Karabiner path.
+focus_pane_left  = ["prefix+h", "prefix+р"]
+focus_pane_down  = ["prefix+j", "prefix+о"]
+focus_pane_up    = ["prefix+k", "prefix+л"]
+focus_pane_right = ["prefix+l", "prefix+д"]
+
+# tmux: bind -n C-Space last-window.
+# NOT equivalent. herdr has no last-TAB action; last_pane is global previous-
+# pane focus, tracked across tabs AND workspaces, where tmux's last-window
+# stayed inside the session. This machine averages ~2.5 panes per window, so
+# the divergence is the normal case here, not an edge case.
+last_pane = "ctrl+space"
+
+# --- Panes: splits -------------------------------------------------------
+# herdr names splits by the divider, same as vim: vertical = side by side.
+# tmux: bind % split-window -h  (side by side)
+# tmux: bind '"' split-window -v (stacked)
+# The tmux `-c "#{pane_current_path}"` is covered by terminal.new_cwd below.
+# The tmux characters are kept as aliases alongside herdr's own defaults;
+# `herdr config check` accepts both, but confirm they survive your terminal's
+# shifted-punctuation encoding on first run.
+split_vertical   = ["prefix+v", "prefix+%"]
+split_horizontal = ["prefix+minus", "prefix+\""]
+
+# tmux: bind -n M-z resize-pane -Z
+zoom = ["prefix+z", "alt+z"]
+
+# tmux prefix+r was `source-file` — keep that, and move resize mode to
+# prefix+ctrl+r (free now that tmux-resurrect's C-r restore is gone).
+# WARNING while both multiplexers run: inside a tmux pane, prefix+ctrl+r is
+# tmux-resurrect RESTORE, not herdr resize. Do not use it nested.
+reload_config = ["prefix+shift+r", "prefix+r"]
+resize_mode   = "prefix+ctrl+r"
+
+# --- Tabs (tmux windows) -------------------------------------------------
+# tmux: bind -n M-1 .. M-9 select-window -t N
+switch_tab = ["prefix+1..9", "alt+1..9"]
+
+# tmux: bind -n M-h/M-l, plus tmux-sensible's prefix C-p / prefix C-n.
+# NOTE the config does `unbind n` / `unbind p`, so plain prefix+n/prefix+p are
+# deliberately NOT window navigation in tmux — prefix+ctrl+p / prefix+ctrl+n
+# are. Binding prefix+n here would reverse an explicit choice, and prefix+p is
+# claimed by `goto` below.
+previous_tab = ["prefix+ctrl+p", "alt+h"]
+next_tab     = ["prefix+ctrl+n", "alt+l"]
+
+# tmux: bind -r C-k swap-window -t -1 / bind -n M-k  (and C-j / M-j)
+# The `-r` REPEAT is lost — herdr returns to terminal mode after each action,
+# so a second prefix+ctrl+k without the prefix reaches the shell (ctrl+k =
+# kill-line, ctrl+j = newline). Use the alt+k / alt+j forms to repeat.
+move_tab_previous = ["prefix+ctrl+k", "alt+k"]
+move_tab_next     = ["prefix+ctrl+j", "alt+j"]
+
+# tmux: bind , rename-window
+rename_tab = ["prefix+shift+t", "prefix+comma"]
+
+# --- Copy mode -----------------------------------------------------------
+# tmux ran tmux-yankee on C-y in the root table and unbound `[`. yankee has
+# no herdr port, so C-y opens herdr's native copy mode instead — a subset,
+# not a replacement (see README).
+copy_mode = ["prefix+[", "ctrl+y"]
+
+# --- Workspaces (tmux sessions) ------------------------------------------
+# tmux: bind s choose-tree -Zs (session chooser). herdr puts `settings` on
+# prefix+s by default, which is a trap for that habit — so the picker takes
+# prefix+s and settings moves aside.
+workspace_picker = ["prefix+w", "prefix+s"]
+settings         = "prefix+shift+s"
+
+# tmux: bind d detach-client. herdr defaults detach to prefix+q, which in tmux
+# is the harmless display-panes — keep both so neither habit misfires.
+detach = ["prefix+q", "prefix+d"]
+
+# --- Command palette -----------------------------------------------------
+# tmux: bind p run-shell tmux-palette. Karabiner maps Cmd+P -> `C-a` then `p`,
+# so binding herdr's session navigator to prefix+p keeps Cmd+P working
+# unchanged. It opens a navigator, not a command palette — see README.
+goto = ["prefix+g", "prefix+p"]
+
+##########################################################################
+##### General Settings ###################################################
+##########################################################################
+[terminal]
+# tmux: bind '"' / bind % both passed -c "#{pane_current_path}".
+new_cwd = "follow"
+
+[session]
+# Resumes Claude/Codex conversations after a server restart — but ONLY with the
+# agent integrations installed (`herdr integration status`); the flag is inert
+# without them. This does not import tmux-assistant-resurrect's saved state, so
+# that plugin stays load-bearing while tmux is still primary.
+resume_agents_on_restore = true
+
+[advanced]
+# tmux: set -g history-limit 50000 (tmux stores only each line's used width).
+# herdr caps by BYTES over a libghostty back end that allocates rows at full
+# pane width, so this is not a like-for-like number: at ~157 columns this is
+# roughly 16k full-width lines, about a third of tmux's 50k. It is a cap, not
+# an allocation, so raising it costs nothing until panes actually fill it.
+# Retention under real widths/Unicode is unmeasured.
+scrollback_limit_bytes = 64000000
+
+##########################################################################
+##### Appearance (modified Gruvbox, matched to the tmux status bar) ######
+##########################################################################
+[theme]
+name = "gruvbox"
+auto_switch = false
+
+[ui]
+# tmux: pane-active-border-style / window-status-current-style fg "#fe8019".
+# Only the accent is mapped. The tmux config also set copy-mode match styles,
+# message/prompt, pane-number and clock colours — none of those are carried
+# over.
+accent = "#fe8019"
+
+# tmux: unbind -T copy-mode-vi MouseDragEnd1Pane, plus the DoubleClick1Pane
+# overrides — both existed to STOP the selection being copied and cleared on
+# mouse release. `false` gets that polarity right but is NOT the same
+# interaction: tmux kept you in copy-mode so keyboard motions refined the
+# selection and `y` copied it. Here the highlight is merely retained, ordinary
+# keys clear it, and Ctrl+C copies.
+copy_on_select = false
+
+# tmux: setw -g mouse on
+mouse_capture = true
+
+# tmux: status-right showed #{host_short}; window-status-*-format showed
+# #{window_zoomed_flag} in bold.
+tab_bar_right = [{ type = "zoom" }, { type = "hostname" }]
+
+# tmux's status bar sits at the bottom; herdr defaults to a top tab bar.
+tab_bar_position = "bottom"
+
+# Closer to tmux's plain splitters: no outside frame, no gaps, no scrollbars.
+pane_outer_borders = false
+pane_gaps          = false
+pane_scrollbars    = false
+
+# tmux's `prefix c` never prompted for a window name.
+prompt_new_tab_name = false
+
+status_indicators = "symbols"
+[experimental]
+# Forces an ASCII input source for the duration of prefix mode, so hand-typed
+# prefix+hjkl works under the RU layout. It does NOT cover Karabiner's
+# synthetic chords — see the Cyrillic aliases above for why.
+switch_ascii_input_source_in_prefix = true
+
+# NOTE: pane_history is deliberately NOT enabled. It was briefly set on the
+# assumption it mirrored tmux-resurrect restoring pane contents — but this
+# setup never set @resurrect-capture-pane-contents (verified against both the
+# config file and `tmux show-options -g`), and the plugin defaults it off. So
+# it would be NEW disk persistence of terminal output, not parity. herdr ships
+# it off for exactly that reason: session-history.json holds whatever was on
+# screen, secrets included. Enable it only as a deliberate decision.
+
+[ui.toast]
+delivery = "system"
