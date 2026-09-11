@@ -15,7 +15,8 @@
                                             "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
-                                            "^tmux$"
+                                            "^tmux$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -455,7 +456,8 @@
                                             "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
-                                            "^tmux$"
+                                            "^tmux$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -491,7 +493,8 @@
                                             "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
-                                            "^tmux$"
+                                            "^tmux$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -527,7 +530,8 @@
                                             "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
-                                            "^tmux$"
+                                            "^tmux$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -563,7 +567,8 @@
                                             "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
-                                            "^tmux$"
+                                            "^tmux$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -604,7 +609,8 @@
                                             "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.googlecode\\.iterm2$",
                                             "^com\\.apple\\.Terminal$",
-                                            "^tmux$"
+                                            "^tmux$",
+                                            "^dev\\.warp\\.Warp-Stable$"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
