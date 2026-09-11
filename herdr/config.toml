@@ -109,6 +109,20 @@ detach = ["prefix+q", "prefix+d"]
 # unchanged. It opens a navigator, not a command palette — see README.
 goto = ["prefix+g", "prefix+p"]
 
+# --- Clear all shell panes in the tab ------------------------------------
+# tmux: bind L run-shell "... send C-l to zsh/bash/tmux panes only".
+# herdr's default swap_pane_right also wants prefix+shift+l. The tmux habit
+# wins: swap_pane_right is unset. swap left/down/up keep their defaults --
+# the tmux config never bound swap-pane at all, so nothing is really lost.
+swap_pane_right = ""
+
+# Runs detached. $HOME keeps the public repo free of an absolute path.
+[[keys.command]]
+key = "prefix+shift+l"
+type = "shell"
+command = "$HOME/.dotfiles/herdr/scripts/clear-panes.py"
+description = "Clear all shell panes in this tab"
+
 ##########################################################################
 ##### General Settings ###################################################
 ##########################################################################
