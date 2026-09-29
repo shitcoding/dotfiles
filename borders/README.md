@@ -50,6 +50,24 @@ Make executable: `chmod +x ~/.config/borders/bordersrc`
 brew services start borders
 ```
 
+### macOS 27: borders left behind in Mission Control
+
+On macOS 27 Mission Control is drawn by `WindowManager`, and border windows are no
+longer hidden with their targets, so the active border stays at the window's original
+frame on top of the overview ([#209](https://github.com/FelixKratz/JankyBorders/issues/209)).
+v1.9.0 doesn't fix it, and its ignores-cycle filter drops Ghostty ([#200](https://github.com/FelixKratz/JankyBorders/issues/200)).
+
+Until [#210](https://github.com/FelixKratz/JankyBorders/pull/210) ships, run v1.8.4 with
+#210 cherry-picked, built from a local clone (`make` → `bin/borders`), from a
+`com.user.borders` LaunchAgent instead of `brew services`: copy the Homebrew plist and
+change the label and program path, then remove the Homebrew one so the two don't fight.
+Keep the formula installed: `bordersrc` and the watcher still call the Homebrew
+`borders`, but only as an IPC client of the running instance.
+
+```bash
+launchctl kickstart -k gui/$(id -u)/com.user.borders   # restart
+```
+
 ## Per-app border styles (optional)
 
 The watcher script applies square borders to specific apps (useful for terminals with square corners).
