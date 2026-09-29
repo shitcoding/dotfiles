@@ -30,39 +30,58 @@ trap "rm -f '$PID_FILE'" EXIT
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 CONFIG_FILE="$SCRIPT_DIR/square_apps.txt"
-SWIFT_HELPER="$SCRIPT_DIR/get_windows.swift"
+SWIFT_SRC="$SCRIPT_DIR/get_windows.swift"
+# Compiled once at startup: `swift get_windows.swift` JIT-compiles the script on every
+# call (~0.25 s CPU, 170 MB peak), which at one call per second was a fifth of a core.
+# Lives outside the repo (public, and a build artifact). Edits to the .swift source need
+# a watcher restart; square_apps.txt edits are still picked up live.
+HELPER_BIN="${XDG_CACHE_HOME:-$HOME/.cache}/borders/get_windows"
 BORDERS_BIN="/opt/homebrew/bin/borders"
 POLL_INTERVAL=1
-STYLED_WINDOWS_FILE="/tmp/borders_styled_windows.txt"
-BORDERS_PID_FILE="/tmp/borders_last_pid.txt"
 
-# Clear styled windows on startup (styles are lost when borders restarts)
-: > "$STYLED_WINDOWS_FILE"
+# Everything below runs every second, so the loop sticks to bash builtins: each fork
+# costs a Gatekeeper/trustd round-trip on macOS 27. Per cycle it only runs the helper
+# and `sleep`. The styled-window set lives in memory, newline-delimited with a leading
+# and trailing newline so a membership test is one glob match.
+STYLED=$'\n'
+SPECS=""
+
+if [[ ! -x "$HELPER_BIN" || "$SWIFT_SRC" -nt "$HELPER_BIN" ]]; then
+    echo "Compiling $SWIFT_SRC -> $HELPER_BIN"
+    mkdir -p "$(dirname "$HELPER_BIN")"
+    swiftc -O "$SWIFT_SRC" -o "$HELPER_BIN" || { echo "swiftc failed"; exit 1; }
+fi
 
 get_borders_pid() {
     pgrep -x borders 2>/dev/null | head -1
 }
 
-# Detect borders restart and clear style cache if needed
+BORDERS_PID=$(get_borders_pid)
+
+# Detect borders restart and clear style cache if needed. `kill -0` is a builtin, so
+# pgrep only runs when the known borders pid is gone.
 check_borders_restart() {
+    [[ -n "$BORDERS_PID" ]] && kill -0 "$BORDERS_PID" 2>/dev/null && return 0
+
     local current_pid
     current_pid=$(get_borders_pid)
     [[ -z "$current_pid" ]] && return 0
 
-    local last_pid=""
-    [[ -f "$BORDERS_PID_FILE" ]] && last_pid=$(cat "$BORDERS_PID_FILE")
-
-    if [[ "$current_pid" != "$last_pid" ]]; then
-        echo "Borders restarted (was: ${last_pid:-none}, now: $current_pid). Re-applying styles."
-        : > "$STYLED_WINDOWS_FILE"
-        echo "$current_pid" > "$BORDERS_PID_FILE"
-    fi
+    echo "Borders restarted (was: ${BORDERS_PID:-none}, now: $current_pid). Re-applying styles."
+    STYLED=$'\n'
+    BORDERS_PID=$current_pid
 }
 
-# Read non-empty, non-comment lines from the config file.
+# Read non-empty, non-comment lines from the config file into SPECS.
 load_square_specs() {
-    [[ -f "$CONFIG_FILE" ]] || return
-    grep -v '^[[:space:]]*#' "$CONFIG_FILE" | grep -v '^[[:space:]]*$'
+    SPECS=""
+    [[ -f "$CONFIG_FILE" ]] || return 0
+    local line skip='^[[:space:]]*(#|$)'
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        [[ "$line" =~ $skip ]] && continue
+        SPECS+="$line"$'\n'
+    done < "$CONFIG_FILE"
+    SPECS=${SPECS%$'\n'}
 }
 
 # Lowercase a string. Bash 3.2 (system bash on macOS) has no ${var,,}, so
@@ -137,57 +156,44 @@ should_square() {
 }
 
 is_styled() {
-    local window_id="$1"
-    grep -q "^${window_id}$" "$STYLED_WINDOWS_FILE" 2>/dev/null
+    [[ "$STYLED" == *$'\n'"$1"$'\n'* ]]
 }
 
 mark_styled() {
-    local window_id="$1"
-    echo "$window_id" >> "$STYLED_WINDOWS_FILE"
+    STYLED+="$1"$'\n'
 }
 
+# Drop styled IDs that are no longer in the current window list. `$1` is the raw
+# helper output: one row per line, fields tab-separated, so a live window ID sits
+# at start-of-line followed by a TAB.
 cleanup_styled() {
-    local current_ids="$1"
-    local temp_file="/tmp/borders_styled_temp.txt"
-
-    [[ ! -f "$STYLED_WINDOWS_FILE" ]] && return
-    : > "$temp_file"
-    while read -r wid; do
-        # Numeric guard before grep — wid is interpolated into a regex.
-        [[ "$wid" =~ ^[0-9]+$ ]] || continue
-        # `current_ids` is the raw `swift get_windows.swift` output: one row
-        # per line, fields tab-separated. A window ID matches if it appears
-        # at start-of-line followed by a TAB.
-        if printf '%s\n' "$current_ids" | grep -q "^${wid}"$'\t'; then
-            echo "$wid" >> "$temp_file"
-        fi
-    done < "$STYLED_WINDOWS_FILE"
-    mv "$temp_file" "$STYLED_WINDOWS_FILE" 2>/dev/null
+    local current=$'\n'"$1" kept=$'\n' wid
+    while IFS= read -r wid; do
+        [[ -n "$wid" && "$current" == *$'\n'"$wid"$'\t'* ]] && kept+="$wid"$'\n'
+    done <<< "$STYLED"
+    STYLED=$kept
 }
 
 echo "Borders watcher started"
 echo "Config: $CONFIG_FILE"
 echo "Poll interval: ${POLL_INTERVAL}s"
 
-# Store initial borders PID
-get_borders_pid > "$BORDERS_PID_FILE"
-
 while true; do
     check_borders_restart
 
-    # Cache specs once per cycle: avoids forking grep twice per window AND
-    # gives the loop a consistent view if the config changes mid-cycle.
-    SPECS=$(load_square_specs)
+    # Reload specs once per cycle: config edits apply live, and the loop gets a
+    # consistent view if the file changes mid-cycle.
+    load_square_specs
     if [[ -z "$SPECS" ]]; then
         sleep "$POLL_INTERVAL"
         continue
     fi
 
     # Get current windows: window_id<TAB>app_name<TAB>owner_pid<TAB>title.
-    WINDOWS=$(swift "$SWIFT_HELPER" 2>/dev/null)
+    WINDOWS=$("$HELPER_BIN" 2>/dev/null)
 
-    # Process each window. Here-string keeps the loop in the main shell so
-    # we could share state across iterations if needed.
+    # Process each window. The here-string keeps the loop in the main shell,
+    # which mark_styled relies on: a piped loop would update a subshell's copy.
     while IFS=$'\t' read -r window_id app_name owner_pid title; do
         [[ -z "$window_id" ]] && continue
         if should_square "$app_name" "$owner_pid" "$title" "$SPECS"; then
