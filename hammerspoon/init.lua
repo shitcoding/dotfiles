@@ -1,62 +1,59 @@
 -- Hammerspoon config
 
 ---------------- Switch to the last space with cmd-0 --------------------
--- Set MCwaitTime for fast but stable animation
-hs.spaces.MCwaitTime = 0.3
+-- macOS 27 moved Mission Control's accessibility tree from the Dock to WindowManager
+-- (Hammerspoon#3897), so hs.spaces.gotoSpace only flashes Mission Control and fails.
+-- Open it ourselves and press the space button in WindowManager's tree instead:
+--   mc.display (one per display, at its global position) > mc.spaces > mc.spaces.list > "Desktop N"
+local TARGET_SCREEN = "Built-in Retina Display"
 
--- Function to get the UUID of the main built-in display with multiple spaces
-local function getTargetScreenUUID()
-    local allSpaces = hs.spaces.allSpaces()
-    if not allSpaces then
-        print("Error fetching all spaces")
-        return nil
+local function childWithId(el, id)
+    for _, c in ipairs(el and el:attributeValue("AXChildren") or {}) do
+        if c:attributeValue("AXIdentifier") == id then return c end
     end
-
-    for screenUUID, spaces in pairs(allSpaces) do
-        local screen = hs.screen.find(screenUUID)
-        if screen and screen:name() == "Built-in Retina Display" and #spaces > 1 then
-            return screenUUID
-        end
-    end
-
-    print("No suitable screen found with multiple spaces.")
-    return nil
 end
 
--- Function to switch to the last space on a specific screen
+-- The last space button of the display whose top-left corner matches `frame`, or nil
+-- while Mission Control is still building its tree.
+local function lastSpaceButton(wm, frame)
+    for _, display in ipairs(hs.axuielement.applicationElement(wm):attributeValue("AXChildren") or {}) do
+        local pos = display:attributeValue("AXPosition")
+        if display:attributeValue("AXIdentifier") == "mc.display" and pos
+            and math.abs(pos.x - frame.x) < 1 and math.abs(pos.y - frame.y) < 1 then
+            local list = childWithId(childWithId(display, "mc.spaces"), "mc.spaces.list")
+            local buttons = list and list:attributeValue("AXChildren") or {}
+            return buttons[#buttons]
+        end
+    end
+end
+
 local function switchToLastSpace()
-    local inspect = require("hs.inspect")
-    local allSpaces, err = hs.spaces.allSpaces()
-
-    if not allSpaces then
-        print("Error fetching all spaces:", err)
+    local screen
+    for _, s in ipairs(hs.screen.allScreens()) do
+        if s:name() == TARGET_SCREEN then screen = s end
+    end
+    local wm = hs.application.get("com.apple.WindowManager")
+    if not (screen and wm) then
+        print("Cmd+0: no " .. TARGET_SCREEN .. " or no WindowManager")
         return
     end
 
-    -- Dynamically get the UUID of the target screen
-    local screenUUID = getTargetScreenUUID()
-    if not screenUUID then
-        print("Target screen UUID not found.")
-        return
-    end
-
-    -- Check if the UUID exists in allSpaces
-    if allSpaces[screenUUID] then
-        -- Get the last space for this screen
-        local lastSpaceID = allSpaces[screenUUID][#allSpaces[screenUUID]]
-        print("Last Space ID:", lastSpaceID)
-
-        -- Attempt to switch to this space
-        local success, errorMsg = hs.spaces.gotoSpace(lastSpaceID)
-        if not success then
-            print("Failed to switch to last space:", errorMsg)
+    local frame, button = screen:fullFrame(), nil
+    local deadline = hs.timer.secondsSinceEpoch() + 2
+    hs.spaces.toggleMissionControl()
+    hs.timer.waitUntil(function()
+        button = lastSpaceButton(wm, frame)
+        return button ~= nil or hs.timer.secondsSinceEpoch() > deadline
+    end, function()
+        if button then
+            button:performAction("AXPress")
+        else
+            hs.spaces.toggleMissionControl()
+            print("Cmd+0: last space button not found in WindowManager's Mission Control tree")
         end
-    else
-        print("Screen UUID not found in allSpaces.")
-    end
+    end, 0.05)
 end
 
--- Bind the function to Cmd-0
 hs.hotkey.bind({"cmd"}, "0", switchToLastSpace)
 -------------------------------------------------------------------------
 
