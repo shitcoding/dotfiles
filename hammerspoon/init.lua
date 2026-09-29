@@ -63,8 +63,6 @@ hs.hotkey.bind({"cmd"}, "0", switchToLastSpace)
 ---------------- Auto-switch to English for terminal apps ----------------
 local terminalApps = {"Ghostty", "Alacritty", "iTerm2", "Terminal", "kitty", "WezTerm", "com.mitchellh.ghostty"}
 
-local lastApp = nil
-
 local function switchToEnglish()
     hs.keycodes.setLayout("U.S.")
 end
@@ -78,23 +76,13 @@ local function isTerminalApp(appName)
     return false
 end
 
-local function checkFrontmostApp()
-    local app = hs.application.frontmostApplication()
-    if app then
-        local appName = app:name()
-        local bundleID = app:bundleID()
-
-        if appName ~= lastApp then
-            lastApp = appName
-
-            if isTerminalApp(appName) or isTerminalApp(bundleID) then
-                switchToEnglish()
-            end
-        end
+-- Event-driven: fires once per app activation (replaces a 10 Hz frontmost-app poll).
+-- Global so the watcher isn't garbage-collected.
+appWatcher = hs.application.watcher.new(function(appName, event, app)
+    if event ~= hs.application.watcher.activated then return end
+    if isTerminalApp(appName) or (app and isTerminalApp(app:bundleID())) then
+        switchToEnglish()
     end
-end
-
--- Check every 0.1 seconds
-appTimer = hs.timer.new(0.1, checkFrontmostApp)
-appTimer:start()
+end)
+appWatcher:start()
 -------------------------------------------------------------------------
