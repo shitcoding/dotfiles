@@ -1,10 +1,16 @@
 -- Hammerspoon config
 
----------------- Switch to the last space with cmd-0 --------------------
+---------------- Switch spaces with cmd-1..9, cmd-0 = last space -------
+-- Instead of macOS's animated space switch (the old BetterTouchTool "Switch To Desktop N"
+-- shortcuts; even Reduce Motion only swaps the slide for a fade of the same length), open
+-- Mission Control and press the space's button: it lands without the slide.
 -- macOS 27 moved Mission Control's accessibility tree from the Dock to WindowManager
--- (Hammerspoon#3897), so hs.spaces.gotoSpace only flashes Mission Control and fails.
--- Open it ourselves and press the space button in WindowManager's tree instead:
+-- (Hammerspoon#3897), so hs.spaces.gotoSpace only flashes Mission Control and fails; read
+-- WindowManager's tree directly:
 --   mc.display (one per display, at its global position) > mc.spaces > mc.spaces.list > "Desktop N"
+-- ponytail: every jump opens Mission Control, so it pays MC's CPU cost (~1 s of Apple
+-- process time per jump); a gesture-based switcher (github.com/rileycx/strafe) is the
+-- upgrade path if that shows.
 local TARGET_SCREEN = "Built-in Retina Display"
 
 local function childWithId(el, id)
@@ -13,48 +19,53 @@ local function childWithId(el, id)
     end
 end
 
--- The last space button of the display whose top-left corner matches `frame`, or nil
--- while Mission Control is still building its tree.
-local function lastSpaceButton(wm, frame)
+-- The space buttons of the display whose top-left corner matches `frame`, or nil while
+-- Mission Control is still building its tree.
+local function spaceButtons(wm, frame)
     for _, display in ipairs(hs.axuielement.applicationElement(wm):attributeValue("AXChildren") or {}) do
         local pos = display:attributeValue("AXPosition")
         if display:attributeValue("AXIdentifier") == "mc.display" and pos
             and math.abs(pos.x - frame.x) < 1 and math.abs(pos.y - frame.y) < 1 then
             local list = childWithId(childWithId(display, "mc.spaces"), "mc.spaces.list")
-            local buttons = list and list:attributeValue("AXChildren") or {}
-            return buttons[#buttons]
+            local buttons = list and list:attributeValue("AXChildren")
+            if buttons and #buttons > 0 then return buttons end
         end
     end
 end
 
-local function switchToLastSpace()
+-- index: 1-based space number on TARGET_SCREEN, or nil for the last space.
+local function switchToSpace(index)
     local screen
     for _, s in ipairs(hs.screen.allScreens()) do
         if s:name() == TARGET_SCREEN then screen = s end
     end
     local wm = hs.application.get("com.apple.WindowManager")
     if not (screen and wm) then
-        print("Cmd+0: no " .. TARGET_SCREEN .. " or no WindowManager")
+        print("space switch: no " .. TARGET_SCREEN .. " or no WindowManager")
         return
     end
 
-    local frame, button = screen:fullFrame(), nil
+    local frame, buttons = screen:fullFrame(), nil
     local deadline = hs.timer.secondsSinceEpoch() + 2
     hs.spaces.toggleMissionControl()
     hs.timer.waitUntil(function()
-        button = lastSpaceButton(wm, frame)
-        return button ~= nil or hs.timer.secondsSinceEpoch() > deadline
+        buttons = spaceButtons(wm, frame)
+        return buttons ~= nil or hs.timer.secondsSinceEpoch() > deadline
     end, function()
+        local button = buttons and buttons[index or #buttons]
         if button then
             button:performAction("AXPress")
         else
             hs.spaces.toggleMissionControl()
-            print("Cmd+0: last space button not found in WindowManager's Mission Control tree")
+            print("space switch: no button for space " .. tostring(index or "last") .. " in WindowManager's Mission Control tree")
         end
     end, 0.05)
 end
 
-hs.hotkey.bind({"cmd"}, "0", switchToLastSpace)
+hs.hotkey.bind({"cmd"}, "0", function() switchToSpace(nil) end)
+for i = 1, 9 do
+    hs.hotkey.bind({"cmd"}, tostring(i), function() switchToSpace(i) end)
+end
 -------------------------------------------------------------------------
 
 ---------------- Auto-switch to English for terminal apps ----------------
