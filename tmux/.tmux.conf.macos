@@ -332,6 +332,10 @@ set-option -g focus-events on # fix for vim-numbertoggle Vim plugin
 # Named per terminal rather than "*:RGB" so a terminal without truecolor is unaffected.
 set -as terminal-features ",alacritty:RGB,xterm-ghostty:RGB,xterm-kitty:RGB"
 
+# Name the terminal window after the tmux session and window
+set -g set-titles on
+set -g set-titles-string "#S · #W"
+
 ##########################################################################
 #####          End of Various Fixes      #################################
 ##########################################################################
