@@ -242,11 +242,12 @@ set-option -g pane-border-style fg="#262626"
 set-option -g pane-border-lines heavy
 set-option -g pane-border-indicators arrows
 
-# message info
-set-option -g message-style bg="#fe8019",fg="#262626"
+# message info. tmux 3.8 only clears the status line under a message when the
+# style has fill=, otherwise the window list shows through the message
+set-option -g message-style bg="#fe8019",fg="#262626",fill="#fe8019"
 
 # writing commands inactive
-set-option -g message-command-style bg="#b0b1ab",fg="#262626"
+set-option -g message-command-style bg="#b0b1ab",fg="#262626",fill="#b0b1ab"
 
 # pane number display
 set-option -g display-panes-active-colour "#fe8019"
