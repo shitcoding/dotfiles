@@ -193,6 +193,14 @@ set -g @palette-key 'off'
 
 # Initialize TMUX plugin manager
 run '~/.tmux/plugins/tpm/tpm'
+
+# Save/restore in the background: plain run-shell holds every keypress until the
+# script exits. Save also runs quiet, because the plugin's spinner calls
+# display-message, which freezes all pane output while it shows. Progress goes to
+# status-right via @resurrect-busy instead. Restore has no quiet mode, so its
+# spinner still freezes output. Must come after TPM, which binds these for the plugin.
+bind C-s run-shell -b 'tmux set -g @resurrect-busy "Saving…"; ~/.tmux/plugins/tmux-resurrect/scripts/save.sh quiet; tmux set -g @resurrect-busy "Saved"; sleep 2; tmux set -gu @resurrect-busy'
+bind C-r run-shell -b '~/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 ##########################################################################
 ##### End of TPM Plugin Manager Settings             #####################
 ##########################################################################
@@ -265,7 +273,7 @@ set-option -wg clock-mode-colour "#fe8019"
 # statusbar formatting
 # "#fe8019" MUST be in lowercase here (conflicts with statusline alias otherwise)
 set-option -g status-left "#[bg=#b0b1ab, fg=#262626]#{?client_prefix,#[bg=#fe8019],#[bg=#b0b1ab]} #{session_name} "
-set-option -g status-right "#[bg=#b0b1ab, fg=#262626]#{?client_prefix,#[bg=#fe8019],#[bg=#b0b1ab]} #{host_short} "
+set-option -g status-right "#{?@resurrect-busy,#[bg=#fe8019#,fg=#262626] #{@resurrect-busy} ,}#[bg=#b0b1ab, fg=#262626]#{?client_prefix,#[bg=#fe8019],#[bg=#b0b1ab]} #{host_short} "
 
 set-option -wg window-status-current-format "#{?window_zoomed_flag,#[fg=default bold],#[fg=default]} #{window_index} #{window_name} "
 set-option -wg window-status-format "#{?window_zoomed_flag,#[fg=default bold],#[fg=default]} #{window_index} #{window_name} "
