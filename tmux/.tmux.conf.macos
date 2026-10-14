@@ -345,9 +345,18 @@ set-option -g focus-events on # fix for vim-numbertoggle Vim plugin
 # Named per terminal rather than "*:RGB" so a terminal without truecolor is unaffected.
 set -as terminal-features ",alacritty:RGB,xterm-ghostty:RGB,xterm-kitty:RGB"
 
-# Name the terminal window after the tmux session and window
+# Name the terminal window after the tmux session, window and pane name
 set -g set-titles on
-set -g set-titles-string "#S · #W"
+set -g set-titles-string "#S · #W#{?pane_title, · #{pane_title},}"
+
+# Pane names: set with `prefix T` (or tmux-palette's rename pane), searchable in
+# tmux-palette's find pane, saved by tmux-resurrect. Programs may not change pane
+# titles (zsh and Claude Code would overwrite a name at every prompt), and new
+# panes start untitled instead of with the hostname.
+setw -g allow-set-title off
+set-hook -g after-new-session 'select-pane -T ""'
+set-hook -g after-new-window 'select-pane -T ""'
+set-hook -g after-split-window 'select-pane -T ""'
 
 ##########################################################################
 #####          End of Various Fixes      #################################
