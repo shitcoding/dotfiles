@@ -215,10 +215,6 @@ bind C-r run-shell -b '~/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
 # window separators
 set-option -wg window-status-separator ""
 
-# monitor window changes
-set-option -wg monitor-activity on
-set-option -wg monitor-bell on
-
 # set statusbar update interval
 set-option -g status-interval 1
 
@@ -232,9 +228,6 @@ set-option -g status-style bg=terminal,fg="#b0b1ab"
 
 # default window title colors
 set-option -wg window-status-style bg="#262626",fg="#7c6f64"
-
-# colors for windows with activity
-set-option -wg window-status-activity-style bg="#262626",fg="#b0b1ab"
 
 # colors for windows with bells
 set-option -wg window-status-bell-style bg="#262626",fg="#fe8019"
